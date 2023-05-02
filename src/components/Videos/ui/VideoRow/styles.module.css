@@ -1,0 +1,59 @@
+/* Videos Row */
+
+.videos_row_container {
+  width: 100%;
+  max-width: var(--max-width);
+  padding: 0 var(--section-horizontal-padding);
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0 auto;
+}
+
+.video_row_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.video_row_navigation {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.row_navigation_button {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  justify-content: center;
+  border-width: 2px;
+  border-color: var(--border-color);
+}
+
+.row_navigation_button svg {
+  fill: var(--secondary-text-color);
+  font-size: 0.9rem;
+}
+
+.row_navigation_button:hover svg{
+  fill: var(--primary-color);
+}
+
+.video_row_title {
+  color: var(--video_row_title);
+  margin-bottom: 1rem;
+}
+
+.videos_row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  padding-bottom: 2rem;
+}

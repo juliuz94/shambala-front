@@ -1,0 +1,114 @@
+.video_header {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  max-width: var(--max-width);
+  padding: 2rem var(--section-horizontal-padding);
+  margin: 0 auto;
+}
+
+.left_column {
+  flex: 1;
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.video_title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.left_column button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.creator_container {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.creator_container p {
+  font-size: 0.8rem;
+}
+
+.center_column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress_circle {
+  display: flex;
+  flex-direction: column;
+}
+
+.progress_circle p:is(:first-of-type) {
+  font-weight: 600;
+}
+
+.progress_circle p:is(:last-of-type) {
+  font-size: 0.9rem;
+}
+
+.right_column {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.next_workshop {
+  padding: 1.25rem 1.5rem;
+  width: 100%;
+  background-color: var(--secondary-background-color);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.next_workshop .info_column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.next_workshop .info_column h2 {
+  margin-bottom: 0.55rem;
+  font-weight: 500;
+}
+
+.next_workshop .workshop_date,
+.next_workshop .workshop_time {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.next_workshop .workshop_date svg {
+  fill: var(--primary-color);
+}
+
+.next_workshop .workshop_time svg {
+  stroke: var(--primary-color);
+}
+
+.next_workshop .actions_column {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.next_workshop .actions_column button {
+  width: 100%;
+  min-height: 3rem;
+  max-width: 250px;
+}

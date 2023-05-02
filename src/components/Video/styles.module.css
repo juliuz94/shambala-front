@@ -1,0 +1,11 @@
+.video_container {
+  background-color: var(--general-background-color);
+}
+
+.video_info_container {
+  display: flex;
+  width: 100%;
+  max-width: var(--max-width);
+  padding: 1rem var(--section-horizontal-padding);
+  margin: 0 auto;
+}

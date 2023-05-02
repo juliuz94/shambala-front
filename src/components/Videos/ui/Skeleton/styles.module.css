@@ -1,0 +1,27 @@
+.skeleton_row_container {
+  width: 100%;
+  max-width: var(--max-width);
+  padding: 0 var(--section-horizontal-padding);
+  margin-bottom: 3rem;
+}
+
+.skeleton_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.skeleton_card {
+  width: 25%;
+  max-width: 300px;
+}
+
+.skeleton_card_image {
+  width: 100% !important;
+  height: 150px !important;
+}
+
+.skeleton_card_image svg {
+  display: none;
+}

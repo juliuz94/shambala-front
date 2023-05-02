@@ -1,0 +1,14 @@
+.input {
+  border-radius: 20px;
+  min-width: 250px;
+  padding: 0.35rem 1rem;
+  background-color: #F9FAFB;
+}
+
+.input svg {
+  fill: var(--secondary-contrast-text-color);
+}
+
+.input input {
+  background-color: #F9FAFB;
+}

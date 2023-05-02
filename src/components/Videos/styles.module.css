@@ -1,0 +1,15 @@
+.content_container {
+  height: fit-content;
+  min-height: calc(100vh - 70px);
+  background-color: var(--general-background-color);
+}
+
+.video_options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--max-width);
+  padding: 2rem var(--section-horizontal-padding);
+  margin: 0 auto;
+}

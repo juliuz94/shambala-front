@@ -1,0 +1,121 @@
+.video_player_container {
+  display: flex;
+  width: 100%;
+  max-width: var(--max-width);
+  padding: 1rem var(--section-horizontal-padding);
+  margin: 0 auto;
+}
+
+.player_container {
+  flex: 1;
+  min-width: 70%;
+  position: relative;
+  background-color: #000;
+  padding-top: 39%; /* Player ratio: 100 / (1280 / 720) */
+  border-radius: 7px 0 0 7px;
+  overflow: hidden;
+}
+
+.controllers {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0.25rem 0.5rem 0.2rem;
+  transition: background-color 1000ms linear;
+}
+
+.player_container:hover .controllers {
+  background-color: hsla(0, 0%, 0%, 0.6);
+}
+
+.play_control_button {
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play_control_button svg {
+  stroke: var(--contrast-text-color);
+  fill: var(--contrast-text-color);
+  font-size: 1.2rem;
+}
+
+.play_control_button p {
+  color: var(--contrast-text-color);
+}
+
+.progress_container {
+  width: 100%;
+  position: relative;
+}
+
+.progress_bar {
+  margin: 0px;
+}
+
+.seek {
+  position: absolute;
+  top: -4.5px;
+  left: -4px;
+  width: 100%;
+}
+
+.time_progress {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.time_progress p {
+  color: var(--contrast-text-color);
+  font-size: 0.7rem;
+}
+
+.sections_container {
+  flex: 1;
+  background-color: var(--tertiary-background-color);
+  border-radius: 0 7px 7px 0;
+}
+
+.sections_header {
+  padding: 1.5rem 1rem;
+}
+
+.sections_header p {
+  color: var(--inactive-color);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.section_card {
+  display: flex;
+  padding: 0.55rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.section_card:hover:not(.active) {
+  opacity: 0.6;
+  background-color: #252424;
+}
+
+.section_card p {
+  color: var(--contrast-text-color);
+  font-size: 0.9rem;
+}
+
+.section_card.active {
+  background-color: #54c05621;
+}
+
+.section_card.active p {
+  color: var(--primary-color);
+  font-weight: 600;
+}

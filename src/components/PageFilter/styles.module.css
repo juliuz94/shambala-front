@@ -1,0 +1,38 @@
+.page_filters_section {
+  display: flex;
+  width: 100%;
+  max-width: var(--max-width);
+  justify-content: flex-end;
+
+}
+
+.filters_container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filters_container p {
+  color: var(--secondary-text-color);
+  font-size: 0.8rem;
+}
+
+.filters_container ul {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filters_container ul li {
+  background-color: var(--border-color);
+  color: var(--secondary-contrast-text-color);
+  font-size: 0.75rem;
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.filters_container ul li.active {
+  background-color: var(--primary-color);
+  color: var(--contrast-text-color);
+}

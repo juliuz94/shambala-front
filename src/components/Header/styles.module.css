@@ -1,0 +1,117 @@
+.navbar {
+  width: 100vw;
+  display: flex;
+  height: 70px;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 1rem;
+  background-color: var(--general-background-color);
+}
+
+.logo_container{
+  width: 15%;
+  min-width: 180px;
+  max-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.menu_container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu_container ul {
+  display: flex;
+  gap: 2rem;
+}
+
+.menu_container ul a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--inactive-color);
+}
+
+.menu_container ul li {
+  position: relative;
+}
+
+.menu_container ul a.active {
+  color: var(--primary-text-color);
+  /* text-decoration: none; */
+}
+
+.menu_container ul a.active::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background-color: var(--primary-color);
+  position: absolute;
+  left: 45%;
+  bottom: -12.5px;
+  border-radius: 5px;
+}
+
+.menu_container ul a {
+  text-decoration: none;
+}
+
+.menu_container ul a:hover {
+  color: var(--primary-text-color);
+}
+
+.user_options_container {
+  width: 15%;
+  min-width: 180px;
+  /* max-width: 200px; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.point_counter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--secondary-background-color);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+.point_counter svg {
+  fill: var(--primary-color);
+}
+
+.point_counter p {
+  font-size: 0.75rem;
+}
+
+.user_name {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.avatar {
+  background-color: var(--primary-color);
+}
+
+.user_options_button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+}
+
+.user_option {
+  width: 130px;
+}
+
+.user_option a {
+  color: var(--primary-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+}
