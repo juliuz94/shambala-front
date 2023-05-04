@@ -1,7 +1,16 @@
+.event_container {
+  background-color: var(--general-background-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
 .event_header {
   display: flex;
   width: 100%;
   max-width: var(--max-width);
+  margin: 0 auto;
   padding: 2rem 3rem;
 }
 
@@ -100,8 +109,134 @@
   width: 100%;
   max-width: var(--max-width);
   padding: 1rem 3rem;
+  margin: 0 auto;
+  display: flex;
+  flex: 1;
 }
 
 .tabs {
   width: 158px;
+}
+
+.tabs_content {
+  width: 100%;
+  padding-top: 1.5rem;
+}
+
+.left_column {
+  flex: 1;
+}
+
+.event_description {
+  font-size: 0.9rem;
+  color: var(--secondary-text-color);
+  max-width: 800px;
+}
+
+.right_column {
+  width: 400px;
+}
+
+.speaker_card {
+  flex: 1;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  padding: 1rem 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.speaker_card_header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.speaker_name {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.speaker_bio {
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+.event_subscription {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: var(--background-color);
+  width: 100%;
+  height: 80px;
+  border-radius: 50px 50px 0 0;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.event_subscription_content {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.event_subscription_left_column {
+  display: flex;
+  gap: 3rem;
+  font-family: var(--secondary-font);
+}
+
+.event_info_block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.event_info_block label, 
+.event_info_block p {
+  font-size: 0.9rem;
+}
+
+.event_info_block label {
+  color: var(--secondary-color);
+  font-weight: 500;
+}
+
+.event_subscription_right_column {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.event_info_price {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.event_info_price label {
+  font-size: 0.9rem;
+}
+
+.event_info_price p {
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+.event_subscription_right_column button {
+  padding: 1rem 3rem;
+  border: none;
+  background-color: var(--secondary-color);
+  color: var(--contrast-text-color);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.event_subscription_right_column button p {
+  font-size: 1rem;
 }
