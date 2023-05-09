@@ -1,6 +1,17 @@
 .divider{
-  height:.2rem;
-  width:min(100%, 10.7rem);
+  height:0.2rem;
   background:linear-gradient(rgba(27, 202, 82, 1) 0%, rgba(15, 114, 236, 1) 100%);
   margin:1rem 0;
+}
+
+@media screen and (max-width:768px){
+  .divider{
+    width:min(100%, 8rem);
+  }
+}
+
+@media screen and (min-width:1025px){
+  .divider{
+    width:min(100%, 10.7rem);
+  }
 }

@@ -2,12 +2,10 @@
   width:100%;
   max-width:var(--max-width);
   height:100%;
-  padding:10rem;
-  margin:2.5rem 0
 }
 
 .videos_container{
-  margin-top:7rem;
+  margin-top:2rem;
   display:flex;
   flex-direction:row;
   width:100%;

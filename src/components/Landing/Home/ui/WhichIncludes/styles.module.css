@@ -1,13 +1,28 @@
 .container{
   width:100%;
-  max-width:var(--max-width);
   height:100%;
-  margin:2.5rem 0;
-  padding:0 10rem
 }
 
 .memberships{
   display:flex;
-  flex-direction:row;
-  margin:4rem 0 0 0;
+}
+
+@media screen and (max-width:768px){
+  .container{
+
+  }
+
+  .memberships{
+    flex-direction:column;
+  }
+}
+
+@media screen and (min-width:1025px){
+  .container{
+    max-width:var(--max-width);
+  }
+
+  .memberships{
+    margin:4rem 0 0 0;
+  }
 }

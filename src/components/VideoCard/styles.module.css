@@ -1,9 +1,7 @@
-/* video Card */
-
 .video_card{
-  width:22%;
-  min-width:22%;
-  max-width:300px;
+  width:100%;
+  min-width:314px;
+  max-width:340px;
   cursor:pointer;
   margin-right:32px;
 }
@@ -25,7 +23,6 @@
   top: 0;
   border-radius: 10px;
 } */
-
 .new_label{
   background-color:var(--secondary-color);
   position:absolute;

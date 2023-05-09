@@ -1,24 +1,27 @@
 import styles from './styles.module.css'
 import { strings } from '@/constants/strings'
 import VideoStart from '@/components/VideoStart'
-import Divider from '@/components/Divider'
+import TitleSections from '@/components/Landing/Home/ui/TitleSections'
+import GlobalContainer from '@/components/Landing/Home/ui/GlobalContainer'
 
 const LearnMore=() => {
   return (
-    <div className={styles.container} >
-      <div className={styles.learMore} >
-        <h2 >
-          {strings.ladingPage.home.learMore}
-        </h2 >
-        <Divider />
-        <div className={styles.text_container} >
-          <p >
-            {strings.ladingPage.home.learMoreDesc}
-          </p >
+    <GlobalContainer >
+      <div className={styles.container} >
+        <div className={styles.learMore} >
+          <TitleSections title={strings.ladingPage.home.learMore} />
+          <div className={styles.text_container} >
+            <p >
+              {strings.ladingPage.home.learMoreDesc}
+            </p >
+          </div >
+        </div >
+        <div className={styles.video_container} >
+          <VideoStart />
         </div >
       </div >
-      <VideoStart />
-    </div >
+    </GlobalContainer >
+
   )
 }
 

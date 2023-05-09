@@ -15,7 +15,7 @@ const WhyBePart=() => {
           <TitleSections title={strings.ladingPage.homeSectionsTitles.whyBePart} />
         </section >
         <section className={styles.content} >
-          <Image src={Plant} alt={'image'} />
+          <Image src={Plant} alt={'image'} className={styles.image} />
           <div className={styles.container_text} >
             <CustomMap className={styles.map} data={strings.ladingPage.whyBePart} renderItem={(item) => (
               <section className={styles.content_text} key={item.id} >

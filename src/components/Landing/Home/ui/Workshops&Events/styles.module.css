@@ -1,8 +1,6 @@
 .container{
   width:100%;
   max-width:var(--max-width);
-  padding:0 10rem;
-  margin:2.5rem 0
 }
 
 .card_container{
