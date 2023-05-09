@@ -1,0 +1,37 @@
+.container{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  max-width:var(--max-width);
+  padding:0 10rem;
+  margin:2.5rem 0
+}
+
+.learMore{
+  height:293px;
+  width:min(100%, 30.87rem);
+}
+
+.container h2{
+  font-size:48px;
+  font-weight:700;
+  line-height:58px;
+  letter-spacing:-0.025em;
+  text-align:left;
+  color:#374151
+}
+
+.container p{
+  font-size:18px;
+  font-weight:400;
+  line-height:26px;
+  text-align:left;
+  color:#000000;
+}
+
+.text_container{
+  height:145px;
+  width:min(100%, 25.1rem);
+}

@@ -1,0 +1,13 @@
+.video_container{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:24.2rem;
+  width:min(100%, 41.1rem);
+  border-radius:1rem;
+  background:conic-gradient(from 180deg at 50% 50%, #ACE24B 0deg, #1BCA52 105deg, #D9EEB2 187.5deg, #ACE24B 360deg);
+}
+
+.play_video{
+  cursor:pointer;
+}

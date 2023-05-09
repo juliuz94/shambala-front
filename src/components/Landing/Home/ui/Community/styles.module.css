@@ -1,0 +1,19 @@
+.container{
+  width:100%;
+  max-width:var(--max-width);
+  margin:2.5rem 0;
+  padding:0 10rem;
+
+}
+
+.card_container{
+  width:100%;
+  max-width:var(--max-width);
+  display:flex;
+  flex-direction:row;
+  overflow-x:auto;
+}
+
+.card_container::-webkit-scrollbar{
+  display:none;
+}

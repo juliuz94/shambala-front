@@ -1,8 +1,27 @@
 import { FC } from 'react'
+import FirtsView from '@/components/Landing/Home/ui/FirtsView'
+import LearnMore from '@/components/Landing/Home/ui/LearnMore'
+import WhyBePart from '@/components/Landing/Home/ui/WhyBePart'
+import WhichIncludes from '@/components/Landing/Home/ui/WhichIncludes'
+import Team from '@/components/Landing/Home/ui/Team'
+import Opened from '@/components/Landing/Home/ui/Opened'
+import WorkshopsEvents from '@/components/Landing/Home/ui/Workshops&Events'
+import Community from '@/components/Landing/Home/ui/Community'
+import ContactUs from '@/components/Landing/Home/ui/ContactUs'
 
-const Home:FC = () => {
+const Home: FC=() => {
   return (
-    <div>LANDING</div>
+    <>
+      <FirtsView />
+      <LearnMore />
+      <WhyBePart />
+      <WhichIncludes />
+      <Team />
+      <Opened />
+      <WorkshopsEvents />
+      <Community />
+      <ContactUs />
+    </>
   )
 }
 
