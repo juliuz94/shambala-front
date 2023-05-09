@@ -147,3 +147,41 @@
   font-size: 0.9rem;
   margin-right: 1rem;
 }
+
+/* Small version */
+
+.event_card.small {
+  padding: 1rem;
+}
+
+.event_card.small .card_content {
+  gap: 0.75rem;
+}
+
+.event_card.small .event_info {
+  padding: 0 0 0 1rem;
+}
+
+.event_card.small .event_time,
+.event_card.small .event_location,
+.event_card.small .speakers {
+  display: none;
+}
+
+.event_card.small .sponsors {
+  margin-top: 0;
+}
+
+.event_card.small .sponsors p {
+  display: none;
+}
+
+.event_card.small .image_container {
+  max-width: 140px;
+  height: 100px;
+}
+
+.event_card.event_card.small .event_type,
+.event_card.event_card.small .like_event {
+  display: none;
+}

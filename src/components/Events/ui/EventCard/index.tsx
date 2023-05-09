@@ -5,11 +5,15 @@ import { Avatar, Button } from 'antd'
 import { HiOutlineClock, HiOutlineMapPin, HiCalendarDays, HiOutlineHeart } from 'react-icons/hi2'
 import styles from './styles.module.css'
 
-const EventCard: FC = () => {
+interface PropTypes {
+  small?: boolean
+}
+
+const EventCard = ({ small }: PropTypes) => {
   const router = useRouter()
 
   return (
-    <div className={styles.event_card} onClick={() => router.push('/event/123')}>
+    <div className={`${styles.event_card} ${small ? styles.small : null}`} onClick={() => router.push('/event/123')}>
       <div className={styles.card_content}>
         <div className={styles.date_container}>
           <p className={styles.week_day}>

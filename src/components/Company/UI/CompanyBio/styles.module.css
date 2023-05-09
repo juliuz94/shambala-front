@@ -1,0 +1,51 @@
+.company_bio_container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.thumbnail_container {
+  flex: 1;
+  max-width: 30%;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.thumbnail_container:hover img {
+  opacity: 0.75;
+  cursor: pointer;
+}
+
+.thumbnail_container img {
+  width: 100%;
+  height: auto;
+}
+
+.play_icon_container {
+  width: 60px;
+  height: 60px;
+  background-color: #3b3b3bd8;
+  border-radius: 50px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.play_icon_container svg {
+  font-size: 1.5rem;
+  fill: var(--primary-color);
+}
+
+.company_bio_container p {
+  flex: 1;
+  font-size: 0.9rem;
+  line-height: 1.78rem;
+  color: var(--secondary-text-color);
+}

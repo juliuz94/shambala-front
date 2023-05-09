@@ -48,7 +48,7 @@ const Header: FC = () => {
             <Link href='/events-workshops' className={pathName === '/events-workshops' ? styles.active : ''}>Talleres & Eventos</Link>
           </li>
           <li>
-            <Link href='/videos'>Mi Empresa</Link>
+            <Link href='/company/123'>Mi Empresa</Link>
           </li>
           <li>
             <Link href='/videos'>Comunidad</Link>
