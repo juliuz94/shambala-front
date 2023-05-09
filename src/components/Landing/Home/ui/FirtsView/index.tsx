@@ -1,10 +1,9 @@
 import styles from './styles.module.css'
-import Image from 'next/image'
 import { Subscribe } from '@/svg'
 import { strings } from '@/constants/strings'
 import { ArrowDownOutlined, MailOutlined } from '@ant-design/icons'
 import React from 'react'
-import { FirstImageTitle, SecondImageTitle, ThreeImageTitle } from '../../../../../../public/images/svg'
+import TitleImageLanding from '@/components/TitleImageLanding'
 
 const FirstView=() => {
   return (
@@ -16,27 +15,21 @@ const FirstView=() => {
             {strings.ladingPage.email}
           </h3 >
         </section >
-        <Subscribe className={styles.btn_subscribe} />
+        <Subscribe className={styles.btn_subscribe} sizeCircle={63} />
       </div >
       <section className={styles.title_section} >
-        <div >
-          <div className={styles.title_content} >
-            <h1 className={styles.titles} > Cultivamos el movimiento </h1 >
-            <Image className={styles.image} src={FirstImageTitle} alt={'image'} />
-          </div >
-          <div className={styles.title_content} >
-            <h1 className={styles.titles} > ambiental </h1 >
-            <Image className={styles.image} src={SecondImageTitle} alt={'image'} />
-            <h1 className={styles.titles} > creando comunidades </h1 >
-          </div >
-          <div className={styles.title_content} >
-            <h1 className={styles.titles} > por medio del conocimiento </h1 >
-            <Image className={styles.image} src={ThreeImageTitle} alt={'image'} />
-          </div >
-        </div >
-        <ArrowDownOutlined style={{fontSize: '100px', color: '#E1E4E5'}} />
+        <TitleImageLanding
+          firstPhrase={'Cultivamos el movimiento'}
+          secondPhrase={'ambiental creando'}
+          thirdPhrase={'comunidades'}
+          fourthPhrase={'por medio del'}
+          fifthPhrase={'conocimiento'}
+        />
+        <ArrowDownOutlined className={styles.arrow} style={{fontSize: '100px', color: '#E1E4E5'}} />
       </section >
-
+      <section className={styles.btn_subscribe_mobile} >
+        <Subscribe sizeCircle={20} />
+      </section >
     </div >
   )
 }

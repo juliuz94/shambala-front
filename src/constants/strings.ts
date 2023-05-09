@@ -45,6 +45,25 @@ export const strings={
       workshopsAndEvents: 'Talleres y eventos',
       community: 'Comunidad',
       contactUs: 'Contáctanos'
+    },
+    empresarial: {
+      whyBePart: [
+        {
+          id: 1,
+          reason: 'Alinear tu empresa a los objetivos de sostenibilidad y a los objetivos de desarrollo sostenible'
+        },
+        {id: 2, reason: 'Educación y conocimiento ambiental en todas las temáticas relevantes para tu empresa'},
+        {id: 3, reason: 'Teambulding y bienestar para tus empleados'},
+        {id: 4, reason: 'Integración entre proyectos de sostenibilidad de distintas áreas'},
+        {id: 5, reason: 'Programa de bienestar para tus empleados'},
+        {id: 6, reason: 'Proyectar una marca sostenible para todos tus stakeholders'},
+        {
+          id: 7,
+          reason: 'Conocer las nuevas tendencias en sostenibilidad y hacer parte de una comunidad de aprendizaje continuo'
+        },
+        {id: 8, reason: 'Marketing y branding por parte de la empresa y por parte de tus empleados'}
+      ]
+
     }
   }
 }

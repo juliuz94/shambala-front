@@ -1,8 +1,8 @@
 import styles from './styles.module.css'
 import { strings } from '@/constants/strings'
 import VideoStart from '@/components/VideoStart'
-import TitleSections from '@/components/Landing/Home/ui/TitleSections'
-import GlobalContainer from '@/components/Landing/Home/ui/GlobalContainer'
+import TitleSections from '../../../../TitleSections'
+import GlobalContainer from '../../../../GlobalContainer'
 
 const LearnMore=() => {
   return (

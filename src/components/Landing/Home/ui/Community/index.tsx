@@ -1,8 +1,8 @@
-import TitleSections from '@/components/Landing/Home/ui/TitleSections'
+import TitleSections from '../../../../TitleSections'
 import { strings } from '@/constants/strings'
 import styles from './styles.module.css'
 import CardCommunity from '@/components/CardCommunity'
-import GlobalContainer from '@/components/Landing/Home/ui/GlobalContainer'
+import GlobalContainer from '../../../../GlobalContainer'
 
 const Community=() => {
   return (

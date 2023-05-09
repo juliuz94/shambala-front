@@ -1,9 +1,9 @@
 import styles from './styles.module.css'
 import TeamCard from '@/components/TeamCard'
-import TitleSections from '@/components/Landing/Home/ui/TitleSections'
+import TitleSections from '../../../../TitleSections'
 import { strings } from '@/constants/strings'
 import PersonImage from '../../../../../../public/images/person_image.jpg'
-import GlobalContainer from '@/components/Landing/Home/ui/GlobalContainer'
+import GlobalContainer from '../../../../GlobalContainer'
 
 const Team=() => {
   return (

@@ -2,7 +2,6 @@ interface Props<T> {
   data: T[]
   renderItem: (item: T) => JSX.Element
   className: string
-  // direction: 'row' | 'column'
 }
 
 export function CustomMap<T>(props: Props<T>) {

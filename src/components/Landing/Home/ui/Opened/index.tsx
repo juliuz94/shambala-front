@@ -1,8 +1,8 @@
-import TitleSections from '@/components/Landing/Home/ui/TitleSections'
+import TitleSections from '../../../../TitleSections'
 import styles from './styles.module.css'
 import VideoCard from '@/components/VideoCard'
 import { strings } from '@/constants/strings'
-import GlobalContainer from '@/components/Landing/Home/ui/GlobalContainer'
+import GlobalContainer from '../../../../GlobalContainer'
 
 const Opened=() => {
   return (

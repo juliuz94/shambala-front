@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import FirtsView from '@/components/Landing/Home/ui/FirtsView'
+import FirstView from '@/components/Landing/Home/ui/FirtsView'
 import LearnMore from '@/components/Landing/Home/ui/LearnMore'
 import WhyBePart from '@/components/Landing/Home/ui/WhyBePart'
 import WhichIncludes from '@/components/Landing/Home/ui/WhichIncludes'
@@ -12,7 +12,7 @@ import ContactUs from '@/components/Landing/Home/ui/ContactUs'
 const Home: FC=() => {
   return (
     <>
-      <FirtsView />
+      <FirstView />
       <LearnMore />
       <WhyBePart />
       <WhichIncludes />

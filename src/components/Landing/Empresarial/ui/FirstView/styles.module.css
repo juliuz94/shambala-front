@@ -1,0 +1,27 @@
+.container{
+  width:100%;
+  background-image:url('../../../../../../public/images/png/image-background.png');
+  background-repeat:no-repeat;
+  background-size:contain;
+  margin:0 0 2.5rem 0;
+}
+
+@media screen and (max-width:768px){
+  .container{
+    height:100%;
+    max-width:var(--mobile-max-width);
+  }
+
+  .arrow{
+    display:none;
+  }
+}
+
+@media screen and (min-width:1025px){
+  .container{
+    display:flex;
+    align-items:center;
+    height:100vh;
+    max-width:var(--max-width)
+  }
+}

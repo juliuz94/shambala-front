@@ -1,10 +1,11 @@
 .container{
-  margin-bottom:8rem;
+  margin-bottom:10rem;
 }
 
 @media screen and (max-width:768px){
   .container{
-    height:1040px;
+    height:1332px;
+
   }
 }
 
