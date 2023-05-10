@@ -2,7 +2,7 @@ import * as React from 'react'
 import { SVGProps } from 'react'
 
 interface Props extends SVGProps<SVGSVGElement> {
-  sizeCircle?: number | string
+  sizecircle?: number | string
   height?: number | string
 }
 
@@ -14,7 +14,7 @@ const SvgComponent=(props: Props) => (
     fill='none'
     {...props}
   >
-    <circle cx={107} cy={99.514} r={props.sizeCircle} fill='#54C055' />
+    <circle cx={107} cy={99.514} r={props.sizecircle} fill='#54C055' />
     <g clipPath='url(#a)' filter='url(#b)' >
       <path
         fill='#fff'

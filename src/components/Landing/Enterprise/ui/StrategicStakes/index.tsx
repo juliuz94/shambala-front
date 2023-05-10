@@ -2,7 +2,7 @@ import styles from './styles.module.css'
 import GlobalContainer from '@/components/GlobalContainer'
 import TitleSections from '@/components/TitleSections'
 import VideoStart from '@/components/VideoStart'
-import Anwers from '@/components/Landing/Empresarial/ui/Anwers'
+import Anwers from '@/components/Landing/Enterprise/ui/Anwers'
 import { BusinessMan, Globe, Person } from '../../../../../../public/images/svg'
 
 const StrategicStakes=() => {
@@ -35,7 +35,7 @@ const StrategicStakes=() => {
             title={'93% de los CEO’s'}
             description={'consideran que la sostenibilidad será un aspecto crítico para el éxito de su organización'}
             image={BusinessMan} />
-          
+
         </section >
       </div >
     </GlobalContainer >

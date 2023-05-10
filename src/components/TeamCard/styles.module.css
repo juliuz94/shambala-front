@@ -10,12 +10,11 @@
   .image{
     height:152px;
     width:133px;
-    border-radius:4px;
+    border-radius:10px;
     margin:0 14px 0 0
   }
 
   .container_team_card_info{
-
   }
 
   .container_team_card_mobile{
@@ -65,22 +64,25 @@
     display:flex;
     flex-direction:row;
     align-items:center;
+    margin:0.5rem 0.5rem 0.5rem 0;
+
   }
 
   .image{
-    height:19rem;
-    width:15rem;
-    margin:2rem;
+    height:12rem;
+    width:10rem;
+    margin:2rem 0;
     background-color:red;
+    border-radius:10px;
   }
 
   .container_team_card_info{
     width:min(100%, 33rem);
-    margin:35px
+    margin:2rem 0 1rem 1rem;
   }
 
   .name_title{
-    font-size:40px;
+    font-size:min(40px, 30px);
     font-weight:700;
     line-height:58px;
     letter-spacing:-0.025em;
@@ -89,7 +91,7 @@
   }
 
   .career_title{
-    font-size:24px;
+    font-size:min(24px, 20px);
     font-weight:700;
     line-height:58px;
     letter-spacing:-0.025em;
@@ -104,10 +106,9 @@
   }
 
   .description{
-    font-size:18px;
+    font-size:min(18px, 16px);
     font-weight:400;
     line-height:26px;
-    letter-spacing:0em;
     text-align:left;
     color:#000000
   }
