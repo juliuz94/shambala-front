@@ -5,17 +5,19 @@ import styles from './styles.module.css'
 import { MenuOutlined } from '@ant-design/icons'
 import { Drawer } from 'antd'
 import { CustomMap } from '@/components/Custom/CustomMap'
+import { useRouter } from 'next/router'
 
 const routes=[
   {label: 'Home', route: '/'},
   {label: 'Empresarial', route: '/Enterprise'},
   {label: 'Nosotros', route: '/AboutUs'},
-  {label: 'Experiencias', route: '/Experiencias'},
+  {label: 'Experiencias', route: '/Experiences'},
   {label: 'Contactanos', route: '/contactanos'}
 ]
 
 const Header: FC=() => {
   const [open, setOpen]=useState(false)
+  const route=useRouter()
 
   const showDrawer=() => {
     setOpen(true)
@@ -23,6 +25,10 @@ const Header: FC=() => {
 
   const onClose=() => {
     setOpen(false)
+  }
+
+  const loginNavigate=() => {
+    route.push('/login')
   }
 
 
@@ -68,7 +74,7 @@ const Header: FC=() => {
           </Link >
         )}
         />
-        <button className={`${styles.btn} ${styles.uncolored}`} >
+        <button className={`${styles.btn} ${styles.uncolored}`} onClick={loginNavigate} >
           Iniciar Sesión
         </button >
         <button className={`${styles.btn} ${styles.colored}`} >

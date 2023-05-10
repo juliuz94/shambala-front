@@ -6,6 +6,7 @@ import Friends from './friends.png'
 import AppointmentCalendar from './appointmentCalendar.png'
 import AboutUsBackground from './aboutUsBackground.png'
 import Bill from './billGates.jpg'
+import CommunityImage from './communityImage.png'
 
 export {
   LinearBackground,
@@ -15,5 +16,6 @@ export {
   Friends,
   AppointmentCalendar,
   AboutUsBackground,
-  Bill
+  Bill,
+  CommunityImage
 }

@@ -1,14 +1,34 @@
 import styles from './styles.module.css'
 import EventCard from '@/components/Events/ui/EventCard'
 import TitleSections from '../../../../TitleSections'
-import { strings } from '@/constants/strings'
 import GlobalContainer from '../../../../GlobalContainer'
+import React from 'react'
 
-const WorkshopsAndEvents=() => {
+
+interface WorkshopsAndEventsProps {
+  title: string
+  style?: React.CSSProperties
+}
+
+const WorkshopsAndEvents=({title, style}: WorkshopsAndEventsProps) => {
   return (
     <GlobalContainer >
-      <div className={styles.container} >
-        <TitleSections title={strings.ladingPage.homeSectionsTitles.workshopsAndEvents} />
+      <main className={styles.container} >
+        <TitleSections title={title} />
+        <article className={`${styles.container_tag} ${style}`} >
+          <div className={styles.tags} >
+            <p >Todos</p >
+          </div >
+          <div className={styles.tags} >
+            <p >Talleres</p >
+          </div >
+          <div className={styles.tags} >
+            <p >Eventos</p >
+          </div >
+          <div className={styles.tags} >
+            <p >Conferencia</p >
+          </div >
+        </article >
         <section className={styles.card_container} >
           <EventCard />
           <EventCard />
@@ -16,7 +36,7 @@ const WorkshopsAndEvents=() => {
           <EventCard />
           <EventCard />
         </section >
-      </div >
+      </main >
     </GlobalContainer >
 
   )

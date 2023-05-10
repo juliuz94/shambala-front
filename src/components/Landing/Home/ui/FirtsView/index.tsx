@@ -7,7 +7,7 @@ import TitleImageLanding from '@/components/TitleImageLanding'
 
 const FirstView=() => {
   return (
-    <div className={styles.container} >
+    <main className={styles.container} >
       <div className={styles.container_social} >
         <section className={styles.email} >
           <MailOutlined className={styles.mail_icon} style={{color: 'black', fontSize: '24px'}} />
@@ -30,7 +30,7 @@ const FirstView=() => {
       <section className={styles.btn_subscribe_mobile} >
         <Subscribe sizecircle={'20'} />
       </section >
-    </div >
+    </main >
   )
 }
 
