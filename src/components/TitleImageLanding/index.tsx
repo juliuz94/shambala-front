@@ -7,7 +7,7 @@ interface TitleImageLandingProps {
   firstPhrase: string
   secondPhrase: string
   thirdPhrase: string
-  fourthPhrase: string
+  fourthPhrase?: string
   fifthPhrase?: string
   ftImage?: string
   sdImage?: string

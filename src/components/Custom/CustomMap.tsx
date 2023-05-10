@@ -1,7 +1,7 @@
 interface Props<T> {
   data: T[]
   renderItem: (item: T) => JSX.Element
-  className: string
+  className?: string
 }
 
 export function CustomMap<T>(props: Props<T>) {

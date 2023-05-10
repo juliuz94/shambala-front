@@ -1,3 +1,5 @@
+import { Crown, Earth, GroupPerson, Leaf, LifeRing, Start, Tree } from '../../public/images/svg'
+
 export const strings={
   ladingPage: {
     footerInfo: '© 2023 Loyaltybro. All rights reserved.',
@@ -62,6 +64,45 @@ export const strings={
           reason: 'Conocer las nuevas tendencias en sostenibilidad y hacer parte de una comunidad de aprendizaje continuo'
         },
         {id: 8, reason: 'Marketing y branding por parte de la empresa y por parte de tus empleados'}
+      ]
+    },
+    AboutUs: {
+      manifiestio: [
+        {
+          id: 1,
+          reason: 'Creemos firmemente que la crisis ambiental es la oportunidad para la humanidad de unirse bajo un mismo propósito y dejar atrás nuestras diferencias en pro de la supervivencia del planeta tierra, nuestro único hogar.',
+          image: GroupPerson
+        },
+        {
+          id: 2,
+          reason: 'Consideramos que el amor por la por la vida y la naturaleza es la manera más pura de amar la experiencia que se tiene como ser vivo.',
+          image: Tree
+        },
+        {
+          id: 3,
+          reason: 'Sabemos que en la unión y la fraternidad se encuentra la posibilidad de salvación para el ser humano.',
+          image: Earth
+        },
+        {
+          id: 4,
+          reason: 'Reconocemos que la lucha más importante que tiene el ser humano se asienta en encontrar una razón para vivir. Damos por sentado que el sentido de la vida debe fundamentarse principalmente en el amor propio y el amor por lo exterior a uno.',
+          image: LifeRing
+        },
+        {
+          id: 5,
+          reason: 'Estamos convencidos de que la solución a la crisis ambiental se encuentra, más allá de todo, en una transformación en la cultura y en el replanteamiento de nuestra condición humana.',
+          image: Leaf
+        },
+        {
+          id: 6,
+          reason: 'Somos un movimiento que explotará el amor que hay en el corazón de cada uno de nosotros para incidir en más corazones y de esa manera crear conciencia sobre la necesidad de una verdadera justicia ambiental y de una construcción desde el respeto a todas las formas de vida.',
+          image: Crown
+        },
+        {
+          id: 7,
+          reason: 'Vamos a cambiar el mundo por medio de la transformación de la cultura.',
+          image: Start
+        }
       ]
 
     }

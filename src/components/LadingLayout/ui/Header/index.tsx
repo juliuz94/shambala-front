@@ -1,32 +1,73 @@
-import React from 'react'
+import React, { FC, useState } from 'react'
 import { ShambalaLogo } from '@/svg'
 import Link from 'next/link'
 import styles from './styles.module.css'
+import { MenuOutlined } from '@ant-design/icons'
+import { Drawer } from 'antd'
+import { CustomMap } from '@/components/Custom/CustomMap'
 
 const routes=[
   {label: 'Home', route: '/'},
-  {label: 'Empresarial', route: '/empresarial'},
-  {label: 'Nosotros', route: '/nosotros'},
+  {label: 'Empresarial', route: '/Enterprise'},
+  {label: 'Nosotros', route: '/AboutUs'},
   {label: 'Experiencias', route: '/Experiencias'},
   {label: 'Contactanos', route: '/contactanos'}
 ]
 
-const Header=() => {
+const Header: FC=() => {
+  const [open, setOpen]=useState(false)
+
+  const showDrawer=() => {
+    setOpen(true)
+  }
+
+  const onClose=() => {
+    setOpen(false)
+  }
+
 
   return (
     <header className={styles.header_nav} >
-      <section >
+      <article >
         <ShambalaLogo
           titlecolor={'#0F72EC'}
           className={styles.logo}
         />
-      </section >
+      </article >
+      <article className={styles.drawer} >
+        <MenuOutlined style={{fontSize: '24px'}}
+                      onClick={showDrawer}
+        />
+        <Drawer
+          title={<ShambalaLogo
+            onClick={onClose}
+            titlecolor={'#0F72EC'}
+            className={styles.logo}
+          />}
+          placement='right'
+          closable={false}
+          onClose={onClose}
+          open={open}
+          getContainer={false}
+        >
+          <CustomMap data={routes.slice(1)} renderItem={({label, route}) => (
+            <article className={styles.drawer_item} >
+              <Link key={route} href={route} >
+                <p >{label}</p >
+              </Link >
+            </article >
+          )}
+          />
+        </Drawer >
+      </article >
+
       <section className={styles.actions} >
-        {routes.slice(1).map(({label, route}) => (
+        <CustomMap className={styles.map} data={routes.slice(1)} renderItem={({label, route}) => (
           <Link key={route} href={route} >
             <p >{label}</p >
           </Link >
-        ))}
+        )}
+        />
         <button className={`${styles.btn} ${styles.uncolored}`} >
           Iniciar Sesión
         </button >

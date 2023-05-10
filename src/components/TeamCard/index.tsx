@@ -1,6 +1,5 @@
 import styles from './styles.module.css'
 import Image, { StaticImageData } from 'next/image'
-import { Logos } from '../../../public/images/png'
 
 interface TeamCardProps {
   image: string | StaticImageData;
@@ -11,7 +10,7 @@ interface TeamCardProps {
 
 const TeamCard=({image, name, career, description}: TeamCardProps) => {
   return (
-    <div className={styles.container_team_card} >
+    <main className={styles.container_team_card} >
       <div className={styles.container_team_card_mobile} >
         <Image className={styles.image} src={image} alt={'no image'} />
         <section className={styles.container_team_card_info} >
@@ -20,10 +19,10 @@ const TeamCard=({image, name, career, description}: TeamCardProps) => {
           <p className={styles.description} >{description}</p >
         </section >
       </div >
-      <section className={styles.logos} >
-        <Image src={Logos} alt={'no found'} />
-      </section >
-    </div >
+      {/*<section className={styles.logos} >*/}
+      {/*  <Image src={Logos} alt={'no found'} />*/}
+      {/*</section >*/}
+    </main >
   )
 }
 

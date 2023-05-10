@@ -15,7 +15,7 @@ const FirstView=() => {
             {strings.ladingPage.email}
           </h3 >
         </section >
-        <Subscribe className={styles.btn_subscribe} sizeCircle={63} />
+        <Subscribe className={styles.btn_subscribe} sizecircle={'63'} />
       </div >
       <section className={styles.title_section} >
         <TitleImageLanding
@@ -28,7 +28,7 @@ const FirstView=() => {
         <ArrowDownOutlined className={styles.arrow} style={{fontSize: '100px', color: '#E1E4E5'}} />
       </section >
       <section className={styles.btn_subscribe_mobile} >
-        <Subscribe sizeCircle={20} />
+        <Subscribe sizecircle={'20'} />
       </section >
     </div >
   )

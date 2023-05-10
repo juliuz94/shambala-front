@@ -7,14 +7,6 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const routes=[
-  {label: 'Home', route: '/'},
-  {label: 'Empresarial', route: '/empresarial'},
-  {label: 'Nosotros', route: '/nosotros'},
-  {label: 'Experiencias', route: '/Experiencias'},
-  {label: 'Contactanos', route: '/contactanos'}
-]
-
 const LandingLayout: FC<LayoutProps>=({children}) => {
   return (
     <div className={styles.container} >
