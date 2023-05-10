@@ -1,0 +1,16 @@
+.container{
+  margin-bottom:10rem;
+}
+
+@media screen and (max-width:768px){
+  .container{
+    height:1332px;
+
+  }
+}
+
+@media screen and (min-width:1025px){
+  .container{
+    height:100%;
+  }
+}

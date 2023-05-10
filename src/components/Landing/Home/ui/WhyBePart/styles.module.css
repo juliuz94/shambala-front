@@ -1,0 +1,15 @@
+.container{
+  margin-bottom:8rem;
+}
+
+@media screen and (max-width:768px){
+  .container{
+    height:1040px;
+  }
+}
+
+@media screen and (min-width:1025px){
+  .container{
+    height:100%;
+  }
+}

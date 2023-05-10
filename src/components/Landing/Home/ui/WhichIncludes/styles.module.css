@@ -1,0 +1,28 @@
+.container{
+  width:100%;
+  height:100%;
+}
+
+.memberships{
+  display:flex;
+}
+
+@media screen and (max-width:768px){
+  .container{
+
+  }
+
+  .memberships{
+    flex-direction:column;
+  }
+}
+
+@media screen and (min-width:1025px){
+  .container{
+    max-width:var(--max-width);
+  }
+
+  .memberships{
+    margin:4rem 0 0 0;
+  }
+}

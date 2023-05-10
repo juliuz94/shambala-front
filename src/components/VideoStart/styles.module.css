@@ -1,0 +1,26 @@
+.video_container{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  border-radius:1rem;
+  background:conic-gradient(from 180deg at 50% 50%, #ACE24B 0deg, #1BCA52 105deg, #D9EEB2 187.5deg, #ACE24B 360deg);
+}
+
+.play_video{
+  cursor:pointer;
+}
+
+@media screen and (max-width:768px){
+  .video_container{
+    height:231px;
+    width:399px;
+  }
+}
+
+@media screen and (min-width:1025px){
+  .video_container{
+    height:24.2rem;
+    max-width:41.1rem;
+  }
+}
