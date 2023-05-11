@@ -8,7 +8,7 @@ import { Bill } from '../../../../../../public/images/png'
 const Team=() => {
   return (
     <GlobalContainer >
-      <section >
+      <section className={styles.container} >
         <TitleSections title={strings.ladingPage.homeSectionsTitles.team} />
         <main className={styles.main} >
           <article className={styles.card_container} >

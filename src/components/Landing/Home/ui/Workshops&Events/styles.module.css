@@ -19,6 +19,10 @@
   .container_tag{
     display:none;
   }
+
+  .container{
+    max-width:400px;
+  }
 }
 
 @media screen and (min-width:1024px){

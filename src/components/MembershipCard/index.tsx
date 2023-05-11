@@ -1,6 +1,8 @@
 import styles from './styles.module.css'
 import Image from 'next/image'
 import { CheckCircle } from '../../../public/images/svg'
+import { Checkbox } from 'antd'
+import React from 'react'
 
 interface MembershipCardProps {
   title: string
@@ -12,9 +14,11 @@ interface MembershipCardProps {
       reason: string
     }
   ]
+  btnTitle: string
+  pay?: boolean
 }
 
-const MembershipCard=({title, tag, subtitle, data}: MembershipCardProps) => {
+const MembershipCard=({title, tag, subtitle, data, btnTitle, pay}: MembershipCardProps) => {
   return (
     <div className={styles.container} >
       <div className={styles.tag} >
@@ -34,8 +38,16 @@ const MembershipCard=({title, tag, subtitle, data}: MembershipCardProps) => {
         }
       </div >
       <div className={styles.line} />
+      {/*<section className={`${styles.pay_container} ${pay}`} >*/}
+      <section className={`${pay ? styles.pay_container : styles.disable}`} >
+        <article className={styles.term_and_conditions} >
+          <p >Total</p >
+          <p ><strong >80.000</strong > COP/MENSUALES</p >
+        </article >
+        <Checkbox >Estoy de acuerdo con los terminos y condiciones</Checkbox >
+      </section >
       <button className={styles.btn_start} >
-        <p >Comenzar ahora</p >
+        <p >{btnTitle}</p >
       </button >
 
     </div >
