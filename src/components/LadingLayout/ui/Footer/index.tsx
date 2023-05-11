@@ -1,8 +1,10 @@
 import styles from './styles.module.css'
-import { Facebook, Github, Linkedin, ShambalaLogo, Twitter, WaveMobile, Waves } from '@/svg'
+import { ShambalaLogo, WaveMobile, Waves } from '@/svg'
 import { strings } from '@/constants/strings'
 import React from 'react'
 import { MailOutlined } from '@ant-design/icons'
+import { ImFacebook, ImGithub, ImLinkedin, ImTwitter } from 'react-icons/im'
+
 
 const Footer=() => {
   return (
@@ -20,10 +22,10 @@ const Footer=() => {
             <h3 >{strings.ladingPage.email}</h3 >
           </section >
           <section className={styles.socials} >
-            <Linkedin className={styles.icons} />
-            <Twitter className={styles.icons} />
-            <Facebook className={styles.icons} />
-            <Github className={styles.icons} />
+            <ImTwitter size={24} className={styles.icons} />
+            <ImLinkedin size={24} className={styles.icons} />
+            <ImFacebook size={24} className={styles.icons} />
+            <ImGithub size={24} className={styles.icons} />
           </section >
         </div >
       </div >

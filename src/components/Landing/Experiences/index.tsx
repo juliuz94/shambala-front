@@ -8,8 +8,7 @@ const Experiences=() => {
     <>
       <Header />
       <Opened title={'Videos'} />
-      <WorkshopsEvents title={'Talleres'} />
-      <WorkshopsEvents title={'Eventos'} />
+      <WorkshopsEvents title={'Talleres y Eventos'} />
       <Community />
     </>
   )

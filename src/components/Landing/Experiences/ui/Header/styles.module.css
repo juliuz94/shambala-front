@@ -9,8 +9,12 @@
 
 @media screen and (max-width:768px){
   .container{
+    display:flex;
+    align-items:center;
+    justify-content:center;
     height:100%;
-    max-width:var(--mobile-max-width);
+    background-position:left;
+    background-size:50% 100%;
   }
 
   .arrow{
@@ -24,6 +28,6 @@
     display:flex;
     align-items:center;
     height:100vh;
-    max-width:var(--max-width)
+    justify-content:center;
   }
 }
