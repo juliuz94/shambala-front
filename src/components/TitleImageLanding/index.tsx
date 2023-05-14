@@ -5,8 +5,8 @@ import React from 'react'
 
 interface TitleImageLandingProps {
   firstPhrase: string
-  secondPhrase: string
-  thirdPhrase: string
+  secondPhrase?: string
+  thirdPhrase?: string
   fourthPhrase?: string
   fifthPhrase?: string
   ftImage?: string

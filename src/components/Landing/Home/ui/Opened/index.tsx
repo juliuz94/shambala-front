@@ -1,14 +1,17 @@
 import TitleSections from '../../../../TitleSections'
 import styles from './styles.module.css'
 import VideoCard from '@/components/VideoCard'
-import { strings } from '@/constants/strings'
 import GlobalContainer from '../../../../GlobalContainer'
 
-const Opened=() => {
+interface OpenedProps {
+  title: string
+}
+
+const Opened=({title}: OpenedProps) => {
   return (
     <GlobalContainer >
       <div className={styles.container} >
-        <TitleSections title={strings.ladingPage.homeSectionsTitles.opened} />
+        <TitleSections title={title} />
         <section className={styles.videos_container} >
           <VideoCard video={
             {

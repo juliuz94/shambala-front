@@ -18,3 +18,19 @@
 .videos_container::-webkit-scrollbar{
   display:none;
 }
+
+@media screen and (max-width:768px){
+  .container{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    max-width:var(--mobile-max-width);
+    margin:2.5rem 0;
+    padding:0 1rem;
+  }
+
+  .videos_container{
+    max-width:400px;
+  }
+}

@@ -1,6 +1,10 @@
 .main{
 }
 
+.container{
+  width:100%;
+}
+
 .text{
   font-weight:500;
   text-align:left;
@@ -10,6 +14,10 @@
   .main{
     display:flex;
     width:100%;
+  }
+
+  .container{
+    max-width:400px;
   }
 
   .map{
@@ -47,6 +55,7 @@
 }
 
 @media screen and (min-width:1025px){
+
   .main{
     flex-direction:row;
     width:100%;

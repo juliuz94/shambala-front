@@ -13,6 +13,7 @@ const WhichInclude=() => {
         <TitleSections title={strings.ladingPage.homeSectionsTitles.whichIncludes} />
         <div className={styles.card_container} >
           <MembershipCard
+            btnTitle={'Comenzar ahora'}
             title={'Membresia Completa'}
             tag={'Recomendado'}
             subtitle={'$80.000 COP/ Mensuales'}

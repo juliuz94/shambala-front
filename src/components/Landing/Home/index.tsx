@@ -8,6 +8,7 @@ import Opened from '@/components/Landing/Home/ui/Opened'
 import WorkshopsEvents from '@/components/Landing/Home/ui/Workshops&Events'
 import Community from '@/components/Landing/Home/ui/Community'
 import ContactUs from '@/components/Landing/Home/ui/ContactUs'
+import { strings } from '@/constants/strings'
 
 const Home: FC=() => {
   return (
@@ -17,8 +18,8 @@ const Home: FC=() => {
       <WhyBePart />
       <WhichIncludes />
       <Team />
-      <Opened />
-      <WorkshopsEvents />
+      <Opened title={strings.ladingPage.homeSectionsTitles.opened} />
+      <WorkshopsEvents title={strings.ladingPage.homeSectionsTitles.workshopsAndEvents} />
       <Community />
       <ContactUs />
     </>

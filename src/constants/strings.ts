@@ -104,7 +104,15 @@ export const strings={
           image: Start
         }
       ]
-
+    },
+    Experience: {
+      community: [
+        {id: 1, reason: 'Foro sobre distintos temas ambientales de aprendizaje co-construido'},
+        {id: 2, reason: 'Apoyo a comunidades vulnerables en sus desafíos'},
+        {id: 3, reason: 'Retos ambientales'},
+        {id: 4, reason: 'Networking con personas increíbles'},
+        {id: 5, reason: 'Creación de comunidad'}
+      ]
     }
   }
 }

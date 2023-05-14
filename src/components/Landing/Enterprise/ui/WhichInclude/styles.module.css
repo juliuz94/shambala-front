@@ -38,6 +38,7 @@
     justify-content:center;
     align-items:center;
     margin-bottom:4rem;
+    max-width:400px;
   }
 
   .card_container{
@@ -51,7 +52,7 @@
 
   .image{
     height:248px;
-    width:380px;
+    width:min(100%, 400px);
     border-radius:13px 13px 0 0;
     object-fit:cover;
   }

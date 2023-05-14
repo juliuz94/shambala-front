@@ -1,0 +1,41 @@
+.label{
+  font-weight:600;
+  text-align:left;
+}
+
+@media screen and (max-width:768px){
+  .main{
+    background-color:red;
+  }
+
+  .input{
+    height:45px;
+    width:100%;
+    border-radius:100px;
+    padding:13px 25px;
+  }
+
+  .label{
+    font-size:11px;
+    line-height:22px;
+  }
+}
+
+@media screen and (min-width:1025px){
+  .main{
+    flex-direction:row;
+    gap:2rem;
+  }
+
+  .input{
+    height:50px;
+    width:100%;
+    border-radius:100px;
+    padding:13px 25px;
+  }
+
+  .label{
+    font-size:12px;
+    line-height:24px;
+  }
+}

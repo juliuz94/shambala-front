@@ -89,6 +89,27 @@
   margin-left:0.6rem;
 }
 
+.term_and_conditions{
+  width:100%;
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  align-items:center;
+  margin:1.5rem 0;
+}
+
+.pay_container{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  width:100%;
+  margin:1rem 0;
+}
+
+.disable{
+  display:none;
+}
+
 @media screen and (max-width:768px){
   .container{
     margin:1rem 0 1rem 0;

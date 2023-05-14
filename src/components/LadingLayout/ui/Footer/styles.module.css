@@ -48,6 +48,11 @@
     margin:1.5rem 0;
   }
 
+  .icons{
+    cursor:pointer;
+    color:rgba(136, 225, 137, 1);
+  }
+
 }
 
 @media screen and (min-width:1025px){
@@ -107,5 +112,6 @@
 
   .icons{
     cursor:pointer;
+    color:rgba(136, 225, 137, 1);
   }
 }

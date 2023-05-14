@@ -8,7 +8,7 @@ import styles from './styles.module.css'
 const Manifest=() => {
   return (
     <GlobalContainer >
-      <div >
+      <div className={styles.container} >
         <TitleSections title={'Manifiesto'} />
         <main className={styles.main} >
           <CustomMap className={styles.map} data={strings.ladingPage.AboutUs.manifiestio} renderItem={

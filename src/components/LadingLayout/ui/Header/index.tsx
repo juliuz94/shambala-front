@@ -1,30 +1,33 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { ShambalaLogo } from '@/svg'
 import Link from 'next/link'
 import styles from './styles.module.css'
 import { MenuOutlined } from '@ant-design/icons'
-import { Drawer } from 'antd'
 import { CustomMap } from '@/components/Custom/CustomMap'
+import { UseLandingHeader } from '@/Hooks/useLandingHeader'
+import CustomModal from '@/components/Custom/CustomModal/CustomModal'
+import CardContactUs from '@/components/CardContactUs'
+import DrawerMobile from '@/components/LadingLayout/ui/Drawer'
 
 const routes=[
   {label: 'Home', route: '/'},
   {label: 'Empresarial', route: '/Enterprise'},
   {label: 'Nosotros', route: '/AboutUs'},
-  {label: 'Experiencias', route: '/Experiencias'},
-  {label: 'Contactanos', route: '/contactanos'}
+  {label: 'Experiencias', route: '/Experiences'}
 ]
 
 const Header: FC=() => {
-  const [open, setOpen]=useState(false)
-
-  const showDrawer=() => {
-    setOpen(true)
-  }
-
-  const onClose=() => {
-    setOpen(false)
-  }
-
+  const {
+    openDrawer,
+    modal,
+    onCloseDrawer,
+    loginNavigate,
+    subscribeNavigate,
+    handleContactUs,
+    homeNavigate,
+    closeModal,
+    showDrawer
+  }=UseLandingHeader()
 
   return (
     <header className={styles.header_nav} >
@@ -32,49 +35,39 @@ const Header: FC=() => {
         <ShambalaLogo
           titlecolor={'#0F72EC'}
           className={styles.logo}
+          onClick={homeNavigate}
         />
       </article >
+
       <article className={styles.drawer} >
         <MenuOutlined style={{fontSize: '24px'}}
                       onClick={showDrawer}
         />
-        <Drawer
-          title={<ShambalaLogo
-            onClick={onClose}
-            titlecolor={'#0F72EC'}
-            className={styles.logo}
-          />}
-          placement='right'
-          closable={false}
-          onClose={onClose}
-          open={open}
-          getContainer={false}
-        >
-          <CustomMap data={routes.slice(1)} renderItem={({label, route}) => (
-            <article className={styles.drawer_item} >
-              <Link key={route} href={route} >
-                <p >{label}</p >
-              </Link >
-            </article >
-          )}
-          />
-        </Drawer >
+        <DrawerMobile open={openDrawer} onClose={onCloseDrawer} loginNavigate={loginNavigate}
+                      subscribeNavigate={subscribeNavigate} handleContactUs={handleContactUs} data={routes} />
       </article >
 
       <section className={styles.actions} >
         <CustomMap className={styles.map} data={routes.slice(1)} renderItem={({label, route}) => (
-          <Link key={route} href={route} >
+          <Link key={route} href={route} className={styles.links} >
             <p >{label}</p >
           </Link >
         )}
         />
-        <button className={`${styles.btn} ${styles.uncolored}`} >
+        <p onClick={handleContactUs} >Contactanos</p >
+        <button className={`${styles.btn} ${styles.uncolored}`} onClick={loginNavigate} >
           Iniciar Sesión
         </button >
-        <button className={`${styles.btn} ${styles.colored}`} >
+        <button className={`${styles.btn} ${styles.colored}`} onClick={subscribeNavigate} >
           Inscribete
         </button >
       </section >
+
+      <CustomModal
+        isOpen={modal}
+        onClose={closeModal} >
+        <CardContactUs />
+      </CustomModal >
     </header >
   )
 }
