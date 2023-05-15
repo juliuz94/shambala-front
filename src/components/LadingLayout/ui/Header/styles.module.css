@@ -67,7 +67,7 @@
   .drawer{
     display:flex;
     align-items:center;
-    margin:20px 0 0 0;
+    margin:20px 0 0 20px;
     color:var(--primary-color);
   }
 
