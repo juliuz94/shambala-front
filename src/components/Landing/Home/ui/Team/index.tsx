@@ -3,20 +3,25 @@ import TeamCard from '@/components/TeamCard'
 import TitleSections from '../../../../TitleSections'
 import { strings } from '@/constants/strings'
 import GlobalContainer from '../../../../GlobalContainer'
-import { Bill } from '../../../../../../public/images/png'
+import { CustomMap } from '@/components/Custom/CustomMap'
+import { members } from '@/constants/members'
 
 const Team=() => {
   return (
     <GlobalContainer >
       <div className={styles.container} >
         <TitleSections title={strings.ladingPage.homeSectionsTitles.team} />
-        <TeamCard
-          image={Bill}
-          name={'Daniel Gutiérrez Patiño'}
-          career={'Founder and CEO'}
-          description={`El propósito de mi vida es cambiar el mundo. La lucha más 
-        importante que enfrenta la humanidad es la crisis climática y 
-        he decidido dedicar mi vida por completo a esto.`}
+        <CustomMap className={styles.container_cards} data={members} renderItem={
+          (item) => (
+            <TeamCard
+              image={item.photo}
+              name={item.name}
+              career={item.position}
+              description={item.description}
+              linkedin={item.linkedin}
+            />
+          )
+        }
         />
       </div >
     </GlobalContainer >

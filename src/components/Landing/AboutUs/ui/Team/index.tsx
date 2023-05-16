@@ -3,7 +3,8 @@ import TitleSections from '@/components/TitleSections'
 import { strings } from '@/constants/strings'
 import TeamCard from '@/components/TeamCard'
 import styles from './styles.module.css'
-import { Bill } from '../../../../../../public/images/png'
+import { members } from '@/constants/members'
+import { CustomMap } from '@/components/Custom/CustomMap'
 
 const Team=() => {
   return (
@@ -11,26 +12,18 @@ const Team=() => {
       <section className={styles.container} >
         <TitleSections title={strings.ladingPage.homeSectionsTitles.team} />
         <main className={styles.main} >
-          <article className={styles.card_container} >
-            <TeamCard image={Bill}
-                      description={'El propósito de mi vida es cambiar el mundo. La lucha más importante que enfrenta la humanidad es la crisis climática y he decidido dedicar mi vida por completo a esto. '}
-                      name={'Daniel Gutiérrez Patiño'} career={'Founder and CEO'} />
-          </article >
-          <article className={styles.card_container} >
-            <TeamCard image={Bill}
-                      description={'El propósito de mi vida es cambiar el mundo. La lucha más importante que enfrenta la humanidad es la crisis climática y he decidido dedicar mi vida por completo a esto. '}
-                      name={'Daniel Gutiérrez Patiño'} career={'Founder and CEO'} />
-          </article >
-          <article className={styles.card_container} >
-            <TeamCard image={Bill}
-                      description={'El propósito de mi vida es cambiar el mundo. La lucha más importante que enfrenta la humanidad es la crisis climática y he decidido dedicar mi vida por completo a esto. '}
-                      name={'Daniel Gutiérrez Patiño'} career={'Founder and CEO'} />
-          </article >
-          <article className={styles.card_container} >
-            <TeamCard image={Bill}
-                      description={'El propósito de mi vida es cambiar el mundo. La lucha más importante que enfrenta la humanidad es la crisis climática y he decidido dedicar mi vida por completo a esto. '}
-                      name={'Daniel Gutiérrez Patiño'} career={'Founder and CEO'} />
-          </article >
+          <CustomMap className={styles.container_cards} data={members} renderItem={
+            (item) => (
+              <TeamCard
+                image={item.photo}
+                name={item.name}
+                career={item.position}
+                description={item.description}
+                linkedin={item.linkedin}
+              />
+            )
+          }
+          />
         </main >
       </section >
     </GlobalContainer >

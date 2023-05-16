@@ -8,6 +8,17 @@
   margin:0 0 2.5rem 0;
 }
 
+.title{
+  display:flex;
+  font-weight:700;
+  line-height:82px;
+  letter-spacing:-0.025em;
+  text-align:left;
+  color:#374151;
+  align-items:center;
+  justify-content:center;
+}
+
 @media screen and (max-width:768px){
   .container{
     height:100%;
@@ -21,6 +32,20 @@
     display:none;
   }
 
+  .title{
+    display:inline;
+    font-size:25px;
+    line-height:65px;
+    letter-spacing:-0.025em;
+  }
+
+  .image{
+    height:52px;
+    width:145px;
+    border-radius:58px;
+    margin:0 1rem 0 0
+  }
+
 }
 
 @media screen and (min-width:1025px){
@@ -28,5 +53,17 @@
     align-items:center;
     height:100vh;
     justify-content:center;
+  }
+
+  .title_container{
+    width:100%;
+    background-color:red;
+  }
+
+  .image{
+    height:68px;
+    width:205px;
+    border-radius:58px;
+    margin:0 1rem
   }
 }
