@@ -7,6 +7,9 @@ import AppointmentCalendar from './appointmentCalendar.png'
 import AboutUsBackground from './aboutUsBackground.png'
 import Bill from './billGates.jpg'
 import CommunityImage from './communityImage.png'
+import Experience1 from './experience1.png'
+import Experience2 from './experience2.png'
+import Experience3 from './experience3.png'
 
 export {
   LinearBackground,
@@ -17,5 +20,8 @@ export {
   AppointmentCalendar,
   AboutUsBackground,
   Bill,
-  CommunityImage
+  CommunityImage,
+  Experience1,
+  Experience2,
+  Experience3
 }

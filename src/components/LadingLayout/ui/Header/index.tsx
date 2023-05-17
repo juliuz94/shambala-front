@@ -2,12 +2,11 @@ import React, { FC } from 'react'
 import { ShambalaLogo } from '@/svg'
 import Link from 'next/link'
 import styles from './styles.module.css'
-import { MenuOutlined } from '@ant-design/icons'
 import { CustomMap } from '@/components/Custom/CustomMap'
 import { UseLandingHeader } from '@/Hooks/useLandingHeader'
 import CustomModal from '@/components/Custom/CustomModal/CustomModal'
 import CardContactUs from '@/components/CardContactUs'
-import DrawerMobile from '@/components/LadingLayout/ui/Drawer'
+import DropdownMobile from '@/components/LadingLayout/ui/Dropdown'
 
 const routes=[
   {label: 'Home', route: '/'},
@@ -40,11 +39,11 @@ const Header: FC=() => {
       </article >
 
       <article className={styles.drawer} >
-        <MenuOutlined style={{fontSize: '24px'}}
-                      onClick={showDrawer}
+        <DropdownMobile
+          loginNavigate={loginNavigate}
+          subscribeNavigate={subscribeNavigate}
+          openModal={handleContactUs}
         />
-        <DrawerMobile open={openDrawer} onClose={onCloseDrawer} loginNavigate={loginNavigate}
-                      subscribeNavigate={subscribeNavigate} handleContactUs={handleContactUs} data={routes} />
       </article >
 
       <section className={styles.actions} >
