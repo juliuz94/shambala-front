@@ -2,7 +2,13 @@ import CommentForm from '../CommentForm'
 import PostComment from '../PostComment'
 import styles from './styles.module.css'
 
-const Post = ({ setShowPost }: any) => {
+type SetShowPostFunction = (value: boolean) => void
+
+interface PostProps {
+  setShowPost: SetShowPostFunction
+}
+
+const Post: React.FC<PostProps> = ({ setShowPost }) => {
   return (
     <div className={styles.container}>
       <img
