@@ -1,16 +1,21 @@
 import Head from 'next/head'
+import { useState } from 'react'
 import Header from '@/components/Header'
-import styles from '@/styles/Community.module.css'
 import Comment from '@/components/Community/Comment'
 import PostForm from '@/components/Community/PostForm'
 import PostFilter from '@/components/Community/PostFilter'
+import Post from '@/components/Community/Post'
+import styles from '@/styles/Community.module.css'
 
 const CommunityPage = () => {
+  const [showPost, setShowPost] = useState(false)
+
   return (
     <section className={styles.section}>
       <Head>
         <title>Comunidad</title>
       </Head>
+
       <Header />
 
       <div className={styles.container}>
@@ -18,17 +23,23 @@ const CommunityPage = () => {
           <h1>Foro y Comunidad</h1>
         </div>
 
-        <PostFilter />
+        {showPost ? (
+          <Post setShowPost={setShowPost} />
+        ) : (
+          <>
+            <PostFilter />
 
-        <PostForm />
+            <PostForm />
 
-        <div className={styles.comments}>
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
-        </div>
+            <div className={styles.comments} onClick={() => setShowPost(true)}>
+              <Comment />
+              <Comment />
+              <Comment />
+              <Comment />
+              <Comment />
+            </div>
+          </>
+        )}
 
         <img
           className={styles.bg}
