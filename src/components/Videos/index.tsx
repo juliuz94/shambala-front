@@ -11,7 +11,10 @@ import ROUTES from '@/helpers/routes'
 import { Video } from '@/types'
 
 type Label = {
-  label: string;
+  createdAt: String;
+  updatedAt: String;
+  en: String;
+  es: String;
   videos: Video[];
 };
 
@@ -39,12 +42,15 @@ const VideosComponent = () => {
   }
 
   const fetchVideos = async () => {
+    setLoadingData(true)
     try {
-      const { data } = await axiosInstance.get(ROUTES.VIDEOS)
-      organizeVideos(data.docs)
+      const { data } = await axiosInstance.get(ROUTES.VIDEOS_BY_TAG)
+      setVideos(data.docs)
       console.log('[fetchVideos] res', data)
     } catch (error) {
       console.log('[fetchVideos]', error)
+    } finally {
+      setLoadingData(false)
     }
   } 
 
@@ -70,10 +76,11 @@ const VideosComponent = () => {
               </div>
               {
                 videos.length > 0 && videos.map(videoCategory => {
+                  console.log('videoCategory', videoCategory)
                   return (
                     <VideoRow 
-                      key={videoCategory.label} 
-                      title={videoCategory.label} 
+                      key={videoCategory.es} 
+                      title={videoCategory.es} 
                       videos={videoCategory.videos}
                     />
                   )

@@ -57,7 +57,7 @@ const Video = () => {
           />
         </div>
       </div>
-      <RecommendedVideos />
+      {/* <RecommendedVideos /> */}
     </div>
   )
 }
