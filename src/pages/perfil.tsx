@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Header from '@/components/Header'
+import Slider from '@/components/Profile/Slider'
 import styles from '@/styles/Profile.module.css'
 
 const ProfilePage = () => {
@@ -67,14 +68,22 @@ const ProfilePage = () => {
           <div className={styles.options}>
             <div className={styles.options_text}>
               <p>¿Quieres apoyar de alguna manera?</p>
-              <button type='button'>Enviar</button>
+              <p>Recomendaciones y oportunidades de mejora</p>
             </div>
 
             <div className={styles.options_text}>
-              <p>Recomendaciones y oportunidades de mejora</p>
+              <button type='button'>Enviar</button>
               <button type='button'>Enviar</button>
             </div>
           </div>
+        </div>
+
+        <div className={styles.slider}>
+          <Slider title={'En progreso'} />
+        </div>
+
+        <div className={styles.slider}>
+          <Slider title={'Recomendados para ti'} />
         </div>
 
         <img
