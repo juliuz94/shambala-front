@@ -8,12 +8,14 @@ import { Toaster } from 'sonner'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
-  variable: '--primary-font'
+  weight: ['100', '200', '300', '400', '500', '600', '700'],
+  variable: '--primary-font',
 })
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--secondary-font'
+  weight: ['100', '200', '300', '400', '500', '600', '700'],
+  variable: '--secondary-font',
 })
 
 export default function App({ Component, pageProps }: AppProps) {
