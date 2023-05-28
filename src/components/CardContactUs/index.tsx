@@ -1,29 +1,82 @@
 import styles from './styles.module.css'
 import Image from 'next/image'
 import { ContactUsImage } from '../../../public/images/png'
-import InputComponent from '@/components/Inputs'
-import { Input } from 'antd'
+import { Button, Form, Input } from 'antd'
 
-const CardContactUs=() => {
+interface IFormItems {
+  label: string
+  name: string
+  placeholder: string
+  type: string
+}
+
+const CardContactUs = () => {
+  const [form] = Form.useForm()
+
+  function FormItem(props: IFormItems) {
+    return (
+      <Form.Item
+        label={<label className={styles.label}>{props.label}</label>}
+        name={props.name}
+        className={styles.input_container}
+      >
+        <Input
+          className={styles.inputs}
+          size='large'
+          placeholder={props.placeholder}
+          type={props.type}
+        />
+      </Form.Item>
+    )
+  }
 
   return (
-    <div className={styles.container} >
-      <section className={styles.image} >
+    <div className={styles.container}>
+      <section className={styles.image}>
         <Image src={ContactUsImage} alt={'Contact image'} />
-      </section >
-      <section className={styles.form} >
-        <div className={styles.inputs} >
-          <InputComponent placeholder={'Tu nombre'} className={styles.input_container} label={'Nombre completo'} />
-          <InputComponent placeholder={'Ingresa tu correo'} className={styles.input_container} label={'Email'} />
-          <InputComponent placeholder={'+57'} className={styles.input_container} label={'Numero de telefono'} />
-          <Input.TextArea placeholder={'Escribe tu mensaje'} className={`${styles.input_container} ${styles.text_area}`}
-                          style={{resize: 'none'}} />
-          <button className={styles.button} >
-            Enviar
-          </button >
-        </div >
-      </section >
-    </div >
+      </section>
+      <Form
+        className={styles.form}
+        form={form}
+        layout='vertical'
+        name='contac_us'
+      >
+        <FormItem
+          label='Nombre completo'
+          name='name'
+          placeholder='Tu nombre'
+          type='text'
+        />
+        <FormItem
+          label='Email'
+          name='email'
+          placeholder='Ingresa tu correo'
+          type='email'
+        />
+        <FormItem
+          label='Numero de telefono'
+          name='phone'
+          placeholder='+57'
+          type='number'
+        />
+        <Form.Item
+          label={<label className={styles.label}>Escribe tu mensaje</label>}
+          name='message'
+          className={styles.input_container}
+        >
+          <Input.TextArea
+            size='large'
+            placeholder='message'
+            className={styles.text_area}
+          />
+        </Form.Item>
+        <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button htmlType='submit' className={styles.button} type='ghost'>
+            <p>Enviar</p>
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
   )
 }
 

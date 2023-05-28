@@ -2,15 +2,15 @@ import styles from './styles.module.css'
 import Divider from '@/components/Divider'
 
 interface TitleProps {
-  title: string;
+  title: string
 }
 
-const TitleSections=({title}: TitleProps) => {
+const TitleSections = ({ title }: TitleProps) => {
   return (
-    <section className={styles.title_container} >
-      <h2 >{title}</h2 >
+    <section className={styles.title_container}>
+      <h2>{title}</h2>
       <Divider />
-    </section >
+    </section>
   )
 }
 

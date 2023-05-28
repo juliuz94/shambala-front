@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Avatar, Button, Tabs } from 'antd'
 import { HiOutlineArrowSmallLeft, HiOutlineClock, HiOutlineMapPin } from 'react-icons/hi2'
-import { Inter, Montserrat } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { toast } from 'sonner'
 import styles from './styles.module.css'
 

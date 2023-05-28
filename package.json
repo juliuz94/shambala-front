@@ -26,5 +26,10 @@
   "devDependencies": {
     "@types/node": "20.2.1",
     "@types/react": "18.2.6"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "jsxSingleQuote": true
   }
 }

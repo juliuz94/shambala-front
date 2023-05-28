@@ -15,9 +15,7 @@ const Header=() => {
           <Image className={styles.image} src={Experience3} alt={'image'} />
         </section >
       </section >
-
       <ArrowDownOutlined className={styles.arrow} style={{fontSize: '100px', color: '#E1E4E5'}} />
-
     </main >
   )
 }

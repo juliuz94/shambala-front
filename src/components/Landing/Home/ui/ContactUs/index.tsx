@@ -4,17 +4,18 @@ import TitleSections from '../../../../TitleSections'
 import { strings } from '@/constants/strings'
 import GlobalContainer from '../../../../GlobalContainer'
 
-const ContactUs=() => {
+const ContactUs = () => {
   return (
-    <GlobalContainer >
-      <div className={styles.container} >
-        <TitleSections title={strings.ladingPage.homeSectionsTitles.contactUs} />
-        <div className={styles.form_container} >
+    <GlobalContainer>
+      <div className={styles.container}>
+        <TitleSections
+          title={strings.ladingPage.homeSectionsTitles.contactUs}
+        />
+        <div>
           <CardContactUs />
-        </div >
-      </div >
-    </GlobalContainer >
-
+        </div>
+      </div>
+    </GlobalContainer>
   )
 }
 

@@ -1,36 +1,27 @@
 import Portal from './Portal'
+import styles from './styles.module.css'
+import { IoMdCloseCircleOutline } from 'react-icons/io'
 
 interface Props {
-  children: React.ReactNode;
-  onClose: () => void;
-  isOpen: boolean;
+  children: React.ReactNode
+  onClose: () => void
+  isOpen: boolean
 }
 
-export default function CustomModal({children, onClose, isOpen}: Props) {
+export default function CustomModal({ children, onClose, isOpen }: Props) {
   return (
     <>
       {isOpen && (
-        <Portal >
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            height: '100%',
-            zIndex: 1,
-            backgroundColor: 'rgba(0,0,0, 0.5',
-            position: 'fixed',
-            top: 0,
-            left: 0
-          }} >
-            <div className='modal-content' >
-              <button className='modal-close' onClick={onClose} >
-                Cerrar
-              </button >
+        <Portal>
+          <div className={styles.modal}>
+            <div className={styles.container}>
+              <div className={styles.btn_close}>
+                <IoMdCloseCircleOutline size={30} onClick={onClose} />
+              </div>
               {children}
-            </div >
-          </div >
-        </Portal >
+            </div>
+          </div>
+        </Portal>
       )}
     </>
   )

@@ -4,57 +4,73 @@ import styles from './styles.module.css'
 import CardCommunity from '@/components/CardCommunity'
 import GlobalContainer from '../../../../GlobalContainer'
 
-const Community=() => {
+const Community = () => {
   return (
-    <GlobalContainer >
-      <div className={styles.container} >
-        <TitleSections title={strings.ladingPage.homeSectionsTitles.community} />
-        <section className={styles.card_container} >
+    <GlobalContainer>
+      <div className={styles.container}>
+        <TitleSections
+          title={strings.ladingPage.homeSectionsTitles.community}
+        />
+        <section className={styles.card_container}>
           <CardCommunity
-            comment={'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'}
+            comment={
+              'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'
+            }
             reply={'12 respuesta'}
             daysAgo={'Hace 1 dia'}
             author={'Valentina Geronimo'}
           />
           <CardCommunity
-            comment={'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'}
+            comment={
+              'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'
+            }
             reply={'12 respuesta'}
             daysAgo={'Hace 1 dia'}
             author={'Valentina Geronimo'}
           />
           <CardCommunity
-            comment={'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'}
+            comment={
+              'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'
+            }
             reply={'12 respuesta'}
             daysAgo={'Hace 1 dia'}
             author={'Valentina Geronimo'}
           />
           <CardCommunity
-            comment={'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'}
+            comment={
+              'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'
+            }
             reply={'12 respuesta'}
             daysAgo={'Hace 1 dia'}
             author={'Valentina Geronimo'}
           />
           <CardCommunity
-            comment={'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'}
+            comment={
+              'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'
+            }
             reply={'12 respuesta'}
             daysAgo={'Hace 1 dia'}
             author={'Valentina Geronimo'}
           />
           <CardCommunity
-            comment={'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'}
+            comment={
+              'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'
+            }
             reply={'12 respuesta'}
             daysAgo={'Hace 1 dia'}
             author={'Valentina Geronimo'}
           />
           <CardCommunity
-            comment={'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'}
+            comment={
+              'Alguien me puede compartir buenas prácticas de sostenibilidad para una startup de tecnología que está empezando?'
+            }
             reply={'12 respuesta'}
             daysAgo={'Hace 1 dia'}
             author={'Valentina Geronimo'}
           />
-        </section >
-      </div >
-    </GlobalContainer >
+        </section>
+      </div>
+    </GlobalContainer>
   )
 }
 
