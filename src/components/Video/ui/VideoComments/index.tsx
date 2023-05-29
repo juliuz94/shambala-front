@@ -9,7 +9,7 @@ import styles from './styles.module.css'
 
 interface PropTypes {
   video: Video | null;
-  comments: PaginatedComments;
+  comments: PaginatedComments | null;
   refreshData: () => void;
 }
 

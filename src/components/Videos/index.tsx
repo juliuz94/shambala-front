@@ -21,40 +21,37 @@ type Label = {
 const VideosComponent = () => {
   const [loadingData, setLoadingData] = useState(false)
   const [videos, setVideos] = useState<Label[]>([])
-
-  const organizeVideos = (videos: Video[]) => {
-    let organizedVideos: Label[] = []
-
-    videos.forEach((video: Video) => {
-      const category = organizedVideos.find(category => category.label === video.tags[0])
-      if (!category) {
-        organizedVideos.push({
-          label: video.tags[0],
-          videos: [video]
-        })
-      } else {
-        category.videos.push(video)
-      }
-    })
-    
-    console.log(organizedVideos)
-    setVideos(organizedVideos)
-  }
+  const [videosWithProgress, setVideosWithProgress] = useState([])
 
   const fetchVideos = async () => {
     setLoadingData(true)
     try {
       const { data } = await axiosInstance.get(ROUTES.VIDEOS_BY_TAG)
       setVideos(data.docs)
-      console.log('[fetchVideos] res', data)
+      console.log('fetchVideos', data.docs)
+      // console.log('[fetchVideos] res', data)
     } catch (error) {
       console.log('[fetchVideos]', error)
     } finally {
       setLoadingData(false)
     }
-  } 
+  }
+
+  const fetchVideosWithProgress = async () => {
+    try {
+      const { data } = await axiosInstance.get(ROUTES.VIDEOS_WITH_PROGRESS)
+      console.log('fetchVideosWithProgress', data)
+      if (data.docs.length > 0) {
+        const videos = data.docs.map(video => video.videoId)
+        setVideosWithProgress(videos)
+      }
+    } catch (error) {
+      console.log('[fetchVideosWithProgress]', error)
+    }
+  }
 
   useEffect(() => {
+    fetchVideosWithProgress()
     fetchVideos()
   }, [])
 
@@ -64,7 +61,7 @@ const VideosComponent = () => {
       <div className={styles.content_container}>
         {
           loadingData ?
-            <div style={{marginTop: '2rem'}}>
+            <div style={{ marginTop: '2rem' }}>
               <VideoRowSkeleton />
               <VideoRowSkeleton />
             </div>
@@ -74,13 +71,16 @@ const VideosComponent = () => {
                 <SearchInput />
                 <Filter />
               </div>
+              <VideoRow
+                title='En progreso'
+                videos={videosWithProgress}
+              />
               {
                 videos.length > 0 && videos.map(videoCategory => {
-                  console.log('videoCategory', videoCategory)
                   return (
-                    <VideoRow 
-                      key={videoCategory.es} 
-                      title={videoCategory.es} 
+                    <VideoRow
+                      key={videoCategory.es}
+                      title={videoCategory.es}
                       videos={videoCategory.videos}
                     />
                   )

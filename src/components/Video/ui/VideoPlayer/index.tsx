@@ -5,6 +5,8 @@ import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi'
 import { HiPlay, HiPause } from 'react-icons/hi2'
 import { Video } from '@/types'
 import styles from './styles.module.css'
+import { axiosInstance } from '@/axios/axiosInstance'
+import ROUTES from '@/helpers/routes'
 
 interface PropTypes {
   video: Video | null
@@ -26,12 +28,19 @@ const VideoPlayer = ({ video }: PropTypes) => {
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(false)
   const [playBackRate, setPlayBackRate] = useState(1)
+  const [lastProgress, setLastProgress] = useState(0)
   const player = useRef<ReactPlayer>(null)
 
   const onProgress = (progress: VideoStatus) => {
+    if (!playing) return
     const { played, playedSeconds } = progress
     setProgress(played * 100)
+    // console.log('playedSeconds', playedSeconds)
     setProgressSeconds(playedSeconds)
+    if (Math.floor(playedSeconds) % 3 === 0 && lastProgress < Math.floor(playedSeconds)) {
+      setLastProgress(Math.floor(playedSeconds))
+      saveVideoProgress(played)
+    }
   }
 
   const onPlay = () => {
@@ -70,10 +79,22 @@ const VideoPlayer = ({ video }: PropTypes) => {
     }
   };
 
+  const saveVideoProgress = async (timeInSeconds: ArithmeticOperand) => {
+    if (!video) return 
+    try {
+      await axiosInstance.patch(`${ROUTES.VIDEO_PROGRESS}/${video._id}`, {
+        videoId: video._id,
+        progress: timeInSeconds * 100,
+        finished: false
+      })
+    } catch (error) {
+      console.log('[saveVideoProgress]', error) 
+    }
+  }
+
   function toTimeString(totalSeconds: ArithmeticOperand) {
     const totalMs = totalSeconds * 1000;
     const result = new Date(totalMs).toISOString().slice(11, 19);
-
     return result;
   }
 

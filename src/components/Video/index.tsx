@@ -20,6 +20,7 @@ const Video = () => {
   const fetchVideo = async () => {
     try {
       const { data } = await axiosInstance.get(`${ROUTES.VIDEOS}/${id}`)
+      console.log('data', data)
       setVideo(data)
 
     } catch (error) {
@@ -31,13 +32,13 @@ const Video = () => {
     try {
       const { data } = await axiosInstance.get(`${ROUTES.COMMENTS}/${id}`)
       setComments(data)
-      console.log(data)
     } catch (error) {
       console.log('[fetchComments]', error)
     }
   }
 
   useEffect(() => {
+    if (!id) return
     fetchVideo()
     fetchComments()
   }, [id])

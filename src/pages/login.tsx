@@ -5,13 +5,14 @@ import { useUserContext } from '@/context/userContext'
 
 export default function Login() {
   const router = useRouter()
-  const { user } = useUserContext()
+  // const { user } = useUserContext()
 
   useEffect(() => {
+    const user = localStorage.getItem('sha_user')
     if (user) {
       router.push('/videos')
     }
-  }, [user, router])
+  }, [router])
 
   return (
     <LoginComponent />
