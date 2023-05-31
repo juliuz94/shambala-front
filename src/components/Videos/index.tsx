@@ -68,7 +68,7 @@ const VideosComponent = () => {
             <>
               <div className={styles.video_options}>
                 <SearchInput />
-                <Filter />
+                {/* <Filter /> */}
               </div>
               <VideoRow
                 title='En progreso'

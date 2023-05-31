@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useUserContext } from '@/context/userContext'
 import Header from '@/components/Header'
 import Slider from '@/components/Profile/Slider'
-import styles from '@/styles/Profile.module.css'
+import styles from './styles.module.css'
 
 const Profile = () => {
   const router = useRouter()
