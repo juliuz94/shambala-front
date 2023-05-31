@@ -28,8 +28,6 @@ const VideosComponent = () => {
     try {
       const { data } = await axiosInstance.get(ROUTES.VIDEOS_BY_TAG)
       setVideos(data.docs)
-      console.log('fetchVideos', data.docs)
-      // console.log('[fetchVideos] res', data)
     } catch (error) {
       console.log('[fetchVideos]', error)
     } finally {
@@ -41,9 +39,8 @@ const VideosComponent = () => {
     try {
       const { data } = await axiosInstance.get(ROUTES.VIDEOS_WITH_PROGRESS)
       console.log('fetchVideosWithProgress', data)
-      if (data.docs.length > 0) {
-        const videos = data.docs.map(video => video.videoId)
-        setVideosWithProgress(videos)
+      if (data.videos.length > 0) {
+        setVideosWithProgress(data.videos)
       }
     } catch (error) {
       console.log('[fetchVideosWithProgress]', error)
@@ -86,9 +83,6 @@ const VideosComponent = () => {
                   )
                 })
               }
-              {/* <VideoRow title='En Progreso' />
-              <VideoRow title='En Progreso' />
-              <VideoRow title='En Progreso' /> */}
             </>
 
         }

@@ -5,6 +5,7 @@ type Routes = {
   COMMENTS: string;
   VIDEOS_WITH_PROGRESS: string;
   VIDEO_PROGRESS: string;
+  WORKSHOP_PER_MONTH: string;
 };
 
 const ROUTES: Routes = {
@@ -13,7 +14,8 @@ const ROUTES: Routes = {
   VIDEOS_WITH_PROGRESS: '/video/progress/user',
   VIDEO_PROGRESS: '/video/updateProgress',
   COMMENT: 'video/comment',
-  COMMENTS: 'video/comments'
+  COMMENTS: 'video/comments',
+  WORKSHOP_PER_MONTH: '/workshop/peerMonth',
 };
 
 export default ROUTES;

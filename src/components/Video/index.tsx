@@ -14,14 +14,15 @@ import ROUTES from '@/helpers/routes'
 const Video = () => {
   const [video, setVideo] = useState(null)
   const [comments, setComments] = useState(null)
+  const [progress, setProgress] = useState(0)
   const router = useRouter()
   const { id } = router.query
 
   const fetchVideo = async () => {
     try {
       const { data } = await axiosInstance.get(`${ROUTES.VIDEOS}/${id}`)
-      console.log('data', data)
       setVideo(data)
+      setProgress(data.progress.progress.toFixed(0) || 0)
 
     } catch (error) {
       console.log('[fetchVideo]', error)
@@ -47,8 +48,8 @@ const Video = () => {
     <div>
       <Header />
       <div className={styles.video_container}>
-        <VideoHeader video={video} />
-        <VideoPlayer video={video} />
+        <VideoHeader video={video} progress={progress} />
+        <VideoPlayer video={video} videoProgress={progress} />
         <div className={styles.video_info_container}>
           <VideoTabs video={video} />
           <VideoComments 

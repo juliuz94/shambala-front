@@ -4,6 +4,7 @@ import styles from './styles.module.css'
 import { IoIosHeart } from 'react-icons/io'
 import { Video } from '@/types'
 import { UserOutlined } from '@ant-design/icons'
+import dayjs from 'dayjs'
 
 
 interface PropTypes {
@@ -13,14 +14,23 @@ interface PropTypes {
 const VideoCard = ({ video }: PropTypes) => {
   const router = useRouter()
 
-  console.log('video.progress', video.progress)
+  const isNewVideo = (date: string) => {
+    const creationDate = dayjs(date)
+    const today = dayjs()
+    const difference = today.diff(creationDate, 'days')
+    return difference < 7 ? true : false
+  }
 
   return (
     <div className={styles.video_card} onClick={() => router.push(`video/${video._id}`)} >
       <div className={styles.card_header} style={{ backgroundImage: `url(${video?.image})` }} >
-        <div className={styles.new_label} >
-          <p>Nuevo</p>
-        </div >
+        {
+          isNewVideo(video.createdAt) && (
+            <div className={styles.new_label} >
+              <p>Nuevo</p>
+            </div >
+          )
+        }
         <button className={styles.like_button}>
           <IoIosHeart />
         </button>
@@ -50,10 +60,10 @@ const VideoCard = ({ video }: PropTypes) => {
           {video?.description}
         </p >
       </div >
-      <section className={styles.author} >
+      {/* <section className={styles.author} >
         <Avatar size={24} icon={<UserOutlined />} />
         <p > {video.title}</p >
-      </section >
+      </section > */}
     </div >
   )
 }

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Progress, Button, Slider } from 'antd'
 import ReactPlayer from 'react-player'
 import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi'
@@ -9,7 +9,8 @@ import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 
 interface PropTypes {
-  video: Video | null
+  video: Video | null,
+  videoProgress: number
 }
 
 interface VideoStatus {
@@ -21,7 +22,7 @@ interface VideoStatus {
 
 type ArithmeticOperand = any | number | bigint
 
-const VideoPlayer = ({ video }: PropTypes) => {
+const VideoPlayer = ({ video, videoProgress }: PropTypes) => {
   const [progress, setProgress] = useState(0)
   const [progressSeconds, setProgressSeconds] = useState(0)
   const [totalDuration, setTotalDuration] = useState(0)
@@ -35,7 +36,6 @@ const VideoPlayer = ({ video }: PropTypes) => {
     if (!playing) return
     const { played, playedSeconds } = progress
     setProgress(played * 100)
-    // console.log('playedSeconds', playedSeconds)
     setProgressSeconds(playedSeconds)
     if (Math.floor(playedSeconds) % 3 === 0 && lastProgress < Math.floor(playedSeconds)) {
       setLastProgress(Math.floor(playedSeconds))
@@ -72,10 +72,17 @@ const VideoPlayer = ({ video }: PropTypes) => {
     }
   }
 
+  useEffect(() => {
+    const progressInSeconds = (totalDuration * videoProgress) / 100
+    player.current?.seekTo(progressInSeconds, 'seconds')
+    setProgressSeconds(progressInSeconds)
+    setProgress(videoProgress)
+  }, [videoProgress, player, setProgressSeconds, totalDuration])
+
   const onChange = (newValue: ArithmeticOperand) => {
     if (player.current) {
       player.current.seekTo(newValue, 'seconds')
-      setProgressSeconds(newValue);
+      setProgressSeconds(newValue)
     }
   };
 
@@ -91,6 +98,20 @@ const VideoPlayer = ({ video }: PropTypes) => {
       console.log('[saveVideoProgress]', error) 
     }
   }
+
+  const onVideoEnded = async () => {
+    try {
+      await axiosInstance.patch(`${ROUTES.VIDEO_PROGRESS}/${video._id}`, {
+        videoId: video._id,
+        progress: 100,
+        finished: true
+      })
+      setProgress(100)
+      setProgressSeconds(totalDuration)
+    } catch (error) {
+      console.log('onVideoEnded', error)
+    }
+  } 
 
   function toTimeString(totalSeconds: ArithmeticOperand) {
     const totalMs = totalSeconds * 1000;
@@ -115,6 +136,7 @@ const VideoPlayer = ({ video }: PropTypes) => {
           playing={playing}
           muted={muted}
           playbackRate={playBackRate}
+          onEnded={onVideoEnded}
         />
         <div className={styles.controllers}>
           <Button className={styles.play_control_button} type='ghost' onClick={() => setPlaying(!playing)}>

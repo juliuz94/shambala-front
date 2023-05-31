@@ -30,7 +30,7 @@ export type Video = {
   companyWhiteList: string[];
   companyBlackList: string[];
   tags: string[];
-  attachments: string[];
+  attachments: Attachment[];
   sponsors: string[];
   sections: {
     _id: string;
@@ -63,4 +63,73 @@ export interface PaginatedComments {
   hasNextPage: boolean;
   prevPage: null;
   nextPage: null;
+}
+
+export interface Attachment {
+  title: string;
+  description: string;
+  link: boolean;
+  url: string;
+  size: string;
+  guide: boolean;
+  _id: string;
+}
+
+interface ImageGalleryItem {
+  title: string;
+  description: string;
+  link: boolean;
+  url: string;
+  size: string;
+  guide: boolean;
+  _id: string;
+}
+
+interface Tag {
+  _id: string;
+  es: string;
+  en: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+interface Sponsor {
+  _id: string;
+  title: string;
+  image: string;
+  nit: string;
+  permissions: string[];
+  owner: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface Workshop {
+  _id: string;
+  title: string;
+  image: string;
+  imageGallery: ImageGalleryItem[];
+  description: string;
+  location: string;
+  isVirtual: boolean;
+  coordinates: null | object;
+  maxUsers: number;
+  subscribedUsers: any[]; // Update the type of subscribedUsers if possible
+  companyWhiteList: string[];
+  companyBlackList: string[];
+  tags: Tag[];
+  attachments: Attachment[];
+  sponsors: Sponsor[];
+  type: string;
+  speaker: any[]; // Update the type of speaker if possible
+  date: string;
+  isPublic: boolean;
+  agenda: any[]; // Update the type of agenda if possible
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  isLandingPage: boolean;
+  speakers: any[]; // Update the type of speakers if possible
 }

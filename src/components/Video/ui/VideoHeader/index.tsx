@@ -6,10 +6,11 @@ import { Video } from '@/types'
 import styles from './styles.module.css'
 
 interface PropTypes {
-  video: Video | null
+  video: Video | null,
+  progress: number
 }
 
-const VideoHeader = ({ video }: PropTypes) => {
+const VideoHeader = ({ video, progress }: PropTypes) => {
   const { user } = useUserContext()
   const router = useRouter()
 
@@ -22,17 +23,17 @@ const VideoHeader = ({ video }: PropTypes) => {
         <h1 className={styles.video_title}>
           { video?.title }
         </h1>
-        <div className={styles.creator_container}>
+        {/* <div className={styles.creator_container}>
           <Avatar size='small' src={user.photoURL}>
             A
           </Avatar>
           <p>Autor del video</p>
-        </div>
+        </div> */}
       </div>
       <div className={styles.center_column}>
         <Progress
           type="circle"
-          percent={75}
+          percent={progress}
           strokeWidth={8}
           format={(percent) => (
             <div className={styles.progress_circle}>
