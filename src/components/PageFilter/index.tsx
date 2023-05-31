@@ -1,23 +1,31 @@
+import { useState } from 'react'
 import styles from './styles.module.css'
 
-const Filter = () => {
+type FilterProps = {
+  filters: string[]
+}
+
+const Filter = ({ filters }: FilterProps) => {
+  const [activeFilter, setActiveFilter] = useState(filters[0])
+
+  const handleClick = (filter: string) => {
+    setActiveFilter(filter)
+  }
+
   return (
     <div className={styles.page_filters_section}>
       <div className={styles.filters_container}>
         <p>Mostrar:</p>
         <ul>
-          <li className={styles.active}>
-            Todos
-          </li>
-          <li>
-            Fauna
-          </li>
-          <li>
-            Ambiente
-          </li>
-          <li>
-            Sostenibilidad
-          </li>
+          {filters.map((filter, index) => (
+            <li
+              className={filter === activeFilter ? styles.active : ''}
+              key={index}
+              onClick={() => handleClick(filter)}
+            >
+              {filter}
+            </li>
+          ))}
         </ul>
       </div>
     </div>

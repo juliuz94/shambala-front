@@ -1,67 +1,66 @@
-import CommentForm from '../CommentForm'
-import PostComment from '../PostComment'
+import moment from 'moment'
+import 'moment/locale/es'
+import { Doc } from '@/Hooks/useFetchPosts'
 import styles from './styles.module.css'
 
-type SetShowPostFunction = (value: boolean) => void
-
-interface PostProps {
-  setShowPost: SetShowPostFunction
+interface Props {
+  post: Doc
+  onSelectPost: (post: Doc) => void
+  fetchComments: (id: string, limit: number) => Promise<void>
+  commentsLimit: number
 }
 
-const Post: React.FC<PostProps> = ({ setShowPost }) => {
+const Post = ({ post, onSelectPost, fetchComments, commentsLimit }: Props) => {
+  moment.locale('es')
+
+  const timeAgo = moment(post.createdAt).fromNow()
+
+  const handleSelectPost = () => {
+    onSelectPost(post)
+    fetchComments(post._id, commentsLimit)
+  }
+
+  const renderProfileImage = () => {
+    if (post?.user?.image) {
+      return <img src={post?.user.image} className={styles.pfp} alt='profile' />
+    } else {
+      const initials = `${post?.user?.firstName?.[0] || ''}${
+        post?.user?.lastName?.[0] || ''
+      }`
+      return <div className={styles.pfp}>{initials}</div>
+    }
+  }
+
   return (
-    <div className={styles.container}>
-      <img
-        src='/images/svg/arrow_back.svg'
-        alt='back'
-        onClick={() => setShowPost(false)}
-        className={styles.back}
-      />
-
-      <div className={styles.post}>
-        <div className={styles.title}>
-          <h1>
-            Tell me about a time you strongly disagreed with your manager. What
-            did you do to convince him or her that you were right? What
-            happened?
-          </h1>
-        </div>
-
-        <div className={styles.options}>
-          <div className={styles.info}>
-            <p>Hace 1 día</p>
-            <p>•</p>
-            <p>12 Respuestas</p>
-          </div>
-        </div>
-
-        <p className={styles.text}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          viverra purus at sapien rhoncus imperdiet. Nam tempus eleifend metus,
-          eu laoreet dui convallis eu. Nulla quis tellus sit amet magna aliquam
-          faucibus eu ut magna. Nulla elementum fermentum magna quis lobortis.
-          In lobortis feugiat vestibulum. Aenean et ultricies elit, in rhoncus
-          dolor. Fusce efficitur purus sit amet metus scelerisque suscipit.
-          Vestibulum quis convallis dui, sed ullamcorper ligula.
-        </p>
-
-        <div className={styles.user}>
-          <div className={styles.pfp} />
-          <p>Melany Fernández</p>
-        </div>
-
-        <p className={styles.answer}>Responder</p>
-
-        <div className={styles.comments}>
-          <PostComment />
-          <PostComment />
-          <PostComment />
-          <PostComment />
-          <PostComment />
-        </div>
-
-        <CommentForm />
+    <div className={styles.container} onClick={handleSelectPost}>
+      <div className={styles.title}>
+        <h1>{post.title}</h1>
       </div>
+
+      <div className={styles.options}>
+        <div className={styles.info}>
+          <p>{timeAgo}</p>
+          <p>•</p>
+          <p>12 Respuestas</p>
+        </div>
+
+        <div className={styles.circle}>
+          <img
+            className={styles.arrow}
+            src='/images/svg/arrow_right.svg'
+            alt='arrow'
+          />
+        </div>
+      </div>
+
+      <div className={styles.user}>
+        {renderProfileImage()}
+        <p>
+          {post.user?.firstName || ''} {post.user?.lastName || ''}
+        </p>
+      </div>
+
+      <p className={styles.answer}>Responder</p>
     </div>
   )
 }

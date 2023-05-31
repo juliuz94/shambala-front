@@ -81,17 +81,19 @@ const Events = () => {
     fetchEvents(month.monthNumber)
   }
 
+  const filters = ['Todos', 'Fauna', 'Ambiente', 'Sostenibilidad']
+
   return (
     <div>
       <Header />
       <div className={styles.content_container}>
         <div className={styles.events_options}>
           <SearchInput />
-          <Filter />
+          <Filter filters={filters} />
         </div>
 
         <div className={styles.tabs}>
-          {months.map(month => {
+          {months.map((month) => {
             return (
               <div 
                 key={month.key} 

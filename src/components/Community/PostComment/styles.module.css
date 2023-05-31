@@ -16,6 +16,11 @@
 }
 
 .pfp {
+  font-family: var(--secondary-font);
+  font-size: 12px;
+  text-align: center;
+
+  padding-top: 5px;
   width: 24px;
   height: 24px;
 
@@ -23,5 +28,7 @@
 
   object-fit: cover;
 
-  background-color: black;
+  color: white;
+
+  background-color: var(--primary-color);
 }

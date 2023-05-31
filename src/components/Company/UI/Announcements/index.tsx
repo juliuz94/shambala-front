@@ -10,34 +10,34 @@ const Announcements: FC = () => {
       title: 'Titula de anuncio 1',
       date: '23 Marzo 2023',
       img: '/images/event_image.jpg',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra purus at sapien rhoncus imperdiet. Nam tempus eleifend metus, eu laoreet dui convallis eu. Nulla quis tellus sit amet magna...'
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra purus at sapien rhoncus imperdiet. Nam tempus eleifend metus, eu laoreet dui convallis eu. Nulla quis tellus sit amet magna...',
     },
     {
       key: 2,
       title: 'Titula de anuncio 2',
       date: '23 Marzo 2023',
       img: '/images/event_image.jpg',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra purus at sapien rhoncus imperdiet. Nam tempus eleifend metus, eu laoreet dui convallis eu. Nulla quis tellus sit amet magna...'
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra purus at sapien rhoncus imperdiet. Nam tempus eleifend metus, eu laoreet dui convallis eu. Nulla quis tellus sit amet magna...',
     },
     {
       key: 3,
       title: 'Titula de anuncio 3',
       date: '23 Marzo 2023',
       img: '/images/event_image.jpg',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra purus at sapien rhoncus imperdiet. Nam tempus eleifend metus, eu laoreet dui convallis eu. Nulla quis tellus sit amet magna...'
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra purus at sapien rhoncus imperdiet. Nam tempus eleifend metus, eu laoreet dui convallis eu. Nulla quis tellus sit amet magna...',
     },
     {
       key: 4,
       title: 'Titula de anuncio 4',
       date: '23 Marzo 2023',
       img: '/images/event_image.jpg',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra purus at sapien rhoncus imperdiet. Nam tempus eleifend metus, eu laoreet dui convallis eu. Nulla quis tellus sit amet magna...'
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra purus at sapien rhoncus imperdiet. Nam tempus eleifend metus, eu laoreet dui convallis eu. Nulla quis tellus sit amet magna...',
     },
   ]
   const [announcements, setAnnouncements] = useState(testAnnouncements)
 
   const handleNextAnnouncement = () => {
-    setAnnouncements(prevAnnouncements => {
+    setAnnouncements((prevAnnouncements) => {
       const newOrder = prevAnnouncements.slice(1).concat(prevAnnouncements[0])
       return newOrder
     })
@@ -47,12 +47,16 @@ const Announcements: FC = () => {
     <section className={styles.announcements_section}>
       <h2>Anuncios</h2>
       <div className={styles.announcements_container}>
-        {
-          announcements.map(announcement => (
-            <AnnouncementCard key={announcement.key} announcement={announcement} />
-          ))
-        }
-        <Button className={styles.next_card_button} onClick={handleNextAnnouncement}>
+        {announcements.map((announcement) => (
+          <AnnouncementCard
+            key={announcement.key}
+            announcement={announcement}
+          />
+        ))}
+        <Button
+          className={styles.next_card_button}
+          onClick={handleNextAnnouncement}
+        >
           <HiArrowRight />
         </Button>
       </div>
@@ -62,7 +66,17 @@ const Announcements: FC = () => {
 
 export default Announcements
 
-const AnnouncementCard: FC = ({ announcement }) => {
+interface AnnouncementCardProps {
+  announcement: {
+    key: number
+    title: string
+    date: string
+    img: string
+    text: string
+  }
+}
+
+const AnnouncementCard: FC<AnnouncementCardProps> = ({ announcement }) => {
   return (
     <div className={styles.announcement_card}>
       <div className={styles.image_container}>

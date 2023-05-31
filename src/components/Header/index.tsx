@@ -7,8 +7,7 @@ import type { MenuProps } from 'antd'
 import styles from './styles.module.css'
 import { FaLeaf } from 'react-icons/fa'
 import { useUserContext } from '@/context/userContext'
-import { MoreOutlined, LoginOutlined } from '@ant-design/icons'
-
+import { MoreOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons'
 
 const Header: FC = () => {
   const router = useRouter()
@@ -20,13 +19,24 @@ const Header: FC = () => {
       key: '1',
       label: (
         <div className={styles.user_option}>
+          <Link href={'/profile'}>
+            Perfil
+            <UserOutlined />
+          </Link>
+        </div>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <div className={styles.user_option}>
           <a onClick={logOut}>
             Salir
             <LoginOutlined />
           </a>
         </div>
       ),
-    }
+    },
   ]
 
   return (
@@ -39,41 +49,61 @@ const Header: FC = () => {
           src='/images/shambala_logo.png'
         />
       </div>
+
       <div className={styles.menu_container}>
         <ul>
           <li>
-            <Link className={pathName === '/videos' ? styles.active : ''} href='/videos'>Videos</Link>
+            <Link
+              className={pathName === '/videos' ? styles.active : ''}
+              href='/videos'
+            >
+              Videos
+            </Link>
           </li>
+
           <li>
-            <Link href='/events-workshops' className={pathName === '/events-workshops' ? styles.active : ''}>Talleres & Eventos</Link>
+            <Link
+              href='/events-workshops'
+              className={pathName === '/events-workshops' ? styles.active : ''}
+            >
+              Talleres & Eventos
+            </Link>
           </li>
+
           <li>
             <Link href='/company/123'>Mi Empresa</Link>
           </li>
+
           <li>
-            <Link href='/videos'>Comunidad</Link>
+            <Link
+              href='/community'
+              className={pathName === '/community' ? styles.active : ''}
+            >
+              Comunidad
+            </Link>
           </li>
         </ul>
       </div>
+
       <div className={styles.user_options_container}>
         <div className={styles.point_counter}>
           <FaLeaf />
-          <p>
-            25
-          </p>
+          <p>25</p>
         </div>
+
         <p className={styles.user_name}>{user?.name?.split(' ')[0]}</p>
+
         <Avatar
           shape='square'
           size='large'
           src={user?.photoURL}
           className={user?.photoURL ? '' : styles.avatar}
-        // icon={<UserOutlined />} 
+          // icon={<UserOutlined />}
         >
-          {
-            user?.name?.split(' ')[0].split('')[0]
-          }
+          {user?.firstName?.split(' ')[0].split('')[0]}
+          {user?.lastName?.split(' ')[0].split('')[0]}
         </Avatar>
+
         <Dropdown menu={{ items }} placement='bottomRight'>
           <Button className={styles.user_options_button} type='text'>
             <MoreOutlined />
@@ -81,10 +111,9 @@ const Header: FC = () => {
         </Dropdown>
       </div>
 
-
       <style jsx>{`
         .ant-dropdown-menu-item span {
-          min-width: 200px
+          min-width: 200px;
         }
       `}</style>
     </nav>

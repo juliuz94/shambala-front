@@ -3,7 +3,6 @@
   width: 100%;
   max-width: var(--max-width);
   justify-content: flex-end;
-
 }
 
 .filters_container {
@@ -35,4 +34,20 @@
 .filters_container ul li.active {
   background-color: var(--primary-color);
   color: var(--contrast-text-color);
+}
+
+@media (max-width: 910px) {
+  .filters_container p {
+    display: none;
+  }
+
+  .page_filters_section {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 570px) {
+  .filters_container ul {
+    flex-direction: column;
+  }
 }

@@ -11,12 +11,12 @@ import ROUTES from '@/helpers/routes'
 import { Video } from '@/types'
 
 type Label = {
-  createdAt: String;
-  updatedAt: String;
-  en: String;
-  es: String;
-  videos: Video[];
-};
+  createdAt: String
+  updatedAt: String
+  en: String
+  es: String
+  videos: Video[]
+}
 
 const VideosComponent = () => {
   const [loadingData, setLoadingData] = useState(false)
@@ -51,6 +51,8 @@ const VideosComponent = () => {
     fetchVideosWithProgress()
     fetchVideos()
   }, [])
+
+  const filters = ['Todos', 'Fauna', 'Ambiente', 'Sostenibilidad']
 
   return (
     <div>

@@ -7,13 +7,18 @@
   background-color: var(--general-background-color);
 }
 
-.logo_container{
+.logo_container {
   width: 15%;
   min-width: 180px;
   max-height: 200px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
+
+.avatar {
+  min-width: 40px;
+  min-height: 40px;
 }
 
 .menu_container {

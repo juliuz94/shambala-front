@@ -1,4 +1,4 @@
-.post {
+.container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -9,36 +9,23 @@
 
   border: 1px solid #e5e7eb;
   border-radius: 8px;
-  margin-bottom: 60px;
-}
-
-.back {
-  margin-top: 50px;
-  margin-bottom: 20px;
-  cursor: pointer;
 }
 
 .title h1 {
   font-weight: 600;
-  font-size: 22px;
-  line-height: 32px;
-  margin-bottom: 10px;
+  font-size: 18px;
+  line-height: 28px;
+
+  text-transform: capitalize;
 
   color: #111827;
+  cursor: pointer;
 }
 
 .options {
   width: 100%;
   display: flex;
   justify-content: space-between;
-}
-
-.text {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 28px;
-
-  color: #000000;
 }
 
 .info {
@@ -49,7 +36,7 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 24px;
-  margin-bottom: 5px;
+  text-transform: capitalize;
 
   color: #9b9595;
 }
@@ -64,6 +51,12 @@
 }
 
 .pfp {
+  font-family: var(--secondary-font);
+  font-size: 12px;
+  text-align: center;
+
+  padding-top: 5px;
+
   width: 24px;
   height: 24px;
 
@@ -71,7 +64,23 @@
 
   object-fit: cover;
 
-  background-color: black;
+  color: white;
+
+  background-color: var(--primary-color);
+}
+
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 43px;
+  height: 43px;
+
+  border-radius: 100%;
+  border: 1.5px solid #54c055;
+
+  cursor: pointer;
 }
 
 .answer {
@@ -79,14 +88,7 @@
   font-size: 13px;
   line-height: 24px;
 
-  color: #111827;
+  color: #1e9e20;
 
   cursor: pointer;
-}
-
-.comments {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin: 30px;
 }

@@ -22,12 +22,20 @@
 }
 
 .pfp {
+  font-family: var(--secondary-font);
+  font-size: 20px;
+  text-align: center;
+
+  padding-top: 13px;
+
   min-width: 49px;
   min-height: 49px;
 
   border-radius: 8px;
 
-  background-color: black;
+  color: white;
+
+  background-color: var(--primary-color);
 }
 
 .input_bar {
