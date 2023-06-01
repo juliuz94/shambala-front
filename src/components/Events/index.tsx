@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { Empty } from 'antd'
 import Header from '@/components/Header'
 import Filter from '@/components/PageFilter'
 import SearchInput from '@/components/SearchInput'
@@ -7,6 +8,7 @@ import dayjs from 'dayjs'
 import locale from 'dayjs/locale/es'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
+import { VscFolderOpened } from 'react-icons/vsc'
 import { Workshop } from '@/types'
 import styles from './styles.module.css'
 
@@ -32,20 +34,21 @@ interface MonthData {
 }
 
 const Events = () => {
-  const [activeMonth, setActiveMonth] = useState('1')
+  const [activeMonthTag, setActiveMonthTag] = useState('1')
+  const [activeMonth, setActiveMonth] = useState<Month | null>(null)
   const [months, setMonths] = useState<Month[]>([])
   const [workShopsData, setWorkShopsData] = useState<MonthData>()
   const [filter, setFilter] = useState('ALL')
 
-  const fetchEvents = async (month: number) => {
+  const fetchEvents = useCallback(async () => {
+    if (!activeMonth || !filter) return
     try {
-      const { data } = await axiosInstance.get(`${ROUTES.WORKSHOP_PER_MONTH}?month=${month}&type=${filter}`)
-      console.log('res', data)
+      const { data } = await axiosInstance.get(`${ROUTES.WORKSHOP_PER_MONTH}?month=${activeMonth.monthNumber}&type=${filter}`)
       setWorkShopsData(data)
     } catch (error) {
       console.log('[fetchEvents]', error)
     }
-  }
+  }, [filter, activeMonth])
 
   useEffect(() => {
     const currentMonthNumber = dayjs().month()
@@ -67,21 +70,42 @@ const Events = () => {
       }
     ]
     setMonths(monthArray)
+    setActiveMonth(monthArray[0])
   }, [])
 
   useEffect(() => {
     if (months.length < 1) return
-    console.log(months)
-    fetchEvents(months[0].monthNumber)
-  }, [months])
+    fetchEvents()
+  }, [fetchEvents, months])
 
   const handleChangeMonth = (month: Month) => {
-    console.log(month)
-    setActiveMonth(month.key)
-    fetchEvents(month.monthNumber)
+    setActiveMonthTag(month.key)
+    setActiveMonth(month)
+    fetchEvents()
   }
 
-  const filters = ['Todos', 'Fauna', 'Ambiente', 'Sostenibilidad']
+  const filters = ['Todos', 'Eventos', 'Talleres']
+
+  const handleChangeTag = (tag: string) => {
+    console.log('tag', tag)
+    switch (tag) {
+      case 'Todos':
+        setFilter('ALL')
+        break
+
+      case 'Eventos':
+        setFilter('EVENT')
+        break
+
+      case 'Talleres':
+        setFilter('WORKSHOP')
+        break
+
+      default:
+        return
+    }
+    fetchEvents()
+  }
 
   return (
     <div>
@@ -89,15 +113,15 @@ const Events = () => {
       <div className={styles.content_container}>
         <div className={styles.events_options}>
           <SearchInput />
-          <Filter filters={filters} />
+          <Filter filters={filters} callback={handleChangeTag} />
         </div>
 
         <div className={styles.tabs}>
           {months.map((month) => {
             return (
-              <div 
-                key={month.key} 
-                className={`${styles.tab} ${month.key === activeMonth ? styles.active : null}`} 
+              <div
+                key={month.key}
+                className={`${styles.tab} ${month.key === activeMonthTag ? styles.active : null}`}
                 onClick={() => handleChangeMonth(month)}
               >
                 <p>{month.label}</p>
@@ -115,7 +139,16 @@ const Events = () => {
           {
             workShopsData?.docs.length === 0 && (
               <div>
-                empty
+                <Empty
+                  image={<VscFolderOpened color='#54C055' size={60} />}
+                  imageStyle={{ height: 60 }}
+                  description={
+                    <span>
+                      No hay { filter === 'filter' ? 'eventos o talleres' : filter === 'EVENT' ? 'eventos' : 'talleres' } para esta fecha
+                    </span>
+                  }
+                >
+                </Empty>
               </div>
             )
           }

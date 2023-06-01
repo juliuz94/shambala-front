@@ -6,6 +6,7 @@ type Routes = {
   VIDEOS_WITH_PROGRESS: string;
   VIDEO_PROGRESS: string;
   WORKSHOP_PER_MONTH: string;
+  WORKSHOP: string;
   POST: string;
   TAGS: string;
   POST_COMMENT: string;
@@ -19,6 +20,7 @@ const ROUTES: Routes = {
   COMMENT: 'video/comment',
   COMMENTS: 'video/comments',
   WORKSHOP_PER_MONTH: '/workshop/peerMonth',
+  WORKSHOP: '/workshop',
   POST: 'community/post',
   TAGS: 'tags',
   POST_COMMENT: 'community/post/comment',

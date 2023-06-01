@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Avatar, Button } from 'antd'
@@ -17,10 +16,9 @@ interface PropTypes {
 
 const EventCard = ({ small, event }: PropTypes) => {
   const router = useRouter()
-  console.log('event', event)
 
   return (
-    <div className={`${styles.event_card} ${small ? styles.small : null}`} onClick={() => router.push('/event/123')}>
+    <div className={`${styles.event_card} ${small ? styles.small : null}`} onClick={() => router.push(`/event/${event._id}`)}>
 
       <div className={styles.card_content_mobile}>
         <div className={styles.line} />

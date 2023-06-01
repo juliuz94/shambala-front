@@ -120,6 +120,11 @@
     line-height: 22px;
     text-align: left;
     color: #6D6D6D;
+    overflow: hidden; 
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+            line-clamp: 3; 
+    -webkit-box-orient: vertical;
   }
 
   .sponsors {
@@ -222,6 +227,11 @@
     color: var(--secondary-text-color);
     margin: 0.3rem 0;
     max-width: 600px;
+    overflow: hidden; 
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+            line-clamp: 3; 
+    -webkit-box-orient: vertical;
   }
 
   .image_container {

@@ -1,13 +1,15 @@
 import React, { FC, createContext, useState, PropsWithChildren, useContext } from 'react'
-import { User, getAuth, signOut } from 'firebase/auth'
+import { getAuth, signOut, User } from 'firebase/auth'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import { toast } from 'sonner'
+import { User as LocalUser } from '@/types'
 
 type UserContextType = {
-  user: User | null
-  setUser: (user: User | null) => void
-  logOut: () => void
+  user: LocalUser | null
+  setUser: (user: LocalUser | null) => void
+  handleLogin: (user: LocalUser) => void
+  logOut: (user: LocalUser | null) => void
 }
 
 const UserContext = createContext<UserContextType | null>(null);
@@ -17,19 +19,20 @@ export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter()
   const auth = getAuth()
   const userInfo = process.browser && localStorage.getItem('sha_user')
-  const [user, setUser] = useState<User | null>(userInfo ? JSON.parse(userInfo) : null)
+  const [user, setUser] = useState<LocalUser | null>(userInfo ? JSON.parse(userInfo) : null)
 
-  const setAuthInfo = (user: User | null) => {
+  const setAuthInfo = (user: LocalUser | null) => {
     localStorage.setItem('sha_user', JSON.stringify(user))
     setUser(user)
     toast.success('¡Qué bueno tener de vuelta!')
   } 
 
-  const handleLogin = async (user: User | null) =>  {
+  const handleLogin = async (user: User | null | any) =>  {
+    console.log(user)
     try {
       const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/findSession`, {
         headers: {
-          Authorization: `Bearer ${user.accessToken}`
+          Authorization: `Bearer ${user?.accessToken}`
         }
       })
       localStorage.setItem('sha_user_token', user.accessToken)

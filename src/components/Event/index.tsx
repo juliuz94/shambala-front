@@ -1,13 +1,23 @@
-import { FC, useState } from 'react'
+import { FC, useState, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import Header from '@/components/Header'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Avatar, Button, Tabs } from 'antd'
 import { HiOutlineArrowSmallLeft, HiOutlineClock, HiOutlineMapPin } from 'react-icons/hi2'
+import { FaLinkedinIn } from 'react-icons/fa'
 import { Inter } from 'next/font/google'
 import { toast } from 'sonner'
+import Splash from '@/components/Splash'
 import styles from './styles.module.css'
+import { axiosInstance } from '@/axios/axiosInstance'
+import ROUTES from '@/helpers/routes'
+import FileCard from '@/components/FileCard'
+import { Workshop, Attachment } from '@/types'
+import dayjs from 'dayjs'
+import es from 'dayjs/locale/es'
+
+dayjs.locale(es)
 
 const inter = Inter({
   subsets: ['latin']
@@ -21,34 +31,98 @@ const tabs = [
   {
     key: '2',
     label: `Agenda`
+  },
+  {
+    key: '3',
+    label: 'Archivos'
   }
 ]
 
+
 const Event: FC = () => {
-  const router = useRouter()
+  const [loading, setLoading] = useState(false)
+  const [event, setEvent] = useState<Workshop | null>(null)
+  const [guides, setGuides] = useState<Attachment[] | []>([])
+  const [files, setFiles] = useState<Attachment[] | []>([])
   const [tabSelected, setTabSelected] = useState('1')
+  const router = useRouter()
+  const { query: { id } } = router
+
+  const fetchEvent = useCallback(async () => {
+    setLoading(true)
+    try {
+      const { data } = await axiosInstance.get(`${ROUTES.WORKSHOP}/${id}`)
+      console.log('event ->', data)
+      setEvent(data)
+      const attachments = data.attachments
+      if (attachments.length > 0) {
+        const guidesFilter = attachments.filter((file: Attachment) => file.guide === true)
+        setGuides(guidesFilter)
+        const filesFilter = attachments.filter((file: Attachment) => file.guide === false)
+        setFiles(filesFilter)
+      }
+    } catch (error) {
+      console.log('[fetchEvent]', error)
+    } finally {
+      setLoading(false)
+    }
+  }, [id])
+
+  useEffect(() => {
+    if (!id) return
+    fetchEvent()
+  }, [id, fetchEvent])
+
+  const splitTextIntoParagraph = (longString: string) => {
+    const hasSpaces = /\r?\n/g.test(longString)
+
+    if (!hasSpaces) {
+      return <p>{longString}</p>
+    }
+
+    const paragraphsArray = longString.split(/\r?\n/g)
+
+    return paragraphsArray.map((paragraph, index) => {
+      if (paragraph === '') return null
+      return <p key={index} className={styles.event_description}>{paragraph}</p>
+    })
+  }
 
   const renderTabContent = () => {
     switch (tabSelected) {
       case '1':
         return (
-          <p className={styles.event_description}>
-            El enfoque tradicional de corregir sólo la contaminación en el punto de producción resulta insuficiente y puede ocasionar un traslado de los efectos ambientales, de manera que las mejoras obtenidas en la fase de producción se traduce en otros efectos negativos en la fase de uso o de gestión del residuo, que suponen un impacto ambiental mayor que el evitado, si analizamos con una visión global todo el ciclo de vida del producto.
-            <br />
-            <br />
-            Por ello, a día de hoy, la mayoría de las grandes empresas, de los ámbitos más diversos, han iniciado la mejora de sus productos analizándolos con la metodología del ACV que es la base del Ecodiseño, la Huella de Carbono, la Huella de Agua, la Huella Ambiental de Producto de la Unión Europea, las Declaraciones Ambientales de Producto y el Ecoetiquetado en general.
-            <br />
-            Con estas herramientas de comunicación, las empresas pueden demostrar a la sociedad su compromiso con la sostenibilidad.
-            En este curso se tratarán los principios y fundamentos de la Economía Circular.
-            <br />
-            <br />
-            A continuación se aprenderá la metodología del ACV y el manejo del software necesario para poder llevar a cabo este tipo de estudios, y posteriormente se estudiará su aplicación en el Ecodiseño, la Huella de Carbono, la Huella de Agua, la Huella Ambiental de Producto de la Unión Europea, las Declaraciones Ambientales de Producto y el Ecoetiquetado en general, materias que se desarrollarán con detalle.
-          </p>
+          splitTextIntoParagraph(event.description)
         )
 
+      case '3':
+        return (
+          <div className={styles.video_files}>
+            {
+              guides.length > 0 && (
+                <div className={styles.attachments_container}>
+                  {guides.map(guide => <FileCard key={guide._id} file={guide} />)}
+                </div>
+              )
+            }
+            {
+              files.length > 0 && (
+                <div className={styles.attachments_container}>
+                  {files.map(file => <FileCard key={file._id} file={file} />)}
+                </div>
+              )
+            }
+          </div>
+        )
       default:
         return null
     }
+  }
+
+  if (loading || !event) {
+    return (
+      <Splash />
+    )
   }
 
   return (
@@ -60,44 +134,75 @@ const Event: FC = () => {
             <HiOutlineArrowSmallLeft />
           </Button>
           <h1 className={styles.event_title}>
-            FIMA Feria Internacional del Medio Ambiente
+            {event.title}
           </h1>
           <div className={styles.speakers}>
-            <div className={styles.speaker}>
-              <Avatar
-                size='small'
-                src='/images/person_image.jpg'
-              />
-              <p>
-                Kai Olivares
-              </p>
-            </div>
+            {
+              event?.speakers.length > 0 && (
+                <div className={styles.speakers}>
+                  {
+                    event?.speakers.map(speaker => {
+                      return (
+                        <div key={speaker._id} className={styles.speaker}>
+                          <Avatar
+                            size='small'
+                            style={{
+                              backgroundColor: '#0F72EC',
+                              border: 'none',
+                              display: 'flex',
+                              alignItems: 'center'
+                            }}
+                            src={speaker.image}
+                          >
+                            <p style={{ fontSize: '0.5rem' }}>
+                              {speaker.name.split(' ')[0].split('')[0]}
+                              {speaker.name.split(' ')[1]?.split('')[0]}
+                            </p>
+                          </Avatar>
+                          <p className={styles.speaker_name}>
+                            {speaker.name}
+                          </p>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              )
+            }
           </div>
           <div className={styles.event_time}>
             <HiOutlineClock />
             <p>
-              mar, 16 de marzo, 5:00 pm. - vie, 19 de marzo, 5:00 pm.
+              {dayjs(event?.date).format('MMM D, YYYY')}
             </p>
           </div>
           <div className={styles.event_location}>
             <HiOutlineMapPin />
             <p>
-              Corferias Cra. 37 #24 - 67, Bogotá
+              {event?.location}
             </p>
           </div>
-          <div className={styles.sponsors}>
-            <p>Presentado por:</p>
-            <Image src='/images/shambala_logo.png' alt='sponsor_logo' width={80} height={25} />
-          </div>
+          {
+            event?.sponsors.length > 0 && (
+              <div className={styles.sponsors}>
+                <p>Presentado por:</p>
+                {
+                  event?.sponsors.map(sponsor => {
+                    return (
+                      <div key={sponsor._id} className={styles.sponsor_image}>
+                        <img src={sponsor.image} alt='sponsor_logo' />
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            )
+          }
+
         </div>
 
         <div className={styles.event_image}>
-          <Image
-            src='/images/event_image_large.jpg'
-            alt='Event image'
-            fill
-
-          />
+          <img src={event.image} alt={event.title} />
         </div>
       </div>
 
@@ -112,22 +217,31 @@ const Event: FC = () => {
         </div>
 
         <div className={styles.right_column}>
-          <div className={styles.speaker_card}>
-            <div className={styles.speaker_card_header}>
-              <Avatar
-                size='large'
-                src='/images/person_image.jpg'
-              />
-              <p className={styles.speaker_name}>
-                Kai Olivares
-              </p>
-            </div>
-            <div className={styles.speaker_card_body}>
-              <p className={styles.speaker_bio}>
-                Modern Cubist abstract artist, NFT artist, Art educator & bridging the Contemporary with the Digital art realms
-              </p>
-            </div>
-          </div>
+          {
+            event.speakers.length > 0 && (
+              <div className={styles.speaker_card}>
+                <div className={styles.speaker_card_header}>
+                  <div className={styles.speaker_data}>
+                    <Avatar
+                      size='large'
+                      src={event.speakers[0].image}
+                    />
+                    <p className={styles.speaker_name}>
+                      {event.speakers[0].name}
+                    </p>
+                  </div>
+                  <Button className={styles.linkedin_button} href={event.speakers[0].linkedin} target='_blank'>
+                    <FaLinkedinIn />
+                  </Button>
+                </div>
+                <div className={styles.speaker_card_body}>
+                  <p className={styles.speaker_bio}>
+                    {event.speakers[0].biography}
+                  </p>
+                </div>
+              </div>
+            )
+          }
         </div>
       </div>
 
@@ -140,7 +254,7 @@ const Event: FC = () => {
                   Fecha
                 </label>
                 <p className='event_info_text'>
-                  25 Mayo 2023
+                  {dayjs(event.date).format('DD MMMM YYYY')}
                 </p>
               </div>
               <div className={styles.event_info_block}>
@@ -151,14 +265,14 @@ const Event: FC = () => {
                   5:30 PM
                 </p>
               </div>
-              <div className={styles.event_info_block}>
+              {/* <div className={styles.event_info_block}>
                 <label className='event_info_label'>
                   Duración
                 </label>
                 <p className='event_info_text'>
                   60 minutos
                 </p>
-              </div>
+              </div> */}
             </div>
 
             <div className={styles.event_subscription_right_column}>
