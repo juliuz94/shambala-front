@@ -57,12 +57,14 @@ const CommentForm = ({
       <div className={styles.bar}>
         {renderProfileImage()}
 
-        <textarea
-          className={styles.input_bar}
-          placeholder='Comenta...'
-          value={message}
-          onChange={handleChange}
-        />
+        <div className={styles.text_container}>
+          <textarea
+            className={styles.input_bar}
+            placeholder='Comenta...'
+            value={message}
+            onChange={handleChange}
+          />
+        </div>
       </div>
 
       <button

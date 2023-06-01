@@ -1,18 +1,18 @@
-.video_card{
-  width:100%;
-  min-width:314px;
-  max-width:340px;
-  cursor:pointer;
-  margin-right:32px;
+.video_card {
+  width: 100%;
+  min-width: 314px;
+  max-width: 340px;
+  cursor: pointer;
+  margin-right: 32px;
 }
 
-.card_header{
-  position:relative;
-  border-radius:10px;
-  width:100%;
-  height:170px;
-  background-position:center;
-  background-size:cover;
+.card_header {
+  position: relative;
+  border-radius: 10px;
+  width: 100%;
+  height: 170px;
+  background-position: center;
+  background-size: cover;
 }
 
 /* .card_header img {
@@ -23,81 +23,80 @@
   top: 0;
   border-radius: 10px;
 } */
-.new_label{
-  background-color:var(--secondary-color);
-  position:absolute;
-  top:0.5rem;
-  right:1rem;
-  padding:0.25rem 0.8rem;
-  border-radius:15px;
+.new_label {
+  background-color: var(--secondary-color);
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  padding: 0.25rem 0.8rem;
+  border-radius: 15px;
 }
 
-.new_label p{
-  color:var(--contrast-text-color);
-  font-size:0.7rem;
+.new_label p {
+  color: var(--contrast-text-color);
+  font-size: 0.7rem;
 }
 
-.like_button{
-  position:absolute;
-  bottom:0.5rem;
-  right:1rem;
-  background-color:transparent;
-  border:none;
-  padding:0;
-  cursor:pointer;
-
+.like_button {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 1rem;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
-.like_button svg{
-  fill:white;
-  font-size:1.25rem;
+.like_button svg {
+  fill: white;
+  font-size: 1.25rem;
 }
 
-.like_button.liked svg{
-  fill:red;
+.like_button.liked svg {
+  fill: red;
 }
 
-.card_body{
-  padding:0;
+.card_body {
+  padding: 0;
 }
 
-.progress_bar_container{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:0.7rem;
-  margin:0.25rem 0;
+.progress_bar_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  margin: 0.25rem 0;
 }
 
-.progress_bar{
-  margin:0;
+.progress_bar {
+  margin: 0;
 }
 
-.progress_bar_container p{
-  font-size:0.7rem;
-  font-size:400;
+.progress_bar_container p {
+  font-size: 0.7rem;
+  font-size: 400;
 }
 
-.video_title{
-  font-size:0.95rem;
-  font-weight:500;
-  margin-bottom:0.5rem;
+.video_title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0.5rem 0;
 }
 
-.video_description{
-  font-size:0.75rem;
-  color:var(--secondary-text-color);
-  font-size:400;
+.video_description {
+  font-size: 0.75rem;
+  color: var(--secondary-text-color);
+  font-size: 400;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2; /* number of lines to show */
-          line-clamp: 2; 
+  line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
-.author{
-  display:flex;
-  align-items:center;
-  gap:0.5rem;
-  margin-top:0.5rem;
+.author {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
 }

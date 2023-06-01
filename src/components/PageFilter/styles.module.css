@@ -48,6 +48,8 @@
 
 @media (max-width: 570px) {
   .filters_container ul {
-    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 270px;
   }
 }

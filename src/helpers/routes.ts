@@ -1,16 +1,17 @@
 type Routes = {
-  VIDEOS: string;
-  VIDEOS_BY_TAG: string;
-  COMMENT: string;
-  COMMENTS: string;
-  VIDEOS_WITH_PROGRESS: string;
-  VIDEO_PROGRESS: string;
-  WORKSHOP_PER_MONTH: string;
+  VIDEOS: string
+  VIDEOS_BY_TAG: string
+  COMMENT: string
+  COMMENTS: string
+  VIDEOS_WITH_PROGRESS: string
+  VIDEO_PROGRESS: string
+  WORKSHOP_PER_MONTH: string
   WORKSHOP: string;
-  POST: string;
-  TAGS: string;
-  POST_COMMENT: string;
-};
+  POST: string
+  TAGS: string
+  POST_COMMENT: string
+  STATISTICS: string
+}
 
 const ROUTES: Routes = {
   VIDEOS: 'video',
@@ -24,6 +25,7 @@ const ROUTES: Routes = {
   POST: 'community/post',
   TAGS: 'tags',
   POST_COMMENT: 'community/post/comment',
-};
+  STATISTICS: 'users/statistics',
+}
 
 export default ROUTES

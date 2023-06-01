@@ -2,12 +2,39 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useUserContext } from '@/context/userContext'
 import Header from '@/components/Header'
-import Slider from '@/components/Profile/Slider'
+import VideoSlider from './VideoSlider'
+import VideoRowSkeleton from '../Videos/ui/Skeleton'
+import useFetchVideos from '@/Hooks/useFetchVideos'
 import styles from './styles.module.css'
+
+type VideoProgress = {
+  user: string
+  progress: number
+  finished: boolean
+}
+
+type Video = {
+  progress: VideoProgress
+  _id: string
+  title: string
+  url: string
+  image: string
+  description: string
+}
+
+type Label = {
+  createdAt: string
+  updatedAt: string
+  en: string
+  es: string
+  videos: Video[]
+}
 
 const Profile = () => {
   const router = useRouter()
   const { user } = useUserContext()
+
+  const { videos, videosWithProgress, loadingData } = useFetchVideos()
 
   const renderProfileImage = () => {
     if (user?.image) {
@@ -19,6 +46,30 @@ const Profile = () => {
       return <div className={styles.pfp}>{initials}</div>
     }
   }
+
+  const countFinishedVideos = (videos: Video[]) => {
+    let finishedCount = 0
+    videos.forEach((video) => {
+      if (video.progress.finished) {
+        finishedCount += 1
+      }
+    })
+    return finishedCount
+  }
+
+  const allVideos: Video[] = []
+  videos.forEach((videoCategory: any) => {
+    allVideos.push(...videoCategory.videos)
+  })
+
+  const uniqueVideosArray: Video[] = allVideos.filter(
+    (video, index, self) =>
+      index === self.findIndex((v) => v.title === video.title)
+  )
+
+  const newVideos = videos.map((videoCategory) => {
+    return { ...videoCategory, videos: uniqueVideosArray }
+  })
 
   return (
     <div className={styles.section}>
@@ -62,18 +113,26 @@ const Profile = () => {
             <div className={styles.projects}>
               <div className={styles.projects_container}>
                 <div className={styles.projects_text}>
-                  <h3>25</h3>
-                  <p>Videos</p>
-                  <p>Completados</p>
+                  <h3>{countFinishedVideos(videosWithProgress)}</h3>
+                  <p>
+                    {countFinishedVideos(videosWithProgress) > 1
+                      ? 'Videos'
+                      : 'Video'}
+                  </p>
+                  <p>
+                    {countFinishedVideos(videosWithProgress) > 1
+                      ? 'Completados'
+                      : 'Completado'}
+                  </p>
                 </div>
 
                 <div className={styles.projects_text}>
-                  <h3>14</h3>
+                  <h3>0</h3>
                   <p>Eventos</p>
                 </div>
 
                 <div className={styles.projects_text}>
-                  <h3>25</h3>
+                  <h3>0</h3>
                   <p>Puntos</p>
                 </div>
               </div>
@@ -93,13 +152,30 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className={styles.slider}>
-          <Slider title={'En progreso'} />
-        </div>
+        {loadingData ? (
+          <div style={{ marginTop: '2rem' }}>
+            <VideoRowSkeleton />
+            <VideoRowSkeleton />
+          </div>
+        ) : (
+          <>
+            {videosWithProgress.length > 0 && (
+              <div className={styles.slider}>
+                <VideoSlider title='En progreso' videos={videosWithProgress} />
+              </div>
+            )}
 
-        <div className={styles.slider}>
-          <Slider title={'Recomendados para ti'} />
-        </div>
+            {newVideos.length > 0 && (
+              <div className={styles.slider}>
+                <VideoSlider
+                  key={'Recomendados'}
+                  title={'Recomendados para ti'}
+                  videos={uniqueVideosArray}
+                />
+              </div>
+            )}
+          </>
+        )}
 
         <img
           className={styles.bg}

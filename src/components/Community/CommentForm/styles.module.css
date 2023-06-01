@@ -34,6 +34,10 @@
   background-color: var(--primary-color);
 }
 
+.text_container {
+  width: 100%;
+}
+
 .input_bar {
   font-family: var(--secondary-font);
   font-size: 15px;
@@ -66,30 +70,26 @@
   cursor: pointer;
 }
 
-@media (max-width: 748px) {
-  .container {
+@media (max-width: 648px) {
+  .comment_form {
     flex-direction: column;
   }
 
-  .bar {
-    gap: 10px;
+  .text_container {
+    width: 100%;
   }
 
-  .input_bar {
+  .bar {
+    margin-top: 20px;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .input_bar textarea {
     width: 100%;
   }
 
   .button {
     width: 100%;
-  }
-}
-
-@media (max-width: 632px) {
-  .bar {
-    flex-direction: column;
-  }
-
-  .pfp {
-    margin-bottom: 10px;
   }
 }
