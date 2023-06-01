@@ -1,9 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState } from 'react'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { useUserContext } from '@/context/userContext'
 import { toast } from 'sonner'
 import styles from './styles.module.css'
+import { User } from '@/types'
 
 interface Props {
   id: string
@@ -20,7 +22,8 @@ const CommentForm = ({
 }: Props) => {
   const [message, setMessage] = useState('')
 
-  const { user } = useUserContext()
+  const context = useUserContext()
+  const user = context?.user
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value)

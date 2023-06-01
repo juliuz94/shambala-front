@@ -1,27 +1,29 @@
 import { useState } from 'react'
 import { Avatar, Input, Button, Popover } from 'antd'
-import { useUserContext } from '@/context/userContext'
-import { HiArrowSmallRight, HiEllipsisVertical, HiOutlineTrash } from 'react-icons/hi2'
+import {
+  HiArrowSmallRight,
+  HiEllipsisVertical,
+  HiOutlineTrash,
+} from 'react-icons/hi2'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { Video, Comment, PaginatedComments } from '@/types'
 import styles from './styles.module.css'
 
 interface PropTypes {
-  video: Video | null;
-  comments: PaginatedComments | null;
-  refreshData: () => void;
+  video: Video | null
+  comments: PaginatedComments | null
+  refreshData: () => void
 }
 
 const VideoComments = ({ video, refreshData, comments }: PropTypes) => {
   const [textInput, setTextInput] = useState('')
-  const { user } = useUserContext()
 
   const handleCreateComment = async () => {
     try {
       await axiosInstance.post(ROUTES.COMMENT, {
         message: textInput,
-        videoId: video?._id
+        videoId: video?._id,
       })
       setTextInput('')
       refreshData()
@@ -37,8 +39,9 @@ const VideoComments = ({ video, refreshData, comments }: PropTypes) => {
           <p>Comentarios</p>
         </div>
         <div className={styles.comments_box}>
-          {
-            comments?.docs.length > 0 && comments.docs.map(comment => {
+          {comments &&
+            comments?.docs.length > 0 &&
+            comments.docs.map((comment) => {
               return (
                 <Comment
                   key={comment._id}
@@ -46,8 +49,7 @@ const VideoComments = ({ video, refreshData, comments }: PropTypes) => {
                   refreshData={refreshData}
                 />
               )
-            })
-          }
+            })}
         </div>
         <div className={styles.add_comment_box}>
           <div className={styles.form_container}>
@@ -71,12 +73,11 @@ const VideoComments = ({ video, refreshData, comments }: PropTypes) => {
 export default VideoComments
 
 type CommentProps = {
-  comment: Comment,
-  refreshData: () => void;
+  comment: Comment
+  refreshData: () => void
 }
 
 const Comment = ({ comment, refreshData }: CommentProps) => {
-
   const handleDeleteComment = async () => {
     try {
       const res = await axiosInstance.delete(`${ROUTES.COMMENT}/${comment._id}`)
@@ -90,13 +91,11 @@ const Comment = ({ comment, refreshData }: CommentProps) => {
   const PopOverContent = (
     <div className={styles.popover}>
       <Button type='ghost' className={styles.delete_comment_button}>
-          <HiOutlineTrash />
-          <p>
-            Borrar
-          </p>
+        <HiOutlineTrash />
+        <p>Borrar</p>
       </Button>
     </div>
-  );
+  )
 
   return (
     <div className={styles.comment_card}>
@@ -105,16 +104,18 @@ const Comment = ({ comment, refreshData }: CommentProps) => {
           <Avatar size='small' />
           {/* <p>{user?.displayName}</p> */}
         </div>
-        <Popover placement='right' content={PopOverContent} trigger="click">
-          <Button type='ghost' className={styles.comment_options} onClick={handleDeleteComment}>
+        <Popover placement='right' content={PopOverContent} trigger='click'>
+          <Button
+            type='ghost'
+            className={styles.comment_options}
+            onClick={handleDeleteComment}
+          >
             <HiEllipsisVertical />
           </Button>
         </Popover>
       </div>
       <div className={styles.text_container}>
-        <p>
-          {comment.message}
-        </p>
+        <p>{comment.message}</p>
       </div>
     </div>
   )

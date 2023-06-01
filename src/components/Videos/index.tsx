@@ -57,37 +57,30 @@ const VideosComponent = () => {
     <div>
       <Header />
       <div className={styles.content_container}>
-        {
-          loadingData ?
-            <div style={{ marginTop: '2rem' }}>
-              <VideoRowSkeleton />
-              <VideoRowSkeleton />
+        {loadingData ? (
+          <div style={{ marginTop: '2rem' }}>
+            <VideoRowSkeleton />
+            <VideoRowSkeleton />
+          </div>
+        ) : (
+          <>
+            <div className={styles.video_options}>
+              <SearchInput />
+              {/* <Filter /> */}
             </div>
-            :
-            <>
-              <div className={styles.video_options}>
-                <SearchInput />
-                {/* <Filter /> */}
-              </div>
-              <VideoRow
-                title='En progreso'
-                videos={videosWithProgress}
-              />
-              {
-                videos.length > 0 && videos.map(videoCategory => {
-                  return (
-                    <VideoRow
-                      key={videoCategory.es}
-                      title={videoCategory.es}
-                      videos={videoCategory.videos}
-                    />
-                  )
-                })
-              }
-            </>
-
-        }
-
+            <VideoRow title='En progreso' videos={videosWithProgress} />
+            {videos.length > 0 &&
+              videos.map((videoCategory, index) => {
+                return (
+                  <VideoRow
+                    key={`${videoCategory?.es ?? index}`}
+                    title={videoCategory.es}
+                    videos={videoCategory.videos}
+                  />
+                )
+              })}
+          </>
+        )}
       </div>
     </div>
   )

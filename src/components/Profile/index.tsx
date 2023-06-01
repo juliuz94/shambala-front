@@ -170,7 +170,7 @@ const Profile = () => {
                 <VideoSlider
                   key={'Recomendados'}
                   title={'Recomendados para ti'}
-                  videos={uniqueVideosArray}
+                  videos={uniqueVideosArray as any}
                 />
               </div>
             )}

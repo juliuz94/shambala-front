@@ -1,7 +1,15 @@
 import { useState, FC } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, fetchSignInMethodsForEmail } from 'firebase/auth'
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  fetchSignInMethodsForEmail,
+} from 'firebase/auth'
 import { toast } from 'sonner'
 import { Form, Input, Button, Spin, Modal } from 'antd'
 import styles from './styles.module.css'
@@ -13,7 +21,7 @@ const LoginComponent: FC = () => {
   const { setUser, handleLogin } = useUserContext()
   const [loading, setLoading] = useState({
     isLoading: false,
-    type: ''
+    type: '',
   })
   const [showCreateUser, setShowCreateUser] = useState(false)
   const provider = new GoogleAuthProvider()
@@ -29,14 +37,14 @@ const LoginComponent: FC = () => {
   const handleResetLoading = () => {
     setLoading({
       isLoading: false,
-      type: ''
+      type: '',
     })
   }
 
   const signInWithGoogle = async () => {
     setLoading({
       isLoading: true,
-      type: 'google'
+      type: 'google',
     })
     try {
       const result = await signInWithPopup(auth, provider)
@@ -49,18 +57,28 @@ const LoginComponent: FC = () => {
     handleResetLoading()
   }
 
-  const singInWithForm = async (data) => {
+  const singInWithForm = async (data: any) => {
     setLoading({
       isLoading: true,
-      type: 'email&password'
+      type: 'email&password',
     })
     try {
-      const hasOtherSignInMethod = await fetchSignInMethodsForEmail(auth, data.email)
-      if (hasOtherSignInMethod.length > 0 && !hasOtherSignInMethod.includes('password')) {
+      const hasOtherSignInMethod = await fetchSignInMethodsForEmail(
+        auth,
+        data.email
+      )
+      if (
+        hasOtherSignInMethod.length > 0 &&
+        !hasOtherSignInMethod.includes('password')
+      ) {
         return handleUserUsedDifferentMethod(hasOtherSignInMethod)
       }
 
-      const result = await signInWithEmailAndPassword(auth, data.email, data.password)
+      const result = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      )
       setUser(result.user)
       router.push('/videos')
     } catch (error) {
@@ -83,19 +101,19 @@ const LoginComponent: FC = () => {
     switch (errorMessage) {
       case 'Firebase: Error (auth/user-not-found).':
         toast.error('No existe un usuario con este correo')
-        break;
+        break
 
       case 'Firebase: Error (auth/wrong-password).':
         toast.error('La contraseña no es correcta')
-        break;
+        break
 
       case 'Firebase: Error (auth/email-already-in-use).':
         toast.error('Ya existe un usuario con este correo')
-        break;
+        break
 
       default:
         toast.error('Algió salió mal. Intenta nuevamente')
-        break;
+        break
     }
   }
 
@@ -104,12 +122,12 @@ const LoginComponent: FC = () => {
 
     setLoading({
       isLoading: true,
-      type: 'signUp'
+      type: 'signUp',
     })
 
     try {
       await createUserWithEmailAndPassword(auth, email, password)
-      await updateProfile(auth.currentUser, { displayName: name })
+      await updateProfile(auth.currentUser as any, { displayName: name })
       setUser(auth.currentUser)
       router.push('/videos')
     } catch (error) {
@@ -117,7 +135,6 @@ const LoginComponent: FC = () => {
       handleLoginError(error)
     }
   }
-
 
   return (
     <div className={styles.login_page}>
@@ -142,10 +159,7 @@ const LoginComponent: FC = () => {
             className={styles.input_item}
             rules={[{ required: true, message: 'Olvidaste tu email!' }]}
           >
-            <Input
-              className={styles.login_input}
-              size='large'
-            />
+            <Input className={styles.login_input} size='large' />
           </Form.Item>
           <Form.Item
             name='password'
@@ -153,34 +167,59 @@ const LoginComponent: FC = () => {
             className={styles.input_item}
             rules={[{ required: true, message: 'Olvidaste tu contraseña!' }]}
           >
-            <Input.Password
-              className={styles.login_input}
-              size='large'
-            />
+            <Input.Password className={styles.login_input} size='large' />
           </Form.Item>
 
           <Form.Item className={styles.input_item}>
-            <Button disabled={loading.isLoading} className={styles.login_button} size='large' type='primary' htmlType='submit'>
-              {
-                loading.isLoading && loading.type === 'email&password'
-                  ? <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
-                  : 'Ingresar'
-              }
+            <Button
+              disabled={loading.isLoading}
+              className={styles.login_button}
+              size='large'
+              type='primary'
+              htmlType='submit'
+            >
+              {loading.isLoading && loading.type === 'email&password' ? (
+                <Spin
+                  indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+                />
+              ) : (
+                'Ingresar'
+              )}
             </Button>
           </Form.Item>
-
         </Form>
-        <Button disabled={loading.isLoading} className={`${styles.login_button}`} size='large' onClick={signInWithGoogle}>
-          {
-            loading.isLoading && loading.type === 'google'
-              ? <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
-              : <>Ingresa con Google <Image src='/images/google_logo.png' alt='Google Login' width={15} height={15} /></>
-          }
-
+        <Button
+          disabled={loading.isLoading}
+          className={`${styles.login_button}`}
+          size='large'
+          onClick={signInWithGoogle}
+        >
+          {loading.isLoading && loading.type === 'google' ? (
+            <Spin
+              indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+            />
+          ) : (
+            <>
+              Ingresa con Google{' '}
+              <Image
+                src='/images/google_logo.png'
+                alt='Google Login'
+                width={15}
+                height={15}
+              />
+            </>
+          )}
         </Button>
         <div className={styles.other_options}>
-          <p>¿Olvidaste tu contraseña? <a>Haz click aquí</a></p>
-          <p>¿No tienes cuenta? <a onClick={() => setShowCreateUser(true)}>Registrate para acceder</a></p>
+          <p>
+            ¿Olvidaste tu contraseña? <a>Haz click aquí</a>
+          </p>
+          <p>
+            ¿No tienes cuenta?{' '}
+            <a onClick={() => setShowCreateUser(true)}>
+              Registrate para acceder
+            </a>
+          </p>
         </div>
         <Modal
           title='Registrate en Shambala'
@@ -202,10 +241,7 @@ const LoginComponent: FC = () => {
               className={styles.input_item}
               rules={[{ required: true, message: 'Este campo es necesario' }]}
             >
-              <Input
-                className={styles.login_input}
-                size='large'
-              />
+              <Input className={styles.login_input} size='large' />
             </Form.Item>
             <Form.Item
               name='email'
@@ -213,10 +249,7 @@ const LoginComponent: FC = () => {
               className={styles.input_item}
               rules={[{ required: true, message: 'Este campo es necesario' }]}
             >
-              <Input
-                className={styles.login_input}
-                size='large'
-              />
+              <Input className={styles.login_input} size='large' />
             </Form.Item>
             <Form.Item
               name='password'
@@ -224,24 +257,30 @@ const LoginComponent: FC = () => {
               className={styles.input_item}
               rules={[{ required: true, message: 'Olvidaste tu contraseña!' }]}
             >
-              <Input.Password
-                className={styles.login_input}
-                size='large'
-              />
+              <Input.Password className={styles.login_input} size='large' />
             </Form.Item>
             <Form.Item>
-              <Button disabled={loading.isLoading} className={`${styles.login_button}`} type='primary' size='large' htmlType='submit'>
-                {
-                  loading.isLoading && loading.type === 'signUp'
-                    ? <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
-                    : 'Crear cuenta'
-                }
+              <Button
+                disabled={loading.isLoading}
+                className={`${styles.login_button}`}
+                type='primary'
+                size='large'
+                htmlType='submit'
+              >
+                {loading.isLoading && loading.type === 'signUp' ? (
+                  <Spin
+                    indicator={
+                      <LoadingOutlined style={{ fontSize: 24 }} spin />
+                    }
+                  />
+                ) : (
+                  'Crear cuenta'
+                )}
               </Button>
             </Form.Item>
           </Form>
         </Modal>
       </div>
-
     </div>
   )
 }

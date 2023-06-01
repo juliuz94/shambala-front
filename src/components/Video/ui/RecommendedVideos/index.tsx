@@ -5,17 +5,17 @@ import VideoCard from '@/components/VideoCard'
 import styles from './styles.module.css'
 
 const RecommendedVideos: FC = () => {
-  const scrollRef = useRef(null)
-  
+  const scrollRef = useRef<any>(null)
+
   const handleScrollRow = (direction: String) => {
-    if (!scrollRef.current) return 
+    if (!scrollRef.current) return
 
     const rowWidth = scrollRef.current.offsetWidth
 
     if (direction === 'left') {
-      scrollRef.current.scrollLeft -= (rowWidth / 4);
+      scrollRef.current.scrollLeft -= rowWidth / 4
     } else {
-      scrollRef.current.scrollLeft += (rowWidth / 4);
+      scrollRef.current.scrollLeft += rowWidth / 4
     }
   }
 
@@ -25,10 +25,16 @@ const RecommendedVideos: FC = () => {
         <div className={styles.left_column}>
           <h2>Videos similares</h2>
           <div className={styles.video_row_navigation}>
-            <Button className={styles.row_navigation_button} onClick={() => handleScrollRow('left')}>
+            <Button
+              className={styles.row_navigation_button}
+              onClick={() => handleScrollRow('left')}
+            >
               <IoIosArrowRoundBack />
             </Button>
-            <Button className={styles.row_navigation_button} onClick={() => handleScrollRow('right')}>
+            <Button
+              className={styles.row_navigation_button}
+              onClick={() => handleScrollRow('right')}
+            >
               <IoIosArrowRoundForward />
             </Button>
           </div>

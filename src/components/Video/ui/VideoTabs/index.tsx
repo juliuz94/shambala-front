@@ -9,9 +9,7 @@ interface PropTypes {
   video: Video | null
 }
 
-
 const VideoTabs = ({ video }: PropTypes) => {
-
   const items = [
     {
       key: '1',
@@ -22,7 +20,7 @@ const VideoTabs = ({ video }: PropTypes) => {
       key: '2',
       label: `Archivos Adjuntos`,
       children: <VideoFiles video={video} />,
-    }
+    },
   ]
 
   const onChange = (key: string) => {
@@ -31,7 +29,7 @@ const VideoTabs = ({ video }: PropTypes) => {
 
   return (
     <div className={styles.tabs_container}>
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+      <Tabs defaultActiveKey='1' items={items} onChange={onChange} />
     </div>
   )
 }
@@ -50,13 +48,17 @@ const VideoDescription = ({ video }: PropTypes) => {
 
     return paragraphsArray.map((paragraph, index) => {
       if (paragraph === '') return null
-      return <p key={index} className={styles.bio_text}>{paragraph}</p>
+      return (
+        <p key={index} className={styles.bio_text}>
+          {paragraph}
+        </p>
+      )
     })
   }
 
   return (
     <div className={styles.video_description}>
-      {splitTextIntoParagraph(video?.description)}
+      {splitTextIntoParagraph(video?.description ?? '')}
       {/* <p>
         {video?.description}
       </p> */}
@@ -69,28 +71,30 @@ const VideoFiles = ({ video }: PropTypes) => {
   const [files, setFiles] = useState<Attachment[] | []>([])
 
   useEffect(() => {
-    const guides: Attachment[] = video?.attachments?.filter(file => file.guide === true) ?? []
+    const guides: Attachment[] =
+      video?.attachments?.filter((file) => file.guide === true) ?? []
     setGuides(guides)
-    const files: Attachment[] = video?.attachments?.filter(file => file.guide === false) ?? []
+    const files: Attachment[] =
+      video?.attachments?.filter((file) => file.guide === false) ?? []
     setFiles(files)
   }, [video])
 
   return (
     <div className={styles.video_files}>
-      {
-        guides.length > 0 && (
-          <div className={styles.attachments_container}>
-            {guides.map(guide => <FileCard key={guide._id} file={guide} />)}
-          </div>
-        )
-      }
-      {
-        files.length > 0 && (
-          <div className={styles.attachments_container}>
-            {files.map(file => <FileCard key={file._id} file={file} />)}
-          </div>
-        )
-      }
+      {guides.length > 0 && (
+        <div className={styles.attachments_container}>
+          {guides.map((guide) => (
+            <FileCard key={guide._id} file={guide} />
+          ))}
+        </div>
+      )}
+      {files.length > 0 && (
+        <div className={styles.attachments_container}>
+          {files.map((file) => (
+            <FileCard key={file._id} file={file} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

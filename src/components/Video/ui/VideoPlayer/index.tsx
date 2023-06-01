@@ -9,15 +9,15 @@ import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 
 interface PropTypes {
-  video: Video | null,
+  video: Video | null
   videoProgress: number
 }
 
 interface VideoStatus {
-  played: number;
-  playedSeconds: number;
-  loaded: number;
-  loadedSeconds: number;
+  played: number
+  playedSeconds: number
+  loaded: number
+  loadedSeconds: number
 }
 
 type ArithmeticOperand = any | number | bigint
@@ -37,7 +37,10 @@ const VideoPlayer = ({ video, videoProgress }: PropTypes) => {
     const { played, playedSeconds } = progress
     setProgress(played * 100)
     setProgressSeconds(playedSeconds)
-    if (Math.floor(playedSeconds) % 3 === 0 && lastProgress < Math.floor(playedSeconds)) {
+    if (
+      Math.floor(playedSeconds) % 3 === 0 &&
+      lastProgress < Math.floor(playedSeconds)
+    ) {
       setLastProgress(Math.floor(playedSeconds))
       saveVideoProgress(played)
     }
@@ -64,11 +67,11 @@ const VideoPlayer = ({ video, videoProgress }: PropTypes) => {
     switch (playBackRate) {
       case 2:
         setPlayBackRate(1)
-        break;
-    
+        break
+
       default:
         setPlayBackRate(playBackRate + 0.5)
-        break;
+        break
     }
   }
 
@@ -84,39 +87,42 @@ const VideoPlayer = ({ video, videoProgress }: PropTypes) => {
       player.current.seekTo(newValue, 'seconds')
       setProgressSeconds(newValue)
     }
-  };
+  }
 
   const saveVideoProgress = async (timeInSeconds: ArithmeticOperand) => {
-    if (!video) return 
+    if (!video) return
     try {
       await axiosInstance.patch(`${ROUTES.VIDEO_PROGRESS}/${video._id}`, {
         videoId: video._id,
         progress: timeInSeconds * 100,
-        finished: false
+        finished: false,
       })
     } catch (error) {
-      console.log('[saveVideoProgress]', error) 
+      console.log('[saveVideoProgress]', error)
     }
   }
 
   const onVideoEnded = async () => {
     try {
-      await axiosInstance.patch(`${ROUTES.VIDEO_PROGRESS}/${video._id}`, {
-        videoId: video._id,
-        progress: 100,
-        finished: true
-      })
+      if (video) {
+        await axiosInstance.patch(`${ROUTES.VIDEO_PROGRESS}/${video._id}`, {
+          videoId: video._id,
+          progress: 100,
+          finished: true,
+        })
+      }
+
       setProgress(100)
       setProgressSeconds(totalDuration)
     } catch (error) {
       console.log('onVideoEnded', error)
     }
-  } 
+  }
 
   function toTimeString(totalSeconds: ArithmeticOperand) {
-    const totalMs = totalSeconds * 1000;
-    const result = new Date(totalMs).toISOString().slice(11, 19);
-    return result;
+    const totalMs = totalSeconds * 1000
+    const result = new Date(totalMs).toISOString().slice(11, 19)
+    return result
   }
 
   return (
@@ -139,13 +145,25 @@ const VideoPlayer = ({ video, videoProgress }: PropTypes) => {
           onEnded={onVideoEnded}
         />
         <div className={styles.controllers}>
-          <Button className={styles.play_control_button} type='ghost' onClick={() => setPlaying(!playing)}>
+          <Button
+            className={styles.play_control_button}
+            type='ghost'
+            onClick={() => setPlaying(!playing)}
+          >
             {playing ? <HiPause /> : <HiPlay />}
           </Button>
-          <Button className={styles.play_control_button} type='ghost' onClick={() => setMuted(!muted)}>
+          <Button
+            className={styles.play_control_button}
+            type='ghost'
+            onClick={() => setMuted(!muted)}
+          >
             {muted ? <HiVolumeOff /> : <HiVolumeUp />}
           </Button>
-          <Button className={styles.play_control_button} type='ghost' onClick={onChangePlayBackRate}>
+          <Button
+            className={styles.play_control_button}
+            type='ghost'
+            onClick={onChangePlayBackRate}
+          >
             <p>{playBackRate}x</p>
           </Button>
           <div className={styles.progress_container}>
@@ -163,15 +181,15 @@ const VideoPlayer = ({ video, videoProgress }: PropTypes) => {
               value={progressSeconds}
               className={styles.seek}
               railStyle={{
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
               }}
               trackStyle={{
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
               }}
               handleStyle={{
-                maxWidth: '1px'
+                maxWidth: '1px',
               }}
-            // marks={marks}
+              // marks={marks}
             />
           </div>
           <div className={styles.time_progress}>
@@ -187,14 +205,19 @@ const VideoPlayer = ({ video, videoProgress }: PropTypes) => {
           <p>Contenido</p>
         </div>
         <div>
-          {video?.sections.map(section => {
-            return (
-              <div key={section.title} className={styles.section_card} onClick={() => seek(section.time)}>
-                <p>{section.title}</p>
-                <p>{toTimeString(section.time)}</p>
-              </div>
-            )
-          })}
+          {video &&
+            video?.sections.map((section: any) => {
+              return (
+                <div
+                  key={section.title}
+                  className={styles.section_card}
+                  onClick={() => seek(section.time)}
+                >
+                  <p>{section.title}</p>
+                  <p>{toTimeString(section.time)}</p>
+                </div>
+              )
+            })}
         </div>
       </div>
     </section>
