@@ -1,97 +1,103 @@
-.main{
+.main {
 }
 
-.container{
-  width:100%;
+.container {
+  width: 100%;
 }
 
-.text{
-  font-weight:500;
-  text-align:left;
+.text {
+  font-weight: 500;
+  text-align: left;
 }
 
-@media screen and (max-width:768px){
-  .main{
-    display:flex;
-    width:100%;
+@media screen and (max-width: 768px) {
+  .main {
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+
   }
 
-  .container{
-    max-width:400px;
+  .container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
-  .map{
-    display:flex;
-    flex-direction:column;
-    flex-wrap:wrap;
-    width:100%;
-    height:100%;
-    justify-content:center;
+  .map {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
   }
 
-  .reason_container{
-    display:flex;
-    flex-direction:column;
+  .reason_container {
+    display: flex;
+    flex-direction: column;
   }
 
-  .reason_content{
-    display:flex;
-    flex-direction:row;
-    align-items:flex-start;
-    gap:1rem;
-    width:min(100%, 308px);
-    margin:10px;
+  .reason_content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1rem;
+    width: min(100%, 308px);
+    margin: 10px;
   }
 
-  .text{
-    font-size:14px;
-    line-height:20px;
+  .text {
+    font-size: 14px;
+    line-height: 20px;
   }
 
-  .image{
-    width:36px;
-    height:36px;
+  .image {
+    width: 36px;
+    height: 36px;
   }
 }
 
-@media screen and (min-width:1025px){
+@media screen and (min-width: 1025px) {
 
-  .main{
-    flex-direction:row;
-    width:100%;
+  .main {
+    flex-direction: row;
+    width: 100%;
   }
 
-  .map{
-    display:flex;
-    flex-direction:row;
-    flex-wrap:wrap;
-    width:100%;
-    height:100%;
-    justify-content:flex-start;
+  .map {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
   }
 
-  .reason_container{
-    display:flex;
-    flex-direction:row;
+  .reason_container {
+    display: flex;
+    flex-direction: row;
   }
 
-  .reason_content{
-    display:flex;
-    flex-direction:row;
-    align-items:center;
-    gap:1rem;
-    width:500px;
-    margin:10px;
+  .reason_content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    width: 500px;
+    margin: 10px;
   }
 
-  .text{
-    font-size:18px;
-    line-height:26px;
+  .text {
+    font-size: 18px;
+    line-height: 26px;
   }
 
-  .image{
-    width:58px;
-    height:58px;
+  .image {
+    width: 58px;
+    height: 58px;
   }
 
 }

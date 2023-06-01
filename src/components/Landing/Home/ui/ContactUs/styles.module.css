@@ -1,14 +1,23 @@
-.container{
-  width:100%;
+.container {
+  width: 100%;
 }
 
-@media screen and (max-width:768px){
-  .container{
-    max-width:400px;
+@media screen and (max-width: 768px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form {
+    width: 100%;
+    max-width: 400px;
   }
 }
 
-@media screen and (min-width:1025px){
-  .container{
+@media screen and (min-width: 1025px) {
+  .container {
   }
 }

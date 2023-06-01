@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import { ShambalaLogo } from '@/svg'
 import Link from 'next/link'
 import styles from './styles.module.css'
 import { CustomMap } from '@/components/Custom/CustomMap'
@@ -8,6 +7,8 @@ import CustomModal from '@/components/Custom/CustomModal/CustomModal'
 import CardContactUs from '@/components/CardContactUs'
 import DropdownMobile from '@/components/LadingLayout/ui/Dropdown'
 import { Button } from 'antd'
+import { shambalaLogo } from '../../../../../public/images/png'
+import Image from 'next/image'
 
 const routes = [
   { label: 'Home', route: '/' },
@@ -29,11 +30,12 @@ const Header: FC = () => {
   return (
     <header className={styles.header_nav}>
       <article>
-        <ShambalaLogo
-          titlecolor={'#0F72EC'}
+        <Image
+          src={shambalaLogo}
+          alt='Shambala Logo'
           className={styles.logo}
           onClick={homeNavigate}
-        />
+        ></Image>
       </article>
 
       <article className={styles.drawer}>

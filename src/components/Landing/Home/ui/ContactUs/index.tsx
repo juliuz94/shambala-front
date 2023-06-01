@@ -11,7 +11,7 @@ const ContactUs = () => {
         <TitleSections
           title={strings.ladingPage.homeSectionsTitles.contactUs}
         />
-        <div>
+        <div className={styles.form}>
           <CardContactUs />
         </div>
       </div>

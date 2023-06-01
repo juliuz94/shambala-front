@@ -13,6 +13,7 @@ import Crown from './crown.svg'
 import Leaf from './leaf.svg'
 import LifeRing from './lifeRing.svg'
 import Start from './start.svg'
+import shambalaLogo from './shambala_logo.svg'
 
 export {
   FirstImageTitle,
@@ -29,5 +30,6 @@ export {
   Crown,
   Leaf,
   LifeRing,
-  Start
+  Start,
+  shambalaLogo,
 }

@@ -1,126 +1,125 @@
-@media screen and (max-width:768px){
-  .container{
-    height:100%;
-    width:398px;
-    border-radius:20px;
-    background:linear-gradient(180deg, rgba(187, 237, 192, 0) 0%, #BBEDC0 100%);
+@media screen and (max-width: 768px) {
+  .container {
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(187, 237, 192, 0) 0%, #BBEDC0 100%);
   }
 
-  .container_card{
-    height:100%;
-    margin:25px 12px 80px 13px
+  .container_card {
+    height: 100%;
+    max-width: 400px;
+    margin: 25px 12px 80px 13px
   }
 
-  .content{
-    display:flex;
-    flex-direction:column;
-    width:100%;
-    align-items:flex-start;
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
   }
 
-  .image{
-    height:231px;
-    width:177px;
-    border-radius:10px;
+  .image {
+    height: 231px;
+    width: 177px;
+    border-radius: 10px;
   }
 
-  .container_text{
-    display:flex;
-    flex-direction:column;
-    height:269px;
-    width:100%;
-    flex-wrap:wrap;
-    align-items:flex-start;
+  .container_text {
+    display: flex;
+    flex-direction: column;
+    height: 269px;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: flex-start;
   }
 
-  .map{
-    margin-top:2rem;
-    display:flex;
-    flex-wrap:wrap;
-    width:100%;
+  .map {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
   }
 
-  .content_text{
-    display:flex;
-    flex-direction:row;
-    width:100%;
-    margin:1rem 0;
+  .content_text {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 1rem 0;
   }
 
-  .content_text h3{
-    font-size:17px;
-    font-weight:500;
-    line-height:24px;
-    text-align:left;
-    margin-left:0.6rem;
+  .content_text h3 {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: left;
+    margin-left: 0.6rem;
   }
 }
 
-@media screen and (min-width:1025px){
-  .container{
-    display:flex;
-    width:100%;
-    max-width:var(--max-width);
-    align-items:center;
-    justify-content:center;
-    margin:2.5rem 0
+@media screen and (min-width: 1025px) {
+  .container {
+    display: flex;
+    width: 100%;
+    max-width: var(--max-width);
+    align-items: center;
+    justify-content: center;
   }
 
-  .container_card{
-    height:100%;
-    width:min(100%, 84.5rem);
-    background:linear-gradient(180deg, rgba(187, 237, 192, 0) 0%, #BBEDC0 100%);
-    border-radius:20px;
+  .container_card {
+    height: 100%;
+    width: min(100%, 84.5rem);
+    background: linear-gradient(180deg, rgba(187, 237, 192, 0) 0%, #BBEDC0 100%);
+    border-radius: 20px;
   }
 
-  .header{
-    margin:1rem 0 2.9rem 7.2rem
+  .header {
+    margin: 1rem 0 2.9rem 7.2rem
   }
 
-  .header h1{
-    font-size:48px;
-    font-weight:700;
-    line-height:58px;
-    letter-spacing:-0.025em;
-    text-align:left;
-    color:#374151;
+  .header h1 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 58px;
+    letter-spacing: -0.025em;
+    text-align: left;
+    color: #374151;
   }
 
-  .content{
-    display:flex;
-    width:100%;
-    margin:0 7.3rem 6.9rem 3.75rem;
-    align-items:center;
+  .content {
+    margin: 1rem 2rem;
+    align-items: flex-start;
+    gap: 1rem;
+    display: flex;
+
   }
 
-  .container_text{
-    display:flex;
-    flex-direction:row;
-    height:269px;
-    width:min(100%, 54.9rem);
-    margin:0 1.8rem 0 3.7rem;
-    flex-wrap:wrap;
-    align-items:flex-start;
+  .container_text {
+    display: flex;
+    flex-direction: row;
   }
 
-  .map{
-    display:flex;
-    flex-wrap:wrap;
-    width:100%;
+  .map {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+
   }
 
-  .content_text{
-    display:flex;
-    flex-direction:row;
-    width:369px;
-    margin:0 4.2rem 2.5rem 0;
+  .content_text {
+    display: flex;
+    flex-direction: row;
+    width: min(100%, 310px);
+    margin: 0 2rem 1rem 2rem;
   }
 
-  .content_text h3{
-    font-size:18px;
-    font-weight:500;
-    line-height:26px;
-    text-align:left;
-    margin-left:0.6rem;
+  .content_text h3 {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 26px;
+    text-align: left;
+    margin-left: 0.6rem;
   }
 }

@@ -14,6 +14,7 @@
     justify-content: center;
     background-position: left;
     background-size: 50% 100%;
+    padding: 0 .5rem;
   }
 
   .arrow {
