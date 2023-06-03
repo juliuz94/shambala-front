@@ -1,32 +1,36 @@
 import GlobalContainer from '@/components/GlobalContainer'
 import TitleSections from '@/components/TitleSections'
 import { strings } from '@/constants/strings'
-import TeamCard from '@/components/TeamCard'
-import styles from './styles.module.css'
 import { members } from '@/constants/members'
-import { CustomMap } from '@/components/Custom/CustomMap'
+import { ImLinkedin } from 'react-icons/im'
+import styles from './styles.module.css'
 
 const Team = () => {
   return (
     <GlobalContainer>
-      <section className={styles.container}>
+      <div className={styles.container}>
         <TitleSections title={strings.ladingPage.homeSectionsTitles.team} />
-        <main className={styles.main}>
-          <CustomMap
-            className={styles.container_cards}
-            data={members}
-            renderItem={(item) => (
-              <TeamCard
-                image={item.photo}
-                name={item.name}
-                career={item.position}
-                description={item.description}
-                linkedin={item.linkedin}
+
+        <div className={styles.cards_container}>
+          {members.map((member, index) => (
+            <div className={styles.card} key={index}>
+              <img
+                className={styles.card_img}
+                src={member.photo.src}
+                alt={member.name}
               />
-            )}
-          />
-        </main>
-      </section>
+              <div className={styles.card_info}>
+                <h2>{member.name}</h2>
+                <div className={styles.position}>
+                  <h3>{member.position}</h3>
+                  <ImLinkedin size={24} fill='#CBCBCB' />
+                </div>
+                <p>{member.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </GlobalContainer>
   )
 }

@@ -13,24 +13,20 @@
   color: #374151;
 }
 
-@media screen and (max-width: 768px) {
-  .title_container {
-    width: min(100%, 25rem);
-  }
-
-  .title_container h2 {
-    font-size: 2.3rem;
-    line-height: 3rem;
-  }
+.title_container {
+  width: min(100%, 25rem);
 }
 
-@media screen and (min-width: 1025px) {
-  .title_container {
-    width: min(100%, 80rem);
-  }
+.title_container {
+  width: min(100%, 80rem);
+}
 
+.title_container h2 {
+  font-size: 48px;
+}
+
+@media (max-width: 1090px) {
   .title_container h2 {
-    font-size: 3.7rem;
-    line-height: 5rem;
+    font-size: 38px;
   }
 }

@@ -11,8 +11,17 @@ const CompanyBio: FC = () => {
           <HiPlay />
         </div>
       </div>
+      <div className={styles.button_container}>
+        <button className={styles.button} type='button'>
+          Añadir Comentario
+        </button>
+      </div>
       <p>
-        La definición de sostenibilidad hace referencia a la implementación de un modelo de negocio que no perjudique, a través de su actividad, a las generaciones futuras. En ámbito empresarial, esta definición aplicada a la gestión de gastos y política de empresa se centra en la reducción de “daños colaterales.
+        La definición de sostenibilidad hace referencia a la implementación de
+        un modelo de negocio que no perjudique, a través de su actividad, a las
+        generaciones futuras. En ámbito empresarial, esta definición aplicada a
+        la gestión de gastos y política de empresa se centra en la reducción de
+        “daños colaterales.
       </p>
     </div>
   )

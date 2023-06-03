@@ -1,66 +1,128 @@
 .container {
   width: 100%;
-  background-image: url('../../../../../../public/images/png/aboutUsBackground.png');
-  background-repeat: no-repeat;
-  background-size: contain;
   margin: 0 0 2.5rem 0;
+  position: relative;
+  margin-bottom: 120px;
+}
+
+.bg {
+  position: absolute;
+  z-index: -1;
+}
+
+.section_header {
+  width: 100%;
+  margin-left: 40px;
 }
 
 .title {
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  text-align: left;
+  font-size: 60px;
+  line-height: 82px;
   color: #374151;
 }
 
-.image {
-  margin: 0 10px;
+.image_section {
+  display: flex;
+  gap: 20px;
 }
 
-@media screen and (max-width: 768px) {
+.container_social {
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 28.12rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 1.3rem 4rem -0.5rem 0;
+  padding: 0 4rem 0 0;
+}
+
+.email {
+  display: flex;
+  flex-direction: row;
+  gap: 0.7rem;
+}
+
+.btn_subscribe {
+  cursor: pointer;
+}
+
+.email h3 {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 26px;
+  text-align: left;
+}
+
+.title_section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-left: 40px;
+}
+
+.btn_subscribe_mobile {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
   .container {
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    min-height: 400px;
-    align-items: center;
     background-position: left;
     background-size: 50% 100%;
-    padding: 0 .5rem;
+    padding: 0 0.5rem;
+    margin-bottom: 280px;
   }
 
   .title {
     font-size: 38px;
-    line-height: 46px;
+    margin-top: 260px;
+  }
+
+  .image {
+    width: 122.63px;
+    height: 44.59px;
+  }
+
+  .container_social {
+    display: none;
+  }
+
+  .email {
+    display: none;
   }
 
   .arrow {
     display: none;
   }
 
-  .image {
-    height: 44px;
-    width: 122px;
-    border-radius: 50px;
-    margin: 0 5px;
+  .btn_subscribe {
+    display: none;
+  }
+
+  .btn_subscribe_mobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 20px;
+    border-radius: 0.625rem;
+    margin: 0 0 4rem 0;
+  }
+
+  .title_section {
+    margin-top: 80px;
   }
 }
 
-@media screen and (min-width: 1025px) {
-  .container {
-    display: flex;
-    align-items: center;
-    height: 100vh;
-    justify-content: center;
-    padding: 0 80px;
+@media (max-width: 550px) {
+  .image {
+    width: 100px;
+    height: 40px;
   }
 
   .section_header {
-    width: 100%;
-  }
-
-  .title {
-    font-size: 60px;
-    line-height: 82px;
+    margin-left: 10px;
   }
 }

@@ -49,3 +49,37 @@
   line-height: 1.78rem;
   color: var(--secondary-text-color);
 }
+
+.button_container {
+  display: none;
+}
+
+@media (max-width: 787px) {
+  .company_bio_container {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .thumbnail_container {
+    flex: auto;
+    max-width: 100%;
+  }
+
+  .thumbnail_container img {
+    height: auto;
+    object-fit: cover;
+  }
+
+  .button_container {
+    display: flex;
+    width: 100%;
+  }
+
+  .button_container button {
+    color: var(--primary-color);
+    border-radius: 8px;
+    padding: 16px 18px;
+    background-color: white;
+    border: 1px solid var(--primary-color);
+  }
+}

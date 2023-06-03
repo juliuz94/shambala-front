@@ -15,22 +15,22 @@ import styles from './styles.module.css'
 dayjs.locale(locale)
 
 interface Month {
-  key: string;
-  monthNumber: number;
-  label: string;
+  key: string
+  monthNumber: number
+  label: string
 }
 
 interface MonthData {
-  docs: Workshop[];
-  hasNextPage: boolean;
-  hasPrevPage: boolean;
-  limit: number;
-  nextPage: number;
-  page: number;
-  pagingCounter: number;
-  prevPage: boolean | null;
-  totalDocs: number;
-  totalPages: number;
+  docs: Workshop[]
+  hasNextPage: boolean
+  hasPrevPage: boolean
+  limit: number
+  nextPage: number
+  page: number
+  pagingCounter: number
+  prevPage: boolean | null
+  totalDocs: number
+  totalPages: number
 }
 
 const Events = () => {
@@ -43,7 +43,9 @@ const Events = () => {
   const fetchEvents = useCallback(async () => {
     if (!activeMonth || !filter) return
     try {
-      const { data } = await axiosInstance.get(`${ROUTES.WORKSHOP_PER_MONTH}?month=${activeMonth.monthNumber}&type=${filter}`)
+      const { data } = await axiosInstance.get(
+        `${ROUTES.WORKSHOP_PER_MONTH}?month=${activeMonth.monthNumber}&type=${filter}`
+      )
       setWorkShopsData(data)
     } catch (error) {
       console.log('[fetchEvents]', error)
@@ -56,18 +58,22 @@ const Events = () => {
       {
         key: '1',
         monthNumber: currentMonthNumber,
-        label: dayjs().month(currentMonthNumber).format('MMMM')
+        label: dayjs().month(currentMonthNumber).format('MMMM'),
       },
       {
         key: '2',
         monthNumber: currentMonthNumber + 1,
-        label: dayjs().month(currentMonthNumber + 1).format('MMMM')
+        label: dayjs()
+          .month(currentMonthNumber + 1)
+          .format('MMMM'),
       },
       {
         key: '3',
         monthNumber: currentMonthNumber + 2,
-        label: dayjs().month(currentMonthNumber + 2).format('MMMM')
-      }
+        label: dayjs()
+          .month(currentMonthNumber + 2)
+          .format('MMMM'),
+      },
     ]
     setMonths(monthArray)
     setActiveMonth(monthArray[0])
@@ -121,7 +127,9 @@ const Events = () => {
             return (
               <div
                 key={month.key}
-                className={`${styles.tab} ${month.key === activeMonthTag ? styles.active : null}`}
+                className={`${styles.tab} ${
+                  month.key === activeMonthTag ? styles.active : null
+                }`}
                 onClick={() => handleChangeMonth(month)}
               >
                 <p>{month.label}</p>
@@ -131,27 +139,28 @@ const Events = () => {
         </div>
 
         <div className={styles.events_container}>
-          {
-            workShopsData?.docs?.map(workshop => (
-              <EventCard key={workshop._id} event={workshop} />
-            ))
-          }
-          {
-            workShopsData?.docs.length === 0 && (
-              <div>
-                <Empty
-                  image={<VscFolderOpened color='#54C055' size={60} />}
-                  imageStyle={{ height: 60 }}
-                  description={
-                    <span>
-                      No hay { filter === 'filter' ? 'eventos o talleres' : filter === 'EVENT' ? 'eventos' : 'talleres' } para esta fecha
-                    </span>
-                  }
-                >
-                </Empty>
-              </div>
-            )
-          }
+          {workShopsData?.docs?.map((workshop) => (
+            <EventCard key={workshop._id} event={workshop} />
+          ))}
+          {workShopsData?.docs.length === 0 && (
+            <div>
+              <Empty
+                image={<VscFolderOpened color='#54C055' size={60} />}
+                imageStyle={{ height: 60 }}
+                description={
+                  <span>
+                    No hay{' '}
+                    {filter === 'filter'
+                      ? 'eventos o talleres'
+                      : filter === 'EVENT'
+                      ? 'eventos'
+                      : 'talleres'}{' '}
+                    para esta fecha
+                  </span>
+                }
+              ></Empty>
+            </div>
+          )}
         </div>
       </div>
     </div>

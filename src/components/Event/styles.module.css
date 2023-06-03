@@ -142,7 +142,8 @@
   padding-top: 1.5rem;
 }
 
-.video_files, .attachments_container {
+.video_files,
+.attachments_container {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -214,7 +215,7 @@
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 4; /* number of lines to show */
-          line-clamp: 4; 
+  line-clamp: 4;
   -webkit-box-orient: vertical;
 }
 
@@ -252,7 +253,7 @@
   gap: 0.25rem;
 }
 
-.event_info_block label, 
+.event_info_block label,
 .event_info_block p {
   font-size: 0.9rem;
 }
@@ -294,4 +295,29 @@
 
 .event_subscription_right_column button p {
   font-size: 1rem;
+}
+
+@media (max-width: 1023px) {
+  .right_column {
+    display: none;
+  }
+
+  .event_image {
+    display: none;
+  }
+
+  .event_header,
+  .event_info_container {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 750px) {
+  .event_info_price {
+    display: none;
+  }
+
+  .event_subscription_right_column button {
+    display: none;
+  }
 }

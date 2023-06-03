@@ -1,23 +1,45 @@
-import React, { FC } from 'react'
 import Link from 'next/link'
-import styles from './styles.module.css'
-import { CustomMap } from '@/components/Custom/CustomMap'
+import { useEffect, useState } from 'react'
 import { UseLandingHeader } from '@/Hooks/useLandingHeader'
 import CustomModal from '@/components/Custom/CustomModal/CustomModal'
 import CardContactUs from '@/components/CardContactUs'
-import DropdownMobile from '@/components/LadingLayout/ui/Dropdown'
-import { Button } from 'antd'
-import { shambalaLogo } from '../../../../../public/images/png'
-import Image from 'next/image'
+import styles from './styles.module.css'
 
-const routes = [
-  { label: 'Home', route: '/' },
-  { label: 'Empresarial', route: '/enterprise' },
-  { label: 'Nosotros', route: '/about-us' },
-  { label: 'Experiencias', route: '/experiences' },
-]
+const Header = () => {
+  const [showMenu, setShowMenu] = useState(false)
 
-const Header: FC = () => {
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1100px)')
+
+    function handleWindowChange(e: MediaQueryListEvent) {
+      if (e.matches) {
+        setShowMenu(false)
+      }
+    }
+
+    mediaQuery.addEventListener('change', handleWindowChange)
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleWindowChange)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (showMenu) {
+      document.body.style.overflowY = 'hidden'
+      document.body.style.height = '100vh'
+    } else {
+      document.body.style.overflowY = 'unset'
+      document.body.style.height = 'auto'
+    }
+  }, [showMenu])
+
+  const routes = [
+    { label: 'Empresarial', route: '/enterprise' },
+    { label: 'Nosotros', route: '/about-us' },
+    { label: 'Experiencias', route: '/experiences' },
+  ]
+
   const {
     modal,
     loginNavigate,
@@ -28,53 +50,87 @@ const Header: FC = () => {
   } = UseLandingHeader()
 
   return (
-    <header className={styles.header_nav}>
-      <article>
-        <Image
-          src={shambalaLogo}
-          alt='Shambala Logo'
-          className={styles.logo}
-          onClick={homeNavigate}
-        ></Image>
-      </article>
+    <>
+      <div className={styles.nav}>
+        <div className={styles.container}>
+          <div className={styles.left_items}>
+            <img
+              src='/images/shambala_logo.png'
+              alt='Shambala logo'
+              onClick={homeNavigate}
+            />
+          </div>
 
-      <article className={styles.drawer}>
-        <DropdownMobile
-          loginNavigate={loginNavigate}
-          subscribeNavigate={subscribeNavigate}
-          openModal={handleContactUs}
-        />
-      </article>
+          <div className={styles.right_items}>
+            {routes.map((route) => (
+              <Link href={route.route}>
+                <p>{route.label}</p>
+              </Link>
+            ))}
 
-      <section className={styles.actions}>
-        <CustomMap
-          className={styles.map}
-          data={routes.slice(1)}
-          renderItem={({ label, route }) => (
-            <Link key={route} href={route} className={styles.links}>
-              <p>{label}</p>
+            <p onClick={handleContactUs}>Contactanos</p>
+
+            <button
+              className={styles.session_button}
+              type='button'
+              onClick={loginNavigate}
+            >
+              Iniciar sesión
+            </button>
+
+            <button
+              className={styles.signup_button}
+              type='button'
+              onClick={subscribeNavigate}
+            >
+              Inscríbete
+            </button>
+          </div>
+
+          <div className={styles.menu} onClick={() => setShowMenu(true)}>
+            <div className={styles.line} />
+            <div className={styles.line} />
+            <div className={styles.line} />
+          </div>
+        </div>
+
+        <div className={showMenu ? styles.hamburger_menu : styles.hidden}>
+          <div
+            className={styles.close_container}
+            onClick={() => setShowMenu(false)}
+          >
+            <div className={styles.close} />
+          </div>
+
+          {routes.map((route) => (
+            <Link href={route.route}>
+              <p>{route.label}</p>
             </Link>
-          )}
-        />
-        <p onClick={handleContactUs}>Contactanos</p>
-        <Button
-          className={`${styles.btn} ${styles.uncolored}`}
-          onClick={loginNavigate}
-        >
-          <p>Iniciar Sesión</p>
-        </Button>
-        <Button
-          className={`${styles.btn} ${styles.colored}`}
-          onClick={subscribeNavigate}
-        >
-          <p>Inscribete</p>
-        </Button>
-      </section>
+          ))}
 
+          <p onClick={handleContactUs}>Contactanos</p>
+
+          <button
+            className={styles.session_button_mb}
+            type='button'
+            onClick={loginNavigate}
+          >
+            Iniciar sesión
+          </button>
+
+          <button
+            className={styles.signup_button_mb}
+            type='button'
+            onClick={subscribeNavigate}
+          >
+            Inscríbete
+          </button>
+        </div>
+      </div>
       <CustomModal isOpen={modal} onClose={closeModal}>
         <CardContactUs />
       </CustomModal>
-    </header>
+    </>
   )
 }
 

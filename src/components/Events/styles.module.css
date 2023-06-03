@@ -3,16 +3,18 @@
   flex-direction: column;
   height: calc(100vh - 70px);
   background-color: var(--general-background-color);
+  padding: 0 20px;
 }
 
 .events_options {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem 0; 
+  padding-top: 2rem;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-bottom: 40px;
 }
 
 .tabs {
@@ -62,4 +64,17 @@
   flex-direction: column;
   gap: 1rem;
   align-items: center;
+}
+
+@media (max-width: 910px) {
+  .events_options {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 780px) {
+  .events_container {
+    gap: 20px;
+  }
 }

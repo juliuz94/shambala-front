@@ -14,7 +14,7 @@ export default function CustomModal({ children, onClose, isOpen }: Props) {
       {isOpen && (
         <Portal>
           <div className={styles.modal}>
-            <div className={styles.container}>
+            <div className={styles.section}>
               <div className={styles.btn_close}>
                 <IoMdCloseCircleOutline size={30} onClick={onClose} />
               </div>

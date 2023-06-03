@@ -1,27 +1,29 @@
-import styles from './styles.module.css'
-import { strings } from '@/constants/strings'
 import VideoStart from '@/components/VideoStart'
-import TitleSections from '../../../../TitleSections'
-import GlobalContainer from '../../../../GlobalContainer'
+import styles from './styles.module.css'
 
-const LearnMore=() => {
+const LearnMore = () => {
   return (
-    <GlobalContainer >
-      <div className={styles.container} >
-        <div className={styles.learMore} >
-          <TitleSections title={strings.ladingPage.home.learMore} />
-          <div className={styles.text_container} >
-            <p >
-              {strings.ladingPage.home.learMoreDesc}
-            </p >
-          </div >
-        </div >
-        <div className={styles.video_container} >
-          <VideoStart />
-        </div >
-      </div >
-    </GlobalContainer >
+    <div className={styles.container}>
+      <div className={styles.conoce_mas}>
+        <div className={styles.content}>
+          <div className={styles.title}>
+            <h1>Conoce más de nosotros</h1>
+            <hr />
+          </div>
 
+          <p>
+            Nuestra misión es cultivar el movimiento ambiental, creando
+            comunidades basadas en el conocimiento y en incorporar la acción
+            ambiental como una posibilidad de redefinir los valores de nuestra
+            sociedad y de cada individuo.
+          </p>
+        </div>
+
+        <div className={styles.video}>
+          <VideoStart />
+        </div>
+      </div>
+    </div>
   )
 }
 

@@ -14,7 +14,7 @@
   flex-direction: column;
   gap: 2rem;
   padding: 1rem 2rem;
-  position: relative; 
+  position: relative;
   background-color: var(--background-color);
 }
 
@@ -56,7 +56,7 @@
 
 .company_stats p {
   font-size: 0.8rem;
-  color: #615E73;
+  color: #615e73;
 }
 
 .comment_button {
@@ -83,4 +83,16 @@
   gap: 0.5rem;
   overflow: scroll;
   max-height: calc(100vh - 150px);
+}
+
+@media (max-width: 1046px) {
+  .right_column {
+    display: none;
+  }
+}
+
+@media (max-width: 787px) {
+  .comment_button {
+    display: none;
+  }
 }

@@ -5,32 +5,43 @@ import { ArrowDownOutlined, MailOutlined } from '@ant-design/icons'
 import React from 'react'
 import TitleImageLanding from '@/components/TitleImageLanding'
 
-const FirstView=() => {
+const FirstView = () => {
   return (
-    <main className={styles.container} >
-      <div className={styles.container_social} >
-        <section className={styles.email} >
-          <MailOutlined className={styles.mail_icon} style={{color: 'black', fontSize: '24px'}} />
-          <h3 >
-            {strings.ladingPage.email}
-          </h3 >
-        </section >
+    <main className={styles.container}>
+      <img
+        className={styles.bg}
+        src='/images/png/image-background.png'
+        alt='bg'
+      />
+      <div className={styles.container_social}>
+        <section className={styles.email}>
+          <MailOutlined
+            className={styles.mail_icon}
+            style={{ color: 'black', fontSize: '24px' }}
+          />
+          <h3>{strings.ladingPage.email}</h3>
+        </section>
+
         <Subscribe className={styles.btn_subscribe} sizecircle={'63'} />
-      </div >
-      <section className={styles.title_section} >
+      </div>
+
+      <section className={styles.title_section}>
         <TitleImageLanding
           firstPhrase={'Cultivamos el movimiento'}
           secondPhrase={'ambiental creando'}
           thirdPhrase={'comunidades'}
-          fourthPhrase={'por medio del'}
-          fifthPhrase={'conocimiento'}
+          fourthPhrase={'por medio del Conocimiento'}
         />
-        <ArrowDownOutlined className={styles.arrow} style={{fontSize: '100px', color: '#E1E4E5'}} />
-      </section >
-      <section className={styles.btn_subscribe_mobile} >
+        <ArrowDownOutlined
+          className={styles.arrow}
+          style={{ fontSize: '100px', color: '#E1E4E5' }}
+        />
+      </section>
+
+      <section className={styles.btn_subscribe_mobile}>
         <Subscribe sizecircle={'20'} />
-      </section >
-    </main >
+      </section>
+    </main>
   )
 }
 

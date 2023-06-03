@@ -121,28 +121,16 @@ export const strings = {
           image: GroupPerson,
         },
         {
-          id: 2,
-          reason:
-            'Consideramos que el amor por la por la vida y la naturaleza es la manera más pura de amar la experiencia que se tiene como ser vivo.',
-          image: Tree,
-        },
-        {
-          id: 3,
-          reason:
-            'Sabemos que en la unión y la fraternidad se encuentra la posibilidad de salvación para el ser humano.',
-          image: Earth,
-        },
-        {
-          id: 4,
-          reason:
-            'Reconocemos que la lucha más importante que tiene el ser humano se asienta en encontrar una razón para vivir. Damos por sentado que el sentido de la vida debe fundamentarse principalmente en el amor propio y el amor por lo exterior a uno.',
-          image: LifeRing,
-        },
-        {
           id: 5,
           reason:
             'Estamos convencidos de que la solución a la crisis ambiental se encuentra, más allá de todo, en una transformación en la cultura y en el replanteamiento de nuestra condición humana.',
           image: Leaf,
+        },
+        {
+          id: 2,
+          reason:
+            'Consideramos que el amor por la por la vida y la naturaleza es la manera más pura de amar la experiencia que se tiene como ser vivo.',
+          image: Tree,
         },
         {
           id: 6,
@@ -151,10 +139,22 @@ export const strings = {
           image: Crown,
         },
         {
+          id: 3,
+          reason:
+            'Sabemos que en la unión y la fraternidad se encuentra la posibilidad de salvación para el ser humano.',
+          image: Earth,
+        },
+        {
           id: 7,
           reason:
             'Vamos a cambiar el mundo por medio de la transformación de la cultura.',
           image: Start,
+        },
+        {
+          id: 4,
+          reason:
+            'Reconocemos que la lucha más importante que tiene el ser humano se asienta en encontrar una razón para vivir. Damos por sentado que el sentido de la vida debe fundamentarse principalmente en el amor propio y el amor por lo exterior a uno.',
+          image: LifeRing,
         },
       ],
     },

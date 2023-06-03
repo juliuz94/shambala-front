@@ -105,3 +105,41 @@
   font-weight: 300;
   margin-top: 0.5rem;
 }
+
+@media (max-width: 1047px) {
+  .image_container {
+    min-width: 35%;
+  }
+
+  .image_container img {
+    width: 250px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 590px) {
+  .announcements_section {
+    min-height: 60%;
+  }
+
+  .announcement_card {
+    flex-direction: column;
+    height: 450px;
+    margin-bottom: 40px;
+    padding-right: 0;
+  }
+
+  .image_container {
+    margin-top: 20px;
+    min-width: 100%;
+  }
+
+  .announcement_info {
+    align-items: center;
+  }
+
+  .announcement_text {
+    margin: 0 25px;
+    padding-bottom: 40px;
+  }
+}

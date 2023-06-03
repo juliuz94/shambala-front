@@ -148,32 +148,26 @@ const Event: FC = () => {
           </Button>
           <h1 className={styles.event_title}>{event.title}</h1>
           <div className={styles.speakers}>
-            {event?.speakers.length > 0 && (
-              <div className={styles.speakers}>
-                {event?.speakers.map((speaker) => {
-                  return (
-                    <div key={speaker._id} className={styles.speaker}>
-                      <Avatar
-                        size='small'
-                        style={{
-                          backgroundColor: '#0F72EC',
-                          border: 'none',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
-                        src={speaker.image}
-                      >
-                        <p style={{ fontSize: '0.5rem' }}>
-                          {speaker.name.split(' ')[0].split('')[0]}
-                          {speaker.name.split(' ')[1]?.split('')[0]}
-                        </p>
-                      </Avatar>
-                      <p className={styles.speaker_name}>{speaker.name}</p>
-                    </div>
-                  )
-                })}
+            <div className={styles.speakers}>
+              <div className={styles.speaker}>
+                <Avatar
+                  size='small'
+                  style={{
+                    backgroundColor: '#0F72EC',
+                    border: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                  src={event.speakers[0].image}
+                >
+                  <p style={{ fontSize: '0.5rem' }}>
+                    {event.speakers[0].name.split(' ')[0].split('')[0]}
+                    {event.speakers[0].name.split(' ')[1]?.split('')[0]}
+                  </p>
+                </Avatar>
+                <p className={styles.speaker_name}>{event.speakers[0].name}</p>
               </div>
-            )}
+            </div>
           </div>
           <div className={styles.event_time}>
             <HiOutlineClock />

@@ -1,29 +1,23 @@
 import styles from './styles.module.css'
-import GlobalContainer from '@/components/GlobalContainer'
-import TitleSections from '@/components/TitleSections'
 import VideoStart from '@/components/VideoStart'
 import Anwers from '@/components/Landing/Enterprise/ui/Anwers'
-import {
-  BusinessMan,
-  CheckCircle,
-  Globe,
-  Person,
-} from '../../../../../../public/images/svg'
-import { CustomMap } from '@/components/Custom/CustomMap'
+import { BusinessMan, Globe, Person } from '../../../../../../public/images/svg'
 import { strings } from '@/constants/strings'
-import Image from 'next/image'
 
 const StrategicStakes = () => {
   return (
-    <GlobalContainer>
-      <div className={styles.container}>
-        <TitleSections
-          title={
-            '¿Buscas que tu organización sea educada en sostenibilidad y empoderada para los retos estratégicos del presente?'
-          }
-        />
-        <section className={styles.video_container}>
-          <div className={styles.video_description}>
+    <div className={styles.container}>
+      <div className={styles.conoce_mas}>
+        <div className={styles.title}>
+          <h1>
+            ¿Buscas que tu organización sea educada en sostenibilidad y
+            empoderada para los retos estratégicos del presente?
+          </h1>
+          <hr />
+        </div>
+
+        <div className={styles.video}>
+          <div className={styles.content}>
             <p>
               Los retos más difíciles para que una empresa entre en la onda de
               la sostenibilidad son cultivar una transformación cultural y
@@ -32,9 +26,9 @@ const StrategicStakes = () => {
             </p>
           </div>
           <VideoStart />
-        </section>
+        </div>
 
-        <section className={styles.anwers}>
+        <div className={styles.data}>
           <Anwers
             title={'72% de los empleados'}
             description={
@@ -56,23 +50,18 @@ const StrategicStakes = () => {
             }
             image={BusinessMan}
           />
-          <CustomMap
-            data={strings.ladingPage.sustainability}
-            className={styles.container_reason}
-            renderItem={(item) => (
-              <section className={styles.reason} key={item.id}>
-                <Image
-                  src={CheckCircle}
-                  alt={'check'}
-                  style={{ marginTop: '5px' }}
-                />
-                <h3>{item.reason}</h3>
-              </section>
-            )}
-          />
-        </section>
+
+          <div className={styles.list}>
+            {strings.ladingPage.sustainability.map((text) => (
+              <div className={styles.list_items} key={text.id}>
+                <img src='/images/svg/CheckCircle.svg' alt='check' />
+                <p>{text.reason}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-    </GlobalContainer>
+    </div>
   )
 }
 

@@ -1,90 +1,125 @@
 import styles from './styles.module.css'
-import GlobalContainer from '@/components/GlobalContainer'
-import MembershipCard from '@/components/MembershipCard'
-import { strings } from '@/constants/strings'
-import TitleSections from '@/components/TitleSections'
-import { Button, Checkbox, Form, Input } from 'antd'
 
 const Main = () => {
-  const [form] = Form.useForm()
-
   return (
-    <GlobalContainer>
-      <main className={styles.main}>
-        <section className={styles.section}>
-          <TitleSections title={'Suscribirse'} />
-          <Form layout={'vertical'} form={form}>
-            <Form.Item
-              label={<label className={styles.label}>Nombre completo</label>}
-              name={'name'}
-            >
-              <Input placeholder={'Nombre completo'} className={styles.input} />
-            </Form.Item>
-            <Form.Item
-              label={<label className={styles.label}>Email</label>}
-              name={'email'}
-            >
-              <Input
-                placeholder={'Email'}
-                className={styles.input}
-                type={'email'}
-              />
-            </Form.Item>
-            <Form.Item
-              label={<label className={styles.label}>Seleccionar plan</label>}
-              name={'plan'}
-            >
-              <Checkbox>$80.000 COP / Mensuales</Checkbox>
-            </Form.Item>
-            <Form.Item
-              label={<label className={styles.label}>Pagan con</label>}
-              name={'pay'}
-            >
-              <Button type={'primary'}>Tarjeta de credito</Button>
-            </Form.Item>
-            <Form.Item
-              label={<label className={styles.label}>Numero de tarjeta</label>}
-              name={'card'}
-            >
-              <Input
-                placeholder={'0000 0000 0000 0000'}
-                className={styles.input}
-                type={'number'}
-              />
-            </Form.Item>
-            <Form.Item
-              label={<label className={styles.label}>Codigo cvc</label>}
-              name={'cvc'}
-            >
-              <Input
-                placeholder={'CVC'}
-                className={styles.input}
-                type={'number'}
-              />
-            </Form.Item>
-            <Form.Item
-              label={
-                <label className={styles.label}>Nombre en la tarjeta</label>
-              }
-              name={'nameCard'}
-            >
-              <Input
-                placeholder={'Tu nombre'}
-                className={styles.input}
-                type={'text'}
-              />
-            </Form.Item>
-          </Form>
-        </section>
-        <MembershipCard
-          title={'Membresia completa'}
-          tag={'PREMIUN'}
-          data={strings.ladingPage.whichIncludes.membership.complete as any}
-          btnTitle={'Pagar ahora'}
-          pay
-        />
-      </main>
-    </GlobalContainer>
+    <div className={styles.section}>
+      <div className={styles.container}>
+        <div className={styles.membership}>
+          <div className={styles.title}>
+            <h1>Suscribirse</h1>
+            <hr />
+          </div>
+
+          <div className={styles.cards}>
+            <div className={styles.form_container}>
+              <div className={styles.form}>
+                <p>Nombre completo</p>
+                <input
+                  className={styles.input}
+                  type='text'
+                  placeholder='Tu nombre'
+                />
+
+                <p>Email</p>
+                <input
+                  className={styles.input}
+                  type='text'
+                  placeholder='Ingresa tu correo'
+                />
+
+                <p>Seleccionar plan</p>
+                <div className={styles.plan}>
+                  <input
+                    className={styles.checkbox}
+                    type='checkbox'
+                    id='scales'
+                    name='scales'
+                  />
+                  <p>$80.000 COP / Mensuales</p>
+                </div>
+
+                <p>Pagar con</p>
+                <button type='button' className={styles.new_button}>
+                  Tarjeta de Crédito
+                </button>
+
+                <p>Número de la tarjeta</p>
+                <input
+                  className={styles.input}
+                  type='number'
+                  placeholder='0000 0000 0000 0000'
+                />
+
+                <p>Mes/Año</p>
+                <input className={styles.input} type='text' placeholder='CVC' />
+
+                <p>Nombre en la tarjeta</p>
+                <input
+                  className={styles.input}
+                  type='text'
+                  placeholder='Tu nombre'
+                />
+              </div>
+            </div>
+
+            <div className={styles.card}>
+              <div className={styles.card_title}>
+                <h3>Membresía Completa</h3>
+                <h4>
+                  $80.000 COP / <span>Mensuales</span>
+                </h4>
+                <hr className={styles.card_line} />
+              </div>
+
+              <div className={styles.card_content}>
+                <div>
+                  <img src='/images/svg/CheckCircle.svg' alt='check' />
+                  <p>
+                    Acceso a cantidad limitada de videos, talleres y eventos
+                    (10%) de los videos
+                  </p>
+                </div>
+
+                <div>
+                  <img src='/images/svg/CheckCircle.svg' alt='check' />
+                  <p>Acceso completo al espacio de comunidad</p>
+                </div>
+
+                <div>
+                  <img src='/images/svg/CheckCircle.svg' alt='check' />
+                  <p>Apoyo a comunidades</p>
+                </div>
+
+                <div>
+                  <img src='/images/svg/CheckCircle.svg' alt='check' />
+                  <p>Creación propia de contenido en la plataforma</p>
+                </div>
+
+                <div>
+                  <img src='/images/svg/CheckCircle.svg' alt='check' />
+                  <p>Acompañamiento semi-personalizado en canales multicanal</p>
+                </div>
+
+                <div>
+                  <img src='/images/svg/CheckCircle.svg' alt='check' />
+                  <p>Eventos y talleres semi-personalizados</p>
+                </div>
+
+                <hr className={styles.card_line} />
+              </div>
+              <button className={styles.card_button} type='button'>
+                Pagar ahora
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img
+        className={styles.bg}
+        src='/images/svg/waves_subscribe.svg'
+        alt='bg'
+      />
+    </div>
   )
 }
 
