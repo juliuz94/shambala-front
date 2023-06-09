@@ -1,11 +1,32 @@
 .video_container {
+  height: 100vh;
   background-color: var(--general-background-color);
 }
 
 .video_info_container {
-  display: flex;
   width: 100%;
   max-width: var(--max-width);
   padding: 1rem var(--section-horizontal-padding);
   margin: 0 auto;
+}
+
+.video_comments {
+  flex: 1;
+  padding: 1rem 0;
+}
+
+.comments_container {
+  border-radius: 5px;
+  box-shadow: 0px 0 20px 3px rgb(172, 172, 172, 0.5);
+}
+
+.header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+.header p {
+  font-size: 1rem;
+  font-weight: 500;
 }

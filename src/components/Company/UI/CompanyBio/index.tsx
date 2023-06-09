@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Button } from 'antd'
 import { HiPlay } from 'react-icons/hi2'
 import styles from './styles.module.css'
 
@@ -12,9 +13,9 @@ const CompanyBio: FC = () => {
         </div>
       </div>
       <div className={styles.button_container}>
-        <button className={styles.button} type='button'>
-          Añadir Comentario
-        </button>
+        <Button type='primary' size='large' className={styles.button}>
+          Añadir anuncio
+        </Button>
       </div>
       <p>
         La definición de sostenibilidad hace referencia a la implementación de

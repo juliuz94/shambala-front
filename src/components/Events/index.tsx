@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useCallback, useEffect, useState } from 'react'
 import { Empty } from 'antd'
 import Header from '@/components/Header'
@@ -115,7 +116,12 @@ const Events = () => {
 
   return (
     <div>
+      <Head>
+        <title>Talleres & Eventos</title>
+      </Head>
+
       <Header />
+
       <div className={styles.content_container}>
         <div className={styles.events_options}>
           <SearchInput />
@@ -142,6 +148,7 @@ const Events = () => {
           {workShopsData?.docs?.map((workshop) => (
             <EventCard key={workshop._id} event={workshop} />
           ))}
+
           {workShopsData?.docs.length === 0 && (
             <div>
               <Empty

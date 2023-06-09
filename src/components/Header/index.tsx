@@ -4,10 +4,10 @@ import type { MenuProps } from 'antd'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
-import styles from './styles.module.css'
 import { FaLeaf } from 'react-icons/fa'
 import { useUserContext } from '@/context/userContext'
 import { MoreOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons'
+import styles from './styles.module.css'
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -81,7 +81,11 @@ const Header = () => {
 
         <div className={styles.center_items}>
           <Link
-            className={router.pathname === '/videos' ? styles.active : ''}
+            className={
+              router.pathname === '/videos' || router.pathname === '/video/[id]'
+                ? styles.active
+                : ''
+            }
             href='/videos'
           >
             Videos
@@ -96,7 +100,18 @@ const Header = () => {
             Talleres & Eventos
           </Link>
 
-          <Link href='/company/123'>Mi Empresa</Link>
+          {user.company ? (
+            <Link
+              href={`/company/${user?.company._id}`}
+              className={
+                router.pathname === `/company/[id]` ? styles.active : ''
+              }
+            >
+              {user?.company.title}
+            </Link>
+          ) : (
+            ''
+          )}
 
           <Link
             href='/community'

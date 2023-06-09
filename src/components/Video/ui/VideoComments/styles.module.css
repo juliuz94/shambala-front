@@ -1,6 +1,6 @@
 .video_comments {
   flex: 1;
-  padding: 1rem;
+  padding: 1rem 0;
 }
 
 .comments_container {
@@ -11,6 +11,7 @@
 .header {
   padding: 1rem;
   border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
 }
 
 .header p {
@@ -65,7 +66,7 @@
 .text_container {
   padding: 0.5rem;
   border-radius: 6px;
-  background-color: #EBEEF7;
+  background-color: #ebeef7;
 }
 
 .text_container p {
@@ -92,7 +93,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: #F9FAFB;
+  background-color: #f9fafb;
   padding: 0.5rem 1rem;
   border-radius: 30px;
 }

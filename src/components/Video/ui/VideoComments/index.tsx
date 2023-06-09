@@ -14,9 +14,15 @@ interface PropTypes {
   video: Video | null
   comments: PaginatedComments | null
   refreshData: () => void
+  setShowComments: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const VideoComments = ({ video, refreshData, comments }: PropTypes) => {
+const VideoComments = ({
+  video,
+  refreshData,
+  comments,
+  setShowComments,
+}: PropTypes) => {
   const [textInput, setTextInput] = useState('')
 
   const handleCreateComment = async () => {
@@ -35,7 +41,10 @@ const VideoComments = ({ video, refreshData, comments }: PropTypes) => {
   return (
     <div className={styles.video_comments}>
       <div className={styles.comments_container}>
-        <div className={styles.header}>
+        <div
+          className={styles.header}
+          onClick={() => setShowComments((prev) => !prev)}
+        >
           <p>Comentarios</p>
         </div>
         <div className={styles.comments_box}>

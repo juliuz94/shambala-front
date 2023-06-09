@@ -285,16 +285,13 @@
 }
 
 .event_subscription_right_column button {
+  font-size: 1rem;
   padding: 1rem 3rem;
   border: none;
   background-color: var(--secondary-color);
   color: var(--contrast-text-color);
   border-radius: 5px;
   cursor: pointer;
-}
-
-.event_subscription_right_column button p {
-  font-size: 1rem;
 }
 
 @media (max-width: 1023px) {

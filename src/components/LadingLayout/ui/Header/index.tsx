@@ -62,8 +62,8 @@ const Header = () => {
           </div>
 
           <div className={styles.right_items}>
-            {routes.map((route) => (
-              <Link href={route.route}>
+            {routes.map((route, index) => (
+              <Link href={route.route} key={index}>
                 <p>{route.label}</p>
               </Link>
             ))}
@@ -102,8 +102,8 @@ const Header = () => {
             <div className={styles.close} />
           </div>
 
-          {routes.map((route) => (
-            <Link href={route.route}>
+          {routes.map((route, index) => (
+            <Link href={route.route} key={index}>
               <p>{route.label}</p>
             </Link>
           ))}

@@ -1,25 +1,26 @@
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { Inter } from 'next/font/google'
 import { FC, useState, useEffect, useCallback } from 'react'
+import { useUserContext } from '@/context/userContext'
 import { createPortal } from 'react-dom'
 import Header from '@/components/Header'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
-import { Avatar, Button, Tabs } from 'antd'
+import { Avatar, Button, Tabs, Steps } from 'antd'
 import {
   HiOutlineArrowSmallLeft,
   HiOutlineClock,
   HiOutlineMapPin,
 } from 'react-icons/hi2'
 import { FaLinkedinIn } from 'react-icons/fa'
-import { Inter } from 'next/font/google'
 import { toast } from 'sonner'
 import Splash from '@/components/Splash'
-import styles from './styles.module.css'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import FileCard from '@/components/FileCard'
 import { Workshop, Attachment } from '@/types'
 import dayjs from 'dayjs'
 import es from 'dayjs/locale/es'
+import styles from './styles.module.css'
 
 dayjs.locale(es)
 
@@ -43,6 +44,7 @@ const tabs = [
 ]
 
 const Event: FC = () => {
+  const { user } = useUserContext()
   const [loading, setLoading] = useState(false)
   const [event, setEvent] = useState<Workshop | null>(null)
   const [guides, setGuides] = useState<Attachment[] | []>([])
@@ -52,6 +54,24 @@ const Event: FC = () => {
   const {
     query: { id },
   } = router
+
+  const postWorkshop = async () => {
+    const data = {
+      displayName: `${user.firstName}`,
+      email: `${user.email}`,
+      position: '',
+      workshop: event?._id,
+      company: `${user.company}`,
+    }
+
+    try {
+      await axiosInstance.post(`${ROUTES.WORKSHOP}/signUpForEvent`, data)
+      toast.success('Inscripción exitosa')
+      fetchEvent()
+    } catch (error) {
+      toast.error('Hubo un error al realizar la inscripción')
+    }
+  }
 
   const fetchEvent = useCallback(async () => {
     setLoading(true)
@@ -106,6 +126,22 @@ const Event: FC = () => {
       case '1':
         return splitTextIntoParagraph(event?.description as any)
 
+      case '2':
+        return (
+          <>
+            <Steps
+              direction='vertical'
+              size='small'
+              current={1}
+              items={event?.agenda.map((e) => ({
+                title: e.title,
+                description: e.place,
+                subTitle: e.time,
+              }))}
+            />
+          </>
+        )
+
       case '3':
         return (
           <div className={styles.video_files}>
@@ -136,6 +172,10 @@ const Event: FC = () => {
 
   return (
     <div className={styles.event_container}>
+      <Head>
+        <title>Evento - {event.title}</title>
+      </Head>
+
       <Header />
       <div className={styles.event_header}>
         <div className={styles.event_info}>
@@ -158,14 +198,14 @@ const Event: FC = () => {
                     display: 'flex',
                     alignItems: 'center',
                   }}
-                  src={event.speakers[0].image}
+                  src={event.speakers[0]?.image}
                 >
                   <p style={{ fontSize: '0.5rem' }}>
-                    {event.speakers[0].name.split(' ')[0].split('')[0]}
-                    {event.speakers[0].name.split(' ')[1]?.split('')[0]}
+                    {event.speakers[0]?.name.split(' ')[0].split('')[0]}
+                    {event.speakers[0]?.name.split(' ')[1]?.split('')[0]}
                   </p>
                 </Avatar>
-                <p className={styles.speaker_name}>{event.speakers[0].name}</p>
+                <p className={styles.speaker_name}>{event.speakers[0]?.name}</p>
               </div>
             </div>
           </div>
@@ -213,14 +253,14 @@ const Event: FC = () => {
             <div className={styles.speaker_card}>
               <div className={styles.speaker_card_header}>
                 <div className={styles.speaker_data}>
-                  <Avatar size='large' src={event.speakers[0].image} />
+                  <Avatar size='large' src={event.speakers[0]?.image} />
                   <p className={styles.speaker_name}>
-                    {event.speakers[0].name}
+                    {event.speakers[0]?.name}
                   </p>
                 </div>
                 <Button
                   className={styles.linkedin_button}
-                  href={event.speakers[0].linkedin}
+                  href={event.speakers[0]?.linkedin}
                   target='_blank'
                 >
                   <FaLinkedinIn />
@@ -228,7 +268,7 @@ const Event: FC = () => {
               </div>
               <div className={styles.speaker_card_body}>
                 <p className={styles.speaker_bio}>
-                  {event.speakers[0].biography}
+                  {event.speakers[0]?.biography}
                 </p>
               </div>
             </div>
@@ -251,26 +291,29 @@ const Event: FC = () => {
                 <p className='event_info_text'>5:30 PM</p>
               </div>
               {/* <div className={styles.event_info_block}>
-                <label className='event_info_label'>
-                  Duración
-                </label>
-                <p className='event_info_text'>
-                  60 minutos
-                </p>
+                <label className='event_info_label'>Duración</label>
+                <p className='event_info_text'>60 minutos</p>
               </div> */}
             </div>
 
             <div className={styles.event_subscription_right_column}>
-              <div className={styles.event_info_price}>
-                <label className='event_info_label'>Precio</label>
-                <p className='event_info_text'>GRATIS</p>
-              </div>
-              <button
-                className='event_info_button'
-                onClick={() => toast.success('Inscripción exitosa')}
-              >
-                <p>Registrarme ahora</p>
-              </button>
+              {event.subscribedUsers.some(
+                (userInEvent) => userInEvent._id === user._id
+              ) ? null : (
+                <>
+                  <div className={styles.event_info_price}>
+                    <label className='event_info_label'>Precio</label>
+                    <p className='event_info_text'>GRATIS</p>
+                  </div>
+                  <button
+                    type='button'
+                    className='event_info_button'
+                    onClick={postWorkshop}
+                  >
+                    Registrarme ahora
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>,

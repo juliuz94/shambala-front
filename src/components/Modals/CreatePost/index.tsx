@@ -49,7 +49,7 @@ const CreatePostModal = ({
     const postInfo = {
       title: values.title,
       text: content,
-      tags: [values.tags],
+      tags: values.tags,
     }
 
     try {
@@ -107,7 +107,7 @@ const CreatePostModal = ({
             name='tags'
             rules={[{ required: true, message: 'Campo requerido' }]}
           >
-            <Select placeholder='Selecciona las etiquetas'>
+            <Select mode='multiple' placeholder='Selecciona las etiquetas'>
               {tags?.docs.map((tag: Doc) => (
                 <Select.Option key={tag._id} value={tag._id}>
                   {tag.es}

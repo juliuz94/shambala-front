@@ -119,3 +119,14 @@
   color: var(--primary-color);
   font-weight: 600;
 }
+
+@media (max-width: 940px) {
+  .video_player_container {
+    flex-direction: column;
+  }
+
+  .sections_container {
+    margin-top: -5px;
+    border-radius: 0 0 7px 7px;
+  }
+}

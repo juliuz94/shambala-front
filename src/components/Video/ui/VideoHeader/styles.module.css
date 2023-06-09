@@ -60,19 +60,18 @@
 }
 
 .right_column {
-  flex: 1;
   display: flex;
   align-items: center;
 }
 
 .next_workshop {
-  padding: 1.25rem 1.5rem;
   width: 100%;
-  background-color: var(--secondary-background-color);
+  padding: 1.25rem 2.5rem;
   border-radius: 6px;
   display: flex;
   align-items: center;
   gap: 1rem;
+  background-color: var(--secondary-background-color);
 }
 
 .next_workshop .info_column {
@@ -85,6 +84,7 @@
 .next_workshop .info_column h2 {
   margin-bottom: 0.55rem;
   font-weight: 500;
+  font-size: 22px;
 }
 
 .next_workshop .workshop_date,
@@ -111,4 +111,14 @@
   width: 100%;
   min-height: 3rem;
   max-width: 250px;
+}
+
+@media (max-width: 940px) {
+  .video_header {
+    flex-direction: column;
+  }
+
+  .center_column {
+    justify-content: flex-start;
+  }
 }

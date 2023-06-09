@@ -12,6 +12,7 @@ import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 
 const Video = () => {
+  const [showComments, setShowComments] = useState(false)
   const [video, setVideo] = useState(null)
   const [comments, setComments] = useState(null)
   const [progress, setProgress] = useState(0)
@@ -23,7 +24,6 @@ const Video = () => {
       const { data } = await axiosInstance.get(`${ROUTES.VIDEOS}/${id}`)
       setVideo(data)
       setProgress(data.progress.progress.toFixed(0) || 0)
-
     } catch (error) {
       console.log('[fetchVideo]', error)
     }
@@ -49,14 +49,33 @@ const Video = () => {
       <Header />
       <div className={styles.video_container}>
         <VideoHeader video={video} progress={progress} />
+
         <VideoPlayer video={video} videoProgress={progress} />
+
         <div className={styles.video_info_container}>
           <VideoTabs video={video} />
-          <VideoComments 
-            video={video} 
-            refreshData={fetchComments} 
-            comments={comments}
-          />
+
+          {!showComments && (
+            <div
+              className={styles.video_comments}
+              onClick={() => setShowComments(!showComments)}
+            >
+              <div className={styles.comments_container}>
+                <div className={styles.header}>
+                  <p>Ver los comentarios</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {showComments && (
+            <VideoComments
+              video={video}
+              refreshData={fetchComments}
+              comments={comments}
+              setShowComments={setShowComments}
+            />
+          )}
         </div>
       </div>
       {/* <RecommendedVideos /> */}

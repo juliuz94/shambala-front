@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import useFetchPosts, { Doc } from '@/Hooks/useFetchPosts'
+import { useUserContext } from '@/context/userContext'
 import Header from '@/components/Header'
 import Post from '@/components/Community/Post'
 import PostForm from '@/components/Community/PostForm'
@@ -57,6 +58,7 @@ export interface UserComment {
 }
 
 const Community = () => {
+  const { user } = useUserContext()
   const [showPost, setShowPost] = useState(false)
   const [selectedPost, setSelectedPost] = useState<Doc | null>(null)
   const [comments, setComments] = useState<CommentData | null>(null)
@@ -78,8 +80,8 @@ const Community = () => {
     'Agora Virtual',
     'Retos Ambientales',
     'Pon tu grano de arena',
-    'Empresa',
-  ]
+    user.company ? user.company.title : null,
+  ].filter(Boolean)
 
   const { posts, setUpdatePost } = useFetchPosts(pageNumber)
 

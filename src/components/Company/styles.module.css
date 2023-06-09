@@ -86,8 +86,12 @@
 }
 
 @media (max-width: 1046px) {
+  .company_content_container {
+    flex-direction: column;
+  }
+
   .right_column {
-    display: none;
+    max-width: 100%;
   }
 }
 
