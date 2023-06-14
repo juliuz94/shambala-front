@@ -96,6 +96,28 @@ const VideoHeader = ({ video, progress, related }: PropTypes) => {
     setHasClickedInterest(userHasShownInterest)
   }, [interested, user?._id])
 
+  // subscribe to new event
+  const subscribe = async () => {
+    try {
+      await axiosInstance.post(`${ROUTES.WORKSHOP}/subscribeToInterested`, {
+        video: video?.url,
+      })
+    } catch (error) {
+      console.log('error')
+    }
+  }
+
+  const { interested } = useFetchInterested()
+  console.log(interested)
+
+  const handleClick = () => {
+    if (related !== null) {
+      console.log('1')
+    } else {
+      subscribe()
+    }
+  }
+
   return (
     <section className={styles.video_header}>
       <div className={styles.left_column}>
