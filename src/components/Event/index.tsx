@@ -132,7 +132,8 @@ const Event: FC = () => {
             <Steps
               direction='vertical'
               size='small'
-              current={1}
+              progressDot
+              current={event?.agenda.length}
               items={event?.agenda.map((e) => ({
                 title: e.title,
                 description: e.place,
@@ -299,7 +300,13 @@ const Event: FC = () => {
             <div className={styles.event_subscription_right_column}>
               {event.subscribedUsers.some(
                 (userInEvent) => userInEvent._id === user._id
-              ) ? null : (
+              ) ? (
+                <div className={styles.event_info_price}>
+                  <p className={'event_info_text'}>
+                    Ya estás registrado a este evento
+                  </p>
+                </div>
+              ) : (
                 <>
                   <div className={styles.event_info_price}>
                     <label className='event_info_label'>Precio</label>

@@ -1,6 +1,8 @@
 .video_comments {
   flex: 1;
   padding: 1rem 0;
+  position: relative;
+  z-index: 10;
 }
 
 .comments_container {

@@ -1,9 +1,21 @@
+.section {
+  position: relative;
+}
+
 .video_container {
-  height: 100vh;
   background-color: var(--general-background-color);
+  min-height: 100vh;
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
 }
 
 .video_info_container {
+  display: flex;
   width: 100%;
   max-width: var(--max-width);
   padding: 1rem var(--section-horizontal-padding);
@@ -13,6 +25,7 @@
 .video_comments {
   flex: 1;
   padding: 1rem 0;
+  z-index: 10;
 }
 
 .comments_container {
@@ -29,4 +42,10 @@
 .header p {
   font-size: 1rem;
   font-weight: 500;
+}
+
+@media (max-width: 940px) {
+  .video_info_container {
+    flex-direction: column;
+  }
 }

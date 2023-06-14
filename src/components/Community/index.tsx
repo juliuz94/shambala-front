@@ -2,7 +2,6 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import useFetchPosts, { Doc } from '@/Hooks/useFetchPosts'
 import { useUserContext } from '@/context/userContext'
-import Header from '@/components/Header'
 import Post from '@/components/Community/Post'
 import PostForm from '@/components/Community/PostForm'
 import ShowPost from '@/components/Community/ShowPost'
@@ -108,8 +107,6 @@ const Community = () => {
       <Head>
         <title>Comunidad</title>
       </Head>
-
-      <Header />
 
       <div className={styles.container}>
         <div className={styles.community}>

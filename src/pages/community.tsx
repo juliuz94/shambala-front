@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useUserContext } from '@/context/userContext'
 import Community from '@/components/Community'
 import Splash from '@/components/Splash'
+import Layout from '@/components/Layout'
 
 export type DocComment = any
 
@@ -19,7 +20,13 @@ const CommunityPage = () => {
     }
   }, [user, router])
 
-  return loading ? <Splash /> : <Community />
+  return loading ? (
+    <Splash />
+  ) : (
+    <Layout>
+      <Community />
+    </Layout>
+  )
 }
 
 export default CommunityPage

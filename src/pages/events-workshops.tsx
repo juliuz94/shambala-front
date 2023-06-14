@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useUserContext } from '@/context/userContext'
 import Splash from '@/components/Splash'
 import EventsComponent from '@/components/Events'
+import Layout from '@/components/Layout'
 
 export default function Events() {
   const [loading, setLoading] = useState(true)
@@ -17,7 +18,11 @@ export default function Events() {
     }
   }, [user, router])
 
-  return (
-    loading ? <Splash /> : <EventsComponent />
+  return loading ? (
+    <Splash />
+  ) : (
+    <Layout>
+      <EventsComponent />
+    </Layout>
   )
 }

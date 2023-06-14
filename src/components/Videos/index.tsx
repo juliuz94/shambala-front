@@ -1,14 +1,12 @@
-import { useState, useEffect, useMemo } from 'react'
-import Header from '@/components/Header'
-import styles from './styles.module.css'
-import { Button } from 'antd'
-import Filter from '@/components/PageFilter'
+import Head from 'next/head'
+import { useState, useEffect } from 'react'
 import SearchInput from '@/components/SearchInput'
 import VideoRow from './ui/VideoRow'
 import VideoRowSkeleton from './ui/Skeleton'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { Video } from '@/types'
+import styles from './styles.module.css'
 
 type Label = {
   createdAt: String
@@ -51,11 +49,12 @@ const VideosComponent = () => {
     fetchVideos()
   }, [])
 
-  const filters = ['Todos', 'Fauna', 'Ambiente', 'Sostenibilidad']
-
   return (
     <div>
-      <Header />
+      <Head>
+        <title>Videos</title>
+      </Head>
+
       <div className={styles.content_container}>
         {loadingData ? (
           <div style={{ marginTop: '2rem' }}>
@@ -66,7 +65,6 @@ const VideosComponent = () => {
           <>
             <div className={styles.video_options}>
               <SearchInput />
-              {/* <Filter /> */}
             </div>
             <VideoRow title='En progreso' videos={videosWithProgress} />
             {videos.length > 0 &&

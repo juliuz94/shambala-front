@@ -6,11 +6,13 @@ type Routes = {
   VIDEOS_WITH_PROGRESS: string
   VIDEO_PROGRESS: string
   WORKSHOP_PER_MONTH: string
-  WORKSHOP: string;
+  WORKSHOP: string
   POST: string
   TAGS: string
   POST_COMMENT: string
   STATISTICS: string
+  LANDING_VIDEOS: string
+  LANDING_WORKSHOP: string
 }
 
 const ROUTES: Routes = {
@@ -26,6 +28,8 @@ const ROUTES: Routes = {
   TAGS: 'tags',
   POST_COMMENT: 'community/post/comment',
   STATISTICS: 'users/statistics',
+  LANDING_VIDEOS: 'lading/videos',
+  LANDING_WORKSHOP: 'lading/workshop',
 }
 
 export default ROUTES

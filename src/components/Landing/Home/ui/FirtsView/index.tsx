@@ -13,6 +13,7 @@ const FirstView = () => {
         src='/images/png/image-background.png'
         alt='bg'
       />
+
       <div className={styles.container_social}>
         <section className={styles.email}>
           <MailOutlined

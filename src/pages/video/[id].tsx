@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useUserContext } from '@/context/userContext'
 import VideoComponent from '@/components/Video'
 import Splash from '@/components/Splash'
+import Layout from '@/components/Layout'
 
 export default function Videos() {
   const [loading, setLoading] = useState(true)
@@ -17,7 +18,11 @@ export default function Videos() {
     }
   }, [user, router])
 
-  return (
-    loading ? <Splash /> : <VideoComponent />
+  return loading ? (
+    <Splash />
+  ) : (
+    <Layout>
+      <VideoComponent />
+    </Layout>
   )
 }

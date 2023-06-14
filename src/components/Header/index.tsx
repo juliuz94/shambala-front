@@ -69,7 +69,7 @@ const Header = () => {
     <div className={styles.nav}>
       <div className={styles.container}>
         <div className={styles.left_items}>
-          <Link href={'/'}>
+          <Link href={'/videos'}>
             <Image
               width={180}
               height={60}

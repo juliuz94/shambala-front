@@ -4,6 +4,8 @@
   max-width: var(--max-width);
   padding: 1rem var(--section-horizontal-padding);
   margin: 0 auto;
+  position: relative;
+  z-index: 10;
 }
 
 .player_container {
@@ -11,7 +13,7 @@
   min-width: 70%;
   position: relative;
   background-color: #000;
-  padding-top: 39%; /* Player ratio: 100 / (1280 / 720) */
+  padding-top: 39.5%; /* Player ratio: 100 / (1280 / 720) */
   border-radius: 7px 0 0 7px;
   overflow: hidden;
 }
@@ -102,13 +104,16 @@
 }
 
 .section_card:hover:not(.active) {
-  opacity: 0.6;
-  background-color: #252424;
+  background-color: rgba(76, 170, 78, 0.6);
+}
+
+.section_card:hover:not(.active) p {
+  color: #54c055;
 }
 
 .section_card p {
-  color: var(--contrast-text-color);
   font-size: 0.9rem;
+  color: var(--contrast-text-color);
 }
 
 .section_card.active {

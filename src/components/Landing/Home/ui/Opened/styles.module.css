@@ -12,11 +12,12 @@
   overflow: auto;
   justify-content: space-between;
   gap: 1rem;
+  overflow-x: auto;
 }
 
-.videos_container::-webkit-scrollbar {
+/* .videos_container::-webkit-scrollbar {
   display: none;
-}
+} */
 
 @media screen and (max-width: 768px) {
   .container {

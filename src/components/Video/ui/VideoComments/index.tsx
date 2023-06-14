@@ -5,6 +5,7 @@ import {
   HiEllipsisVertical,
   HiOutlineTrash,
 } from 'react-icons/hi2'
+import { BiUpArrowAlt } from 'react-icons/all'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { Video, Comment, PaginatedComments } from '@/types'
@@ -45,7 +46,12 @@ const VideoComments = ({
           className={styles.header}
           onClick={() => setShowComments((prev) => !prev)}
         >
-          <p>Comentarios</p>
+          <p>
+            Comentarios{' '}
+            <span>
+              <BiUpArrowAlt />
+            </span>
+          </p>
         </div>
         <div className={styles.comments_box}>
           {comments &&
@@ -65,6 +71,7 @@ const VideoComments = ({
             <Input.TextArea
               bordered={false}
               size='large'
+              rows={1}
               placeholder='Escribe tu comentario'
               value={textInput}
               onChange={(e) => setTextInput(e.target.value)}
@@ -123,6 +130,7 @@ const Comment = ({ comment, refreshData }: CommentProps) => {
           </Button>
         </Popover>
       </div>
+
       <div className={styles.text_container}>
         <p>{comment.message}</p>
       </div>

@@ -1,6 +1,6 @@
 import { FC } from 'react'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
-import Header from '@/components/Header'
 import { useUserContext } from '@/context/userContext'
 import Events from './UI/Events'
 import useFetchWorkshop from '@/Hooks/useFetchWorkshop'
@@ -17,7 +17,10 @@ const Company: FC = () => {
 
   return (
     <main className={styles.company_container}>
-      <Header />
+      <Head>
+        <title>{user?.company.title || ''}</title>
+      </Head>
+
       <section className={styles.company_content_container}>
         <div className={styles.left_column}>
           <div className={styles.left_column_top}>

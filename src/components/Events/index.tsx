@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import { useCallback, useEffect, useState } from 'react'
 import { Empty } from 'antd'
-import Header from '@/components/Header'
 import Filter from '@/components/PageFilter'
 import SearchInput from '@/components/SearchInput'
 import EventCard from './ui/EventCard'
@@ -119,8 +118,6 @@ const Events = () => {
       <Head>
         <title>Talleres & Eventos</title>
       </Head>
-
-      <Header />
 
       <div className={styles.content_container}>
         <div className={styles.events_options}>

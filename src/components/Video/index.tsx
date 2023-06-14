@@ -1,24 +1,38 @@
-import { useState, useEffect } from 'react'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
-import Header from '@/components/Header'
-import { useUserContext } from '@/context/userContext'
+import { useState, useEffect } from 'react'
+import { axiosInstance } from '@/axios/axiosInstance'
 import VideoHeader from './ui/VideoHeader'
 import VideoPlayer from './ui/VideoPlayer'
 import VideoTabs from './ui/VideoTabs'
 import VideoComments from './ui/VideoComments'
 import RecommendedVideos from './ui/RecommendedVideos'
-import styles from './styles.module.css'
-import { axiosInstance } from '@/axios/axiosInstance'
+import { BiDownArrowAlt } from 'react-icons/all'
 import ROUTES from '@/helpers/routes'
+import styles from './styles.module.css'
 
 const Video = () => {
   const [showComments, setShowComments] = useState(false)
+  const [related, setRelated] = useState(null)
   const [video, setVideo] = useState(null)
   const [comments, setComments] = useState(null)
   const [progress, setProgress] = useState(0)
   const router = useRouter()
   const { id } = router.query
 
+  // events related
+  const fetchRelated = async () => {
+    try {
+      const { data } = await axiosInstance.get(
+        `${ROUTES.WORKSHOP}/${video?.relatedWorkShops[0]}`
+      )
+      setRelated(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // get video
   const fetchVideo = async () => {
     try {
       const { data } = await axiosInstance.get(`${ROUTES.VIDEOS}/${id}`)
@@ -29,6 +43,7 @@ const Video = () => {
     }
   }
 
+  // get comments
   const fetchComments = async () => {
     try {
       const { data } = await axiosInstance.get(`${ROUTES.COMMENTS}/${id}`)
@@ -44,11 +59,24 @@ const Video = () => {
     fetchComments()
   }, [id])
 
+  useEffect(() => {
+    if (
+      video &&
+      video?.relatedWorkShops &&
+      video?.relatedWorkShops.length > 0
+    ) {
+      fetchRelated()
+    }
+  }, [video])
+
   return (
-    <div>
-      <Header />
+    <div className={styles.section}>
+      <Head>
+        <title>{video?.title}</title>
+      </Head>
+
       <div className={styles.video_container}>
-        <VideoHeader video={video} progress={progress} />
+        <VideoHeader video={video} progress={progress} related={related} />
 
         <VideoPlayer video={video} videoProgress={progress} />
 
@@ -62,7 +90,12 @@ const Video = () => {
             >
               <div className={styles.comments_container}>
                 <div className={styles.header}>
-                  <p>Ver los comentarios</p>
+                  <p>
+                    Ver los comentarios{' '}
+                    <span>
+                      <BiDownArrowAlt />
+                    </span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -78,6 +111,8 @@ const Video = () => {
           )}
         </div>
       </div>
+
+      <img className={styles.bg} src='/images/svg/community_bg.svg' alt='bg' />
       {/* <RecommendedVideos /> */}
     </div>
   )
