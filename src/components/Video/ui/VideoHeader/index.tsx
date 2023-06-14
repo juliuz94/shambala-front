@@ -100,22 +100,43 @@ const VideoHeader = ({ video, progress, related }: PropTypes) => {
   const subscribe = async () => {
     try {
       await axiosInstance.post(`${ROUTES.WORKSHOP}/subscribeToInterested`, {
-        video: video?.url,
+        video: video?._id,
       })
     } catch (error) {
       console.log('error')
     }
   }
 
-  const { interested } = useFetchInterested()
-  console.log(interested)
+  // reserve space
+  const reserve = async () => {
+    try {
+      await axiosInstance.post(`${ROUTES.WORKSHOP}/signUpForEvent`, {
+        displayName: user?.firstName,
+        email: user?.email,
+        position: '',
+        workshop: video?._id,
+      })
+    } catch (error) {
+      console.log('error')
+    }
+  }
 
   const handleClick = () => {
     if (related !== null) {
-      console.log('1')
+      reserve()
     } else {
       subscribe()
     }
+  }
+
+  let formattedDate = ''
+  let formattedTime = ''
+
+  if (related?.date) {
+    dayjs.locale('es')
+    const date = dayjs(related.date)
+    formattedDate = date.format('dddd D [de] MMMM')
+    formattedTime = date.format('h:mm A')
   }
 
   return (

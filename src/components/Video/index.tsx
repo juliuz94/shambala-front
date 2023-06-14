@@ -53,8 +53,6 @@ const Video = () => {
     }
   }
 
-  console.log(video)
-
   useEffect(() => {
     if (!id) return
     fetchVideo()
