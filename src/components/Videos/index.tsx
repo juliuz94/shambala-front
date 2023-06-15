@@ -68,15 +68,13 @@ const VideosComponent = () => {
             </div>
             <VideoRow title='En progreso' videos={videosWithProgress} />
             {videos.length > 0 &&
-              videos.map((videoCategory, index) => {
-                return (
-                  <VideoRow
-                    key={`${videoCategory?.es ?? index}`}
-                    title={videoCategory.es}
-                    videos={videoCategory.videos}
-                  />
-                )
-              })}
+              videos.map((videoCategory, index) => (
+                <VideoRow
+                  key={index}
+                  title={videoCategory.es}
+                  videos={videoCategory.videos}
+                />
+              ))}
           </>
         )}
       </div>

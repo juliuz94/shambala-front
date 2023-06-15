@@ -140,3 +140,72 @@ export interface AuthStoreType {
   handleLogin: (user: User) => void
   logOut(): void
 }
+
+export type SubscribedUser = {
+  _id: string
+  uid: string
+  email: string
+  emailWork: null | string
+  nationalIdType: string
+  nationalId: string
+  bio: string
+  image: null | string
+  invitedBy: null | string
+  company: string
+  isVolunteer: boolean
+  type: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+  firstName: string
+  lastName: string
+  vulnerable: boolean
+}
+
+export type Company = {
+  _id: string
+  title: string
+  image: string
+  nit: string
+  permissions: string[]
+  owner: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+export type Agenda = {
+  time: string
+  title: string
+  place: string
+  _id: string
+}
+
+export type Related = {
+  _id: string
+  title: string
+  image: string
+  imageGallery: ImageGalleryItem[]
+  description: string
+  location: string
+  isVirtual: boolean
+  coordinates: null
+  maxUsers: number
+  subscribedUsers: SubscribedUser[]
+  companyWhiteList: Company[]
+  companyBlackList: Company[]
+  tags: Tag[]
+  attachments: Attachment[]
+  sponsors: any[]
+  type: string
+  speaker: any[]
+  date: string
+  agenda: Agenda[]
+  createdAt: string
+  updatedAt: string
+  __v: number
+  isLandingPage: boolean
+  isPublic: boolean
+  speakers: any[]
+  like: any[]
+} | null

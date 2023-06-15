@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { Button, Avatar, Progress } from 'antd'
@@ -9,7 +10,7 @@ import {
 } from 'react-icons/hi2'
 import useFetchInterested from '@/Hooks/useFetchInterested'
 import { useUserContext } from '@/context/userContext'
-import { Video } from '@/types'
+import { Video, Related } from '@/types'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import styles from './styles.module.css'
@@ -17,20 +18,14 @@ import styles from './styles.module.css'
 interface PropTypes {
   video: Video | null
   progress: number
-  related: any
+  related: Related | null
 }
 
 const VideoHeader = ({ video, progress, related }: PropTypes) => {
   const { user } = useUserContext()
   const router = useRouter()
-  const { interested } = useFetchInterested()
-
-  let userHasShownInterest = false
-  if (Array.isArray(interested)) {
-    userHasShownInterest = (interested as any[]).find(
-      (i) => i.user === user?._id
-    )
-  }
+  const { interested } = useFetchInterested(video?._id)
+  const [hasClickedInterest, setHasClickedInterest] = useState(false)
 
   // subscribe to new event
   const subscribe = async () => {
@@ -62,9 +57,11 @@ const VideoHeader = ({ video, progress, related }: PropTypes) => {
       reserve()
     } else {
       subscribe()
+      setHasClickedInterest(true)
     }
   }
 
+  // Formated Date and time
   let formattedDate = ''
   let formattedTime = ''
 
@@ -74,6 +71,30 @@ const VideoHeader = ({ video, progress, related }: PropTypes) => {
     formattedDate = date.format('dddd D [de] MMMM')
     formattedTime = date.format('h:mm A')
   }
+
+  let buttonText = related
+    ? 'Reservar cupo'
+    : hasClickedInterest
+    ? 'Manifestaste tu interés'
+    : '¿Te interesa un evento?'
+  let buttonDisabled = !related && hasClickedInterest
+
+  const CustomButton = ({ className }: { className: string }) => (
+    <Button
+      className={className}
+      type='primary'
+      size='large'
+      onClick={handleClick}
+      disabled={buttonDisabled}
+    >
+      {buttonText}
+    </Button>
+  )
+
+  useEffect(() => {
+    const userHasShownInterest = interested?.user === user?._id
+    setHasClickedInterest(userHasShownInterest)
+  }, [interested, user?._id])
 
   return (
     <section className={styles.video_header}>
@@ -119,34 +140,10 @@ const VideoHeader = ({ video, progress, related }: PropTypes) => {
               <p>{formattedTime || ''}</p>
             </div>
 
-            <Button
-              type={userHasShownInterest ? 'default' : 'primary'}
-              size='large'
-              className={styles.new_button}
-              onClick={handleClick}
-              disabled={userHasShownInterest}
-            >
-              {related !== null
-                ? 'Reservar cupo'
-                : userHasShownInterest
-                ? 'Manifestaste tu interés'
-                : '¿Te interesa un evento?'}
-            </Button>
+            <CustomButton className={styles.new_button} />
           </div>
 
-          <Button
-            type={userHasShownInterest ? 'default' : 'primary'}
-            size='large'
-            className={styles.classic_button}
-            onClick={handleClick}
-            disabled={userHasShownInterest}
-          >
-            {related !== null
-              ? 'Reservar cupo'
-              : userHasShownInterest
-              ? 'Manifestaste tu interés'
-              : '¿Te interesa un evento?'}
-          </Button>
+          <CustomButton className={styles.classic_button} />
         </div>
       </div>
     </section>
