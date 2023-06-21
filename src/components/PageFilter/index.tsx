@@ -2,15 +2,13 @@ import { useState } from 'react'
 import styles from './styles.module.css'
 
 type FilterProps = {
-  filters: string[];
+  filters: string[]
+  activeIndex: number
   callback?: (value: string) => void
 }
 
-const Filter = ({ filters, callback }: FilterProps) => {
-  const [activeFilter, setActiveFilter] = useState(filters[0])
-
+const Filter = ({ filters, activeIndex, callback }: FilterProps) => {
   const handleClick = (filter: string) => {
-    setActiveFilter(filter)
     if (callback) {
       callback(filter)
     }
@@ -23,7 +21,7 @@ const Filter = ({ filters, callback }: FilterProps) => {
         <ul>
           {filters.map((filter, index) => (
             <li
-              className={filter === activeFilter ? styles.active : ''}
+              className={index === activeIndex ? styles.active : ''}
               key={index}
               onClick={() => handleClick(filter)}
             >

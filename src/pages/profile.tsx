@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useUserContext } from '@/context/userContext'
 import Profile from '@/components/Profile'
 import Splash from '@/components/Splash'
+import Layout from '@/components/Layout'
 
 const ProfilePage = () => {
   const [loading, setLoading] = useState(true)
@@ -17,8 +18,12 @@ const ProfilePage = () => {
     }
   }, [user, router])
 
-  return (
-    loading ? <Splash /> : <Profile />
+  return loading ? (
+    <Splash />
+  ) : (
+    <Layout>
+      <Profile />
+    </Layout>
   )
 }
 

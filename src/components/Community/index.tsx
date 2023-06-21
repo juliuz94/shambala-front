@@ -62,6 +62,8 @@ const Community = () => {
   const [selectedPost, setSelectedPost] = useState<Doc | null>(null)
   const [comments, setComments] = useState<CommentData | null>(null)
   const [pageNumber, setPageNumber] = useState(1)
+  const [category, setCategory] = useState('')
+  const [activeFilterIndex, setActiveFilterIndex] = useState(0)
   const [commentsLimit, setCommentsLimit] = useState(10)
 
   const fetchComments = async (id: string, limit: number) => {
@@ -82,7 +84,7 @@ const Community = () => {
     user.company ? user.company.title : null,
   ].filter(Boolean)
 
-  const { posts, setUpdatePost } = useFetchPosts(pageNumber)
+  const { posts, setUpdatePost } = useFetchPosts(pageNumber, category)
 
   const handleScroll = () => {
     const bottom =
@@ -101,6 +103,16 @@ const Community = () => {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [posts, showPost])
+
+  const filtersObject = filters.reduce(
+    (obj, filter, index) => ({ ...obj, [filter]: String(index + 1) }),
+    {}
+  )
+
+  useEffect(() => {
+    const activeFilter = filters[activeFilterIndex]
+    setCategory(filtersObject[activeFilter])
+  }, [activeFilterIndex])
 
   return (
     <section className={styles.section}>
@@ -127,7 +139,14 @@ const Community = () => {
           <>
             <div className={styles.events_options}>
               <SearchInput />
-              <Filter filters={filters} />
+              <Filter
+                filters={filters}
+                activeIndex={activeFilterIndex}
+                callback={(selectedFilter) => {
+                  const selectedFilterIndex = filters.indexOf(selectedFilter)
+                  setActiveFilterIndex(selectedFilterIndex)
+                }}
+              />
             </div>
 
             <PostForm setUpdatePost={setUpdatePost} />

@@ -23,7 +23,7 @@ const VideosComponent = () => {
   const [loadingData, setLoadingData] = useState(false)
   const [videos, setVideos] = useState<Label[]>([])
   const [videosWithProgress, setVideosWithProgress] = useState([])
-  const [showUpdateModal, setShowUpdateModal] = useState()
+  const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false)
 
   const fetchVideos = async () => {
     setLoadingData(true)
@@ -54,11 +54,10 @@ const VideosComponent = () => {
   }, [])
 
   useEffect(() => {
-    if (!user) return 
+    if (!user) return
     if (!user.tags || user?.tags.length < 1) {
       setShowUpdateModal(true)
     }
-
   }, [user])
 
   return (
@@ -90,6 +89,7 @@ const VideosComponent = () => {
           </>
         )}
       </div>
+
       <UpdateUserInfoModal
         open={showUpdateModal}
         setOpen={setShowUpdateModal}

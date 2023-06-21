@@ -58,14 +58,14 @@ export interface User {
   __v: number
 }
 
-const useFetchPosts = (pageNumber: any) => {
+const useFetchPosts = (pageNumber: number, category: string) => {
   const [posts, setPosts] = useState<TypePost | null>(null)
   const [updatePost, setUpdatePost] = useState(false)
 
   const fetchPosts = async () => {
     try {
       const { data } = await axiosInstance.get(
-        `${ROUTES.POST}?page=${pageNumber}`
+        `${ROUTES.POST}?page=${pageNumber}&category=${category}`
       )
       if (posts) {
         setPosts((prevPosts) => ({

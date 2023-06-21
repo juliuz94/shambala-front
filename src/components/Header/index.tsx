@@ -100,7 +100,7 @@ const Header = () => {
             Talleres & Eventos
           </Link>
 
-          {user.company ? (
+          {user?.company ? (
             <Link
               href={`/company/${user?.company._id}`}
               className={

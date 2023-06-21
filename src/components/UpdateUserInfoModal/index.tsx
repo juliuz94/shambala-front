@@ -1,23 +1,23 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
+import React, { useState, Dispatch, SetStateAction } from 'react'
 import { axiosInstance } from '@/axios/axiosInstance'
-import { useUserContext } from '@/context/userContext';
+import { useUserContext } from '@/context/userContext'
 import { Button } from 'antd'
-import ROUTES from '@/helpers/routes';
+import ROUTES from '@/helpers/routes'
 import useFetchTags from '@/Hooks/useFetchTags'
 import { Modal } from 'antd'
-import { Tag } from '@/types';
+import { Tag } from '@/types'
+import { toast } from 'sonner'
 import styles from './styles.module.css'
 
 interface PropTypes {
-  open: boolean;
+  open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }
-
 
 const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
   const { user } = useUserContext()
   const { tags } = useFetchTags(100)
-  const [ selectedTags, setSelectedTags] = useState<Tag[]>([])
+  const [selectedTags, setSelectedTags] = useState<Tag[]>([])
 
   const handleCloseModal = () => {
     setOpen(false)
@@ -28,61 +28,61 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
   }
 
   const toggleAddTag = (tag: Tag) => {
-    const isIncluded = selectedTags.some((selectedTag: Tag)=> selectedTag._id === tag._id)
+    const isIncluded = selectedTags.some(
+      (selectedTag: Tag) => selectedTag._id === tag._id
+    )
 
     if (!isIncluded) {
-      setSelectedTags((prevTags: Tag[]) => ([...prevTags, tag]))
+      setSelectedTags((prevTags: Tag[]) => [...prevTags, tag])
     } else {
       setSelectedTags((prevTags: Tag[]) => {
-        return prevTags.filter((prevTag: Tag) => (prevTag._id !==  tag._id))
+        return prevTags.filter((prevTag: Tag) => prevTag._id !== tag._id)
       })
     }
   }
 
   const handleUpdateUser = async () => {
     try {
-      // console.log('user', user)
       const tagIds = selectedTags.map((tag: Tag) => tag._id)
-      console.log('tagIds', tagIds)
-      const res = await axiosInstance.patch(`${ROUTES.USERS}/${user._id}`, {
-        tags: tagIds
+      await axiosInstance.patch(`${ROUTES.USERS}/${user._id}`, {
+        tags: tagIds,
       })
-      console.log('res', res)
+      toast.success('Se actualizó tu perfil')
+      setOpen(false)
     } catch (error) {
       console.log('[handleUpdateUser] error', error)
     }
   }
 
   return (
-    <Modal
-      open={open}
-      onCancel={handleCloseModal}
-      footer={false}
-      width={450}
-    >
+    <Modal open={open} onCancel={handleCloseModal} footer={false} width={450}>
       <div className={styles.modal_content_container}>
-        <h3>
-          Queremos saber qué te gusta
-        </h3>
+        <h3>Queremos saber qué te gusta</h3>
         <p>
-          Elige de los siguientes temas los que más te interesan. Por favor elige al menos dos temas.
+          Elige de los siguientes temas los que más te interesan. Por favor
+          elige al menos dos temas.
         </p>
         <div className={styles.buttons_container}>
-          {
-            tags && tags?.docs.length > 0 && tags?.docs.map(tag => {
+          {tags &&
+            tags?.docs.length > 0 &&
+            tags?.docs.map((tag) => {
               return (
-                <Button 
-                  key={tag._id} 
+                <Button
+                  key={tag._id}
                   type={checkIfSelected(tag._id) ? 'primary' : 'default'}
                   onClick={() => toggleAddTag(tag)}
                 >
-                  { tag.es }
+                  {tag.es}
                 </Button>
               )
-            })
-          }
+            })}
         </div>
-        <Button disabled={selectedTags.length < 2} size='large' type='primary' onClick={handleUpdateUser}>
+        <Button
+          disabled={selectedTags.length < 2}
+          size='large'
+          type='primary'
+          onClick={handleUpdateUser}
+        >
           Guardar preferencias
         </Button>
       </div>

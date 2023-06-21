@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useUserContext } from '@/context/userContext'
-import Header from '@/components/Header'
 import VideoSlider from './VideoSlider'
 import VideoRowSkeleton from '../Videos/ui/Skeleton'
 import useFetchVideos from '@/Hooks/useFetchVideos'
@@ -77,8 +76,6 @@ const Profile = () => {
         <title>Perfil</title>
       </Head>
 
-      <Header />
-
       <div className={styles.container}>
         <div className={styles.profile}>
           <img
@@ -103,9 +100,9 @@ const Profile = () => {
                 <p className={styles.email}>{user?.email || ''}</p>
 
                 <div className={styles.tags}>
-                  <p>Ecología</p>
-                  <p>Sostenibilidad</p>
-                  <p>Conferencias</p>
+                  {user.tags.map((tag: any) => (
+                    <p>{tag.es}</p>
+                  ))}
                 </div>
               </div>
             </div>
