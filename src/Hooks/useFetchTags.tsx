@@ -24,12 +24,12 @@ export interface Doc {
   __v: number
 }
 
-const useFetchTags = () => {
+const useFetchTags = (limit?: number ) => {
   const [tags, setTags] = useState<Tag | null>(null)
 
   const fetchTags = async () => {
     try {
-      const { data } = await axiosInstance.get(`${ROUTES.TAGS}`)
+      const { data } = await axiosInstance.get(`${ROUTES.TAGS}?limit=${limit || 10}`)
       setTags(data)
     } catch (error) {
       console.log('error')

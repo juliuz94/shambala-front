@@ -13,6 +13,7 @@ type Routes = {
   STATISTICS: string
   LANDING_VIDEOS: string
   LANDING_WORKSHOP: string
+  USERS: string
 }
 
 const ROUTES: Routes = {
@@ -30,6 +31,7 @@ const ROUTES: Routes = {
   STATISTICS: 'users/statistics',
   LANDING_VIDEOS: 'lading/videos',
   LANDING_WORKSHOP: 'lading/workshop',
+  USERS: 'users'
 }
 
 export default ROUTES

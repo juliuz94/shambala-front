@@ -1,11 +1,12 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { Progress, Button, Slider } from 'antd'
 import ReactPlayer from 'react-player'
 import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi'
-import { HiPlay, HiPause } from 'react-icons/hi2'
+import { HiPlay, HiPause, HiOutlineArrowsPointingOut } from 'react-icons/hi2'
 import { Video } from '@/types'
 import styles from './styles.module.css'
 import { axiosInstance } from '@/axios/axiosInstance'
+import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import ROUTES from '@/helpers/routes'
 
 interface PropTypes {
@@ -30,7 +31,9 @@ const VideoPlayer = ({ video, videoProgress }: PropTypes) => {
   const [muted, setMuted] = useState(false)
   const [playBackRate, setPlayBackRate] = useState(1)
   const [lastProgress, setLastProgress] = useState(0)
+  const [isFullScreen, setIsFullScreen] = useState(false)
   const player = useRef<ReactPlayer>(null)
+  const handle = useFullScreenHandle()
 
   const onProgress = (progress: VideoStatus) => {
     if (!playing) return
@@ -125,79 +128,107 @@ const VideoPlayer = ({ video, videoProgress }: PropTypes) => {
     return result
   }
 
+  const reportChange = useCallback((state, handle) => {
+    if (handle) {
+      setIsFullScreen(state)
+    }
+  }, [handle]);
+
+  const handleToggleFullScreen = (e) => {
+    e.stopPropagation()
+    if (isFullScreen) {
+      handle.exit()
+    } else {
+      handle.enter()
+    }
+  }
+
   return (
     <section className={styles.video_player_container}>
       <div className={styles.player_container}>
-        <ReactPlayer
-          ref={player}
-          width='100%'
-          height='100%'
-          className={styles.react_player}
-          style={{ position: 'absolute', top: 0, left: 0 }}
-          url={video?.url}
-          onProgress={onProgress}
-          onDuration={(duration) => setTotalDuration(duration)}
-          onPlay={onPlay}
-          onPause={onPause}
-          playing={playing}
-          muted={muted}
-          playbackRate={playBackRate}
-          onEnded={onVideoEnded}
-        />
-        <div className={styles.controllers}>
-          <Button
-            className={styles.play_control_button}
-            type='ghost'
-            onClick={() => setPlaying(!playing)}
-          >
-            {playing ? <HiPause /> : <HiPlay />}
-          </Button>
-          <Button
-            className={styles.play_control_button}
-            type='ghost'
-            onClick={() => setMuted(!muted)}
-          >
-            {muted ? <HiVolumeOff /> : <HiVolumeUp />}
-          </Button>
-          <Button
-            className={styles.play_control_button}
-            type='ghost'
-            onClick={onChangePlayBackRate}
-          >
-            <p>{playBackRate}x</p>
-          </Button>
-          <div className={styles.progress_container}>
-            <Progress
-              percent={progress}
-              strokeColor={{ '0%': '#54C055', '100%': '#54C055' }}
-              trailColor='#C1C2C3'
-              showInfo={false}
-              className={styles.progress_bar}
+        <FullScreen handle={handle} onChange={reportChange}>
+          <div onClick={() => setPlaying(!playing)}>
+            <ReactPlayer
+              ref={player}
+              width='100%'
+              height='100%'
+              className={styles.react_player}
+              style={{ position: 'absolute', top: 0, left: 0 }}
+              url={video?.url}
+              onProgress={onProgress}
+              onDuration={(duration) => setTotalDuration(duration)}
+              onPlay={onPlay}
+              onPause={onPause}
+              playing={playing}
+              muted={muted}
+              playbackRate={playBackRate}
+              onEnded={onVideoEnded}
             />
-            <Slider
-              min={0}
-              max={totalDuration}
-              onChange={onChange}
-              value={progressSeconds}
-              className={styles.seek}
-              railStyle={{
-                backgroundColor: 'transparent',
-              }}
-              trackStyle={{
-                backgroundColor: 'transparent',
-              }}
-              handleStyle={{
-                maxWidth: '1px',
-              }}
+          </div>
+          <div className={styles.controllers}>
+            <Button
+              className={styles.play_control_button}
+              type='ghost'
+              onClick={() => setPlaying(!playing)}
+            >
+              {playing ? <HiPause /> : <HiPlay />}
+            </Button>
+            <Button
+              className={styles.play_control_button}
+              type='ghost'
+              onClick={() => setMuted(!muted)}
+            >
+              {muted ? <HiVolumeOff /> : <HiVolumeUp />}
+            </Button>
+            <Button
+              className={styles.play_control_button}
+              type='ghost'
+              onClick={onChangePlayBackRate}
+            >
+              <p>{playBackRate}x</p>
+            </Button>
+            <div className={styles.progress_container}>
+              <Progress
+                percent={progress}
+                strokeColor={{ '0%': '#54C055', '100%': '#54C055' }}
+                trailColor='#C1C2C3'
+                showInfo={false}
+                className={styles.progress_bar}
+              />
+              <Slider
+                min={0}
+                max={totalDuration}
+                onChange={onChange}
+                value={progressSeconds}
+                className={styles.seek}
+                railStyle={{
+                  backgroundColor: 'transparent',
+                }}
+                trackStyle={{
+                  backgroundColor: 'transparent',
+                }}
+                handleStyle={{
+                  maxWidth: '1px',
+                }}
               // marks={marks}
-            />
+              />
+            </div>
+            <div className={styles.time_progress}>
+              <p>{toTimeString(progressSeconds)} </p>
+              <p>/</p>
+              <p>{toTimeString(totalDuration)}</p>
+            </div>
+            <div>
+              <Button
+                className={styles.play_control_button}
+                type='ghost'
+                onClick={handleToggleFullScreen}
+              >
+                <HiOutlineArrowsPointingOut />
+              </Button>
+            </div>
           </div>
-          <div className={styles.time_progress}>
-            <p>{toTimeString(progressSeconds)} </p>
-            <p>/</p>
-            <p>{toTimeString(totalDuration)}</p>
-          </div>
-        </div>
+        </FullScreen>
       </div>
 
       <div className={styles.sections_container}>

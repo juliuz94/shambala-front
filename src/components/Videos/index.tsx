@@ -1,11 +1,13 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
+import { useUserContext } from '@/context/userContext'
 import SearchInput from '@/components/SearchInput'
 import VideoRow from './ui/VideoRow'
 import VideoRowSkeleton from './ui/Skeleton'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { Video } from '@/types'
+import UpdateUserInfoModal from '../UpdateUserInfoModal'
 import styles from './styles.module.css'
 
 type Label = {
@@ -17,9 +19,11 @@ type Label = {
 }
 
 const VideosComponent = () => {
+  const { user } = useUserContext()
   const [loadingData, setLoadingData] = useState(false)
   const [videos, setVideos] = useState<Label[]>([])
   const [videosWithProgress, setVideosWithProgress] = useState([])
+  const [showUpdateModal, setShowUpdateModal] = useState()
 
   const fetchVideos = async () => {
     setLoadingData(true)
@@ -48,6 +52,14 @@ const VideosComponent = () => {
     fetchVideosWithProgress()
     fetchVideos()
   }, [])
+
+  useEffect(() => {
+    if (!user) return 
+    if (!user.tags || user?.tags.length < 1) {
+      setShowUpdateModal(true)
+    }
+
+  }, [user])
 
   return (
     <div>
@@ -78,6 +90,10 @@ const VideosComponent = () => {
           </>
         )}
       </div>
+      <UpdateUserInfoModal
+        open={showUpdateModal}
+        setOpen={setShowUpdateModal}
+      />
     </div>
   )
 }

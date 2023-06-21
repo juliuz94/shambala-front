@@ -96,41 +96,6 @@ const VideoHeader = ({ video, progress, related }: PropTypes) => {
     setHasClickedInterest(userHasShownInterest)
   }, [interested, user?._id])
 
-  // subscribe to new event
-  const subscribe = async () => {
-    try {
-      await axiosInstance.post(`${ROUTES.WORKSHOP}/subscribeToInterested`, {
-        video: video?._id,
-      })
-    } catch (error) {
-      console.log('error')
-    }
-  }
-
-  // reserve space
-  const reserve = async () => {
-    try {
-      await axiosInstance.post(`${ROUTES.WORKSHOP}/signUpForEvent`, {
-        displayName: user?.firstName,
-        email: user?.email,
-        position: '',
-        workshop: video?._id,
-      })
-    } catch (error) {
-      console.log('error')
-    }
-  }
-
-  const handleClick = () => {
-    if (related !== null) {
-      reserve()
-    } else {
-      subscribe()
-    }
-  }
-
-  let formattedDate = ''
-  let formattedTime = ''
 
   if (related?.date) {
     dayjs.locale('es')

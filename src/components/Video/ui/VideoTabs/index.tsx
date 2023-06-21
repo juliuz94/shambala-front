@@ -29,7 +29,7 @@ const VideoTabs = ({ video }: PropTypes) => {
 
   return (
     <div className={styles.tabs_container}>
-      <Tabs defaultActiveKey='1' items={items} onChange={onChange} />
+      <Tabs items={items}/>
     </div>
   )
 }

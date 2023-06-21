@@ -111,8 +111,7 @@ const Video = () => {
           )}
         </div>
       </div>
-
-      <img className={styles.bg} src='/images/svg/community_bg.svg' alt='bg' />
+      
       {/* <RecommendedVideos /> */}
     </div>
   )

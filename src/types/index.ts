@@ -85,7 +85,7 @@ interface ImageGalleryItem {
   _id: string
 }
 
-interface Tag {
+export interface Tag {
   _id: string
   es: string
   en: string
