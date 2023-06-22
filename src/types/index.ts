@@ -209,3 +209,48 @@ export type Related = {
   speakers: any[]
   like: any[]
 } | null
+
+export interface CommentData {
+  docs: DocComment[]
+  totalDocs: number
+  limit: number
+  totalPages: number
+  page: number
+  pagingCounter: number
+  hasPrevPage: boolean
+  hasNextPage: boolean
+  prevPage: null
+  nextPage: null
+}
+
+export interface DocComment {
+  _id: string
+  message: string
+  postId: string
+  user: UserComment
+  isPublic: boolean
+  createdAt: Date
+  updatedAt: Date
+  __v: number
+}
+
+export interface UserComment {
+  vulnerable: boolean
+  _id: string
+  uid: string
+  email: string
+  emailWork: null
+  nationalIdType: null
+  nationalId: null
+  firstName: string
+  lastName: string
+  bio: null
+  image: null
+  invitedBy: null
+  company: null
+  isVolunteer: boolean
+  type: null
+  createdAt: Date
+  updatedAt: Date
+  __v: number
+}

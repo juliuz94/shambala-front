@@ -7,54 +7,10 @@ import PostForm from '@/components/Community/PostForm'
 import ShowPost from '@/components/Community/ShowPost'
 import SearchInput from '@/components/SearchInput'
 import { axiosInstance } from '@/axios/axiosInstance'
+import { CommentData } from '@/types/index'
 import ROUTES from '@/helpers/routes'
 import Filter from '@/components/PageFilter'
 import styles from './styles.module.css'
-
-export interface CommentData {
-  docs: DocComment[]
-  totalDocs: number
-  limit: number
-  totalPages: number
-  page: number
-  pagingCounter: number
-  hasPrevPage: boolean
-  hasNextPage: boolean
-  prevPage: null
-  nextPage: null
-}
-
-export interface DocComment {
-  _id: string
-  message: string
-  postId: string
-  user: UserComment
-  isPublic: boolean
-  createdAt: Date
-  updatedAt: Date
-  __v: number
-}
-
-export interface UserComment {
-  vulnerable: boolean
-  _id: string
-  uid: string
-  email: string
-  emailWork: null
-  nationalIdType: null
-  nationalId: null
-  firstName: string
-  lastName: string
-  bio: null
-  image: null
-  invitedBy: null
-  company: null
-  isVolunteer: boolean
-  type: null
-  createdAt: Date
-  updatedAt: Date
-  __v: number
-}
 
 const Community = () => {
   const { user } = useUserContext()
@@ -62,8 +18,6 @@ const Community = () => {
   const [selectedPost, setSelectedPost] = useState<Doc | null>(null)
   const [comments, setComments] = useState<CommentData | null>(null)
   const [pageNumber, setPageNumber] = useState(1)
-  const [category, setCategory] = useState('')
-  const [activeFilterIndex, setActiveFilterIndex] = useState(0)
   const [commentsLimit, setCommentsLimit] = useState(10)
 
   const fetchComments = async (id: string, limit: number) => {
@@ -78,12 +32,25 @@ const Community = () => {
   }
 
   const filters = [
-    'Agora Virtual',
-    'Retos Ambientales',
-    'Pon tu grano de arena',
-    user.company ? user.company.title : null,
-  ].filter(Boolean)
+    {
+      tag: 'Agora Virtual',
+      category: 'agoravirtual',
+    },
+    {
+      tag: 'Retos Ambientales',
+      category: 'retosmabientales',
+    },
+    {
+      tag: 'Pon tu grano de arena',
+      category: 'pontugranodearena',
+    },
+    {
+      tag: user.company ? user.company.title : null,
+      category: user.company ? user.company._id : null,
+    },
+  ].filter((filter) => filter.tag !== null)
 
+  const [category, setCategory] = useState(filters[0].category)
   const { posts, setUpdatePost } = useFetchPosts(pageNumber, category)
 
   const handleScroll = () => {
@@ -104,15 +71,9 @@ const Community = () => {
     }
   }, [posts, showPost])
 
-  const filtersObject = filters.reduce(
-    (obj, filter, index) => ({ ...obj, [filter]: String(index + 1) }),
-    {}
-  )
-
-  useEffect(() => {
-    const activeFilter = filters[activeFilterIndex]
-    setCategory(filtersObject[activeFilter])
-  }, [activeFilterIndex])
+  const handleFilterSelect = (category: string) => {
+    setCategory(category)
+  }
 
   return (
     <section className={styles.section}>
@@ -139,17 +100,10 @@ const Community = () => {
           <>
             <div className={styles.events_options}>
               <SearchInput />
-              <Filter
-                filters={filters}
-                activeIndex={activeFilterIndex}
-                callback={(selectedFilter) => {
-                  const selectedFilterIndex = filters.indexOf(selectedFilter)
-                  setActiveFilterIndex(selectedFilterIndex)
-                }}
-              />
+              <Filter filters={filters} onFilterSelect={handleFilterSelect} />
             </div>
 
-            <PostForm setUpdatePost={setUpdatePost} />
+            <PostForm setUpdatePost={setUpdatePost} category={category} />
 
             <div className={styles.comments} onClick={() => setShowPost(true)}>
               <div

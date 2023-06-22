@@ -82,7 +82,7 @@ const useFetchPosts = (pageNumber: number, category: string) => {
 
   useEffect(() => {
     fetchPosts()
-  }, [updatePost, pageNumber])
+  }, [updatePost, pageNumber, category])
 
   return { posts, setUpdatePost }
 }

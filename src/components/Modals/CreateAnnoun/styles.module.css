@@ -1,0 +1,9 @@
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.custom_quill {
+  height: 230px;
+  margin-bottom: 40px;
+}

@@ -5,9 +5,10 @@ import { useUserContext } from '@/context/userContext'
 
 type PostFormProps = {
   setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
+  category: string
 }
 
-const PostForm = ({ setUpdatePost }: PostFormProps) => {
+const PostForm = ({ setUpdatePost, category }: PostFormProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [inputText, setInputText] = useState('')
 
@@ -56,6 +57,7 @@ const PostForm = ({ setUpdatePost }: PostFormProps) => {
         title={inputText}
         setTitle={setInputText}
         setUpdatePost={setUpdatePost}
+        category={category}
       />
     </div>
   )

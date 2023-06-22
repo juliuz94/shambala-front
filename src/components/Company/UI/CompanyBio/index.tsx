@@ -1,9 +1,16 @@
 import { FC } from 'react'
 import { Button } from 'antd'
 import { HiPlay } from 'react-icons/hi2'
+import { useUserContext } from '@/context/userContext'
 import styles from './styles.module.css'
 
-const CompanyBio: FC = () => {
+type CompanyBioProps = {
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const CompanyBio: FC<CompanyBioProps> = ({ setIsModalOpen }) => {
+  const { user } = useUserContext()
+
   return (
     <div className={styles.company_bio_container}>
       <div className={styles.thumbnail_container}>
@@ -12,11 +19,20 @@ const CompanyBio: FC = () => {
           <HiPlay />
         </div>
       </div>
-      <div className={styles.button_container}>
-        <Button type='primary' size='large' className={styles.button}>
-          Añadir anuncio
-        </Button>
-      </div>
+      {user?.company.owner === user?._id ? (
+        <div className={styles.button_container}>
+          <Button
+            type='primary'
+            size='large'
+            className={styles.button}
+            onClick={() => setIsModalOpen(true)}
+          >
+            Añadir anuncio
+          </Button>
+        </div>
+      ) : (
+        ''
+      )}
       <p>
         La definición de sostenibilidad hace referencia a la implementación de
         un modelo de negocio que no perjudique, a través de su actividad, a las

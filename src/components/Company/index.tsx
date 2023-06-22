@@ -1,9 +1,10 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useUserContext } from '@/context/userContext'
 import Events from './UI/Events'
 import useFetchWorkshop from '@/Hooks/useFetchWorkshop'
+import CreateAnnounModal from '../Modals/CreateAnnoun'
 import { Button } from 'antd'
 import CompanyBio from './UI/CompanyBio'
 import Announcements from './UI/Announcements'
@@ -14,6 +15,8 @@ const Company: FC = () => {
   const workshopId = router.query.id
   const { workshop } = useFetchWorkshop(workshopId as string)
   const { user } = useUserContext()
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
     <main className={styles.company_container}>
@@ -35,32 +38,37 @@ const Company: FC = () => {
 
               <div className={styles.company_stats}>
                 <div className={styles.stat}>
-                  <h3>225</h3>
+                  <h3>0</h3>
                   <p>Usuario</p>
                 </div>
 
                 <div className={styles.stat}>
-                  <h3>25</h3>
+                  <h3>0</h3>
                   <p>Cursos</p>
                 </div>
 
                 <div className={styles.stat}>
-                  <h3>14</h3>
+                  <h3>0</h3>
                   <p>Eventos</p>
                 </div>
               </div>
             </div>
 
-            <Button
-              type='primary'
-              size='large'
-              className={styles.comment_button}
-            >
-              Añadir anuncio
-            </Button>
+            {user?.company.owner === user?._id ? (
+              <Button
+                type='primary'
+                size='large'
+                className={styles.comment_button}
+                onClick={() => setIsModalOpen(true)}
+              >
+                Añadir anuncio
+              </Button>
+            ) : (
+              ''
+            )}
           </div>
 
-          <CompanyBio />
+          <CompanyBio setIsModalOpen={setIsModalOpen} />
           <Announcements />
         </div>
 
@@ -75,6 +83,11 @@ const Company: FC = () => {
               ))}
           </div>
         </div>
+
+        <CreateAnnounModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
       </section>
     </main>
   )

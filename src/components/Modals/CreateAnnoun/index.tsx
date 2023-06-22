@@ -1,34 +1,22 @@
 import { useState } from 'react'
 import { Modal, Button, Form, Input, Select } from 'antd'
-import { Doc } from '@/Hooks/useFetchTags'
 import ROUTES from '@/helpers/routes'
 import { axiosInstance } from '@/axios/axiosInstance'
-import useFetchTags from '@/Hooks/useFetchTags'
 import { toast } from 'sonner'
 import 'react-quill/dist/quill.snow.css'
 import dynamic from 'next/dynamic'
 const ReactQuill = dynamic(import('react-quill'), { ssr: false })
 import styles from './styles.module.css'
 
-type CreatePostModalProps = {
+type CreateAnnounModalProps = {
   isModalOpen: boolean
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  title: string
-  setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
-  setTitle: React.Dispatch<React.SetStateAction<string>>
-  category: string
 }
 
-const CreatePostModal = ({
+const CreateAnnounModal = ({
   isModalOpen,
   setIsModalOpen,
-  title,
-  setUpdatePost,
-  setTitle,
-  category,
-}: CreatePostModalProps) => {
-  const { tags } = useFetchTags()
-
+}: CreateAnnounModalProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [content, setContent] = useState('')
 
@@ -44,27 +32,26 @@ const CreatePostModal = ({
     setIsModalOpen(false)
   }
 
-  const handleCreatePost = async (values: {
+  const handleCreateAnnoun = async (values: {
     title: string
-    text: string
-    tags: []
+    content: string
   }) => {
     setIsLoading(true)
 
-    const postInfo = {
-      title: values.title,
-      text: content,
-      tags: values.tags,
-      category,
-    }
+    // const announInfo = {
+    //   title: values.title,
+    //   content,
+    //   createdBy: '',
+    //   company: '',
+    //   image: '',
+    // }
 
     try {
-      await axiosInstance.post(`${ROUTES.POST}`, postInfo)
+      // await axiosInstance.post(`${ROUTES.ANNOUNCEMENT}`, announInfo)
       setIsModalOpen(false)
-      setUpdatePost((prev) => !prev)
-      setTitle('')
+      // setUpdatePost((prev) => !prev)
       setContent('')
-      toast.success('Se agregó tu post correctamente')
+      toast.success('Se agregó tu anuncio correctamente')
     } catch (error) {
       toast.error('Parece que hubo un error')
     } finally {
@@ -74,7 +61,7 @@ const CreatePostModal = ({
 
   return (
     <Modal
-      title='Crear post'
+      title='Crear anuncio'
       centered
       open={isModalOpen}
       onOk={handleOk}
@@ -83,14 +70,7 @@ const CreatePostModal = ({
       okButtonProps={{ style: { display: 'none' } }}
       destroyOnClose={true}
     >
-      <Form
-        name='basic'
-        autoComplete='off'
-        onFinish={handleCreatePost}
-        initialValues={{
-          title,
-        }}
-      >
+      <Form name='basic' autoComplete='off' onFinish={handleCreateAnnoun}>
         <div className={styles.content}>
           <Form.Item
             name='title'
@@ -110,19 +90,6 @@ const CreatePostModal = ({
               className={styles.custom_quill}
             />
           </Form.Item>
-
-          <Form.Item
-            name='tags'
-            rules={[{ required: true, message: 'Campo requerido' }]}
-          >
-            <Select mode='multiple' placeholder='Selecciona las etiquetas'>
-              {tags?.docs.map((tag: Doc) => (
-                <Select.Option key={tag._id} value={tag._id}>
-                  {tag.es}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
         </div>
 
         <div className={styles.buttons}>
@@ -137,4 +104,4 @@ const CreatePostModal = ({
   )
 }
 
-export default CreatePostModal
+export default CreateAnnounModal

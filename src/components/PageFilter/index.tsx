@@ -1,16 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from './styles.module.css'
 
-type FilterProps = {
-  filters: string[]
-  activeIndex: number
-  callback?: (value: string) => void
+type FilterItem = {
+  tag: string
+  category: string
 }
 
-const Filter = ({ filters, activeIndex, callback }: FilterProps) => {
-  const handleClick = (filter: string) => {
-    if (callback) {
-      callback(filter)
+type FilterProps = {
+  filters: FilterItem[]
+  onFilterSelect?: (category: string) => void
+}
+
+const Filter = ({ filters, onFilterSelect }: FilterProps) => {
+  const [activeFilter, setActiveFilter] = useState<FilterItem>(filters[0])
+
+  const handleClick = (filter: FilterItem = filters[0]) => {
+    setActiveFilter(filter)
+    if (onFilterSelect) {
+      onFilterSelect(filter.category)
     }
   }
 
@@ -21,11 +28,11 @@ const Filter = ({ filters, activeIndex, callback }: FilterProps) => {
         <ul>
           {filters.map((filter, index) => (
             <li
-              className={index === activeIndex ? styles.active : ''}
+              className={filter.tag === activeFilter?.tag ? styles.active : ''}
               key={index}
               onClick={() => handleClick(filter)}
             >
-              {filter}
+              {filter.tag}
             </li>
           ))}
         </ul>
