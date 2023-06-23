@@ -18,7 +18,7 @@ const useFetchAnnouncement = () => {
     fetchAnnouncement()
   }, [])
 
-  return { announcement }
+  return { announcement, setAnnouncement }
 }
 
 export default useFetchAnnouncement

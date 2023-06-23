@@ -34,19 +34,19 @@ const Community = () => {
   const filters = [
     {
       tag: 'Agora Virtual',
-      category: 'agoravirtual',
+      category: 'AGORA_VIRTUAL',
     },
     {
       tag: 'Retos Ambientales',
-      category: 'retosmabientales',
+      category: 'RETOS_AMBIENTALES',
     },
     {
       tag: 'Pon tu grano de arena',
-      category: 'pontugranodearena',
+      category: 'PON_TU_GRANO_DE_ARENA',
     },
     {
-      tag: user.company ? user.company.title : null,
-      category: user.company ? user.company._id : null,
+      tag: user.community ? user.community.title : null,
+      category: user.community ? user.community._id : null,
     },
   ].filter((filter) => filter.tag !== null)
 
@@ -110,16 +110,17 @@ const Community = () => {
                 className={styles.comments}
                 onClick={() => setShowPost(true)}
               >
-                {posts?.docs &&
-                  posts.docs.map((post: Doc, index: number) => (
-                    <Post
-                      post={post}
-                      key={index}
-                      onSelectPost={setSelectedPost}
-                      fetchComments={fetchComments}
-                      commentsLimit={commentsLimit}
-                    />
-                  ))}
+                {posts?.totalDocs
+                  ? posts.docs.map((post: Doc, index: number) => (
+                      <Post
+                        post={post}
+                        key={index}
+                        onSelectPost={setSelectedPost}
+                        fetchComments={fetchComments}
+                        commentsLimit={commentsLimit}
+                      />
+                    ))
+                  : ''}
               </div>
             </div>
           </>

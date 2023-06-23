@@ -100,14 +100,14 @@ const Header = () => {
             Talleres & Eventos
           </Link>
 
-          {user?.company ? (
+          {user?.community ? (
             <Link
-              href={`/company/${user?.company._id}`}
+              href={`/company/${user?.community._id}`}
               className={
                 router.pathname === `/company/[id]` ? styles.active : ''
               }
             >
-              {user?.company.title}
+              {user?.community.title}
             </Link>
           ) : (
             ''

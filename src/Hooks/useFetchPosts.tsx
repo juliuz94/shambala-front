@@ -68,9 +68,14 @@ const useFetchPosts = (pageNumber: number, category: string) => {
         `${ROUTES.POST}?page=${pageNumber}&category=${category}`
       )
       if (posts) {
+        const postMap = new Map([
+          ...(posts.docs.map((doc) => [doc._id, doc]) || []),
+          ...data.docs.map((doc: { _id: any }) => [doc._id, doc]),
+        ])
+        const uniquePosts = Array.from(postMap.values())
         setPosts((prevPosts) => ({
           ...data,
-          docs: [...(prevPosts?.docs || []), ...data.docs],
+          docs: uniquePosts,
         }))
       } else {
         setPosts(data)

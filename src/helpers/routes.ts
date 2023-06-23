@@ -15,6 +15,7 @@ type Routes = {
   LANDING_WORKSHOP: string
   USERS: string
   ANNOUNCEMENT: string
+  CATEGORY: string
 }
 
 const ROUTES: Routes = {
@@ -34,6 +35,7 @@ const ROUTES: Routes = {
   LANDING_WORKSHOP: 'lading/workshop',
   USERS: 'users',
   ANNOUNCEMENT: 'announcements',
+  CATEGORY: 'category',
 }
 
 export default ROUTES
