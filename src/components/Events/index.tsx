@@ -122,7 +122,7 @@ const Events = () => {
       <div className={styles.content_container}>
         <div className={styles.events_options}>
           <SearchInput />
-          <Filter filters={filters} callback={handleChangeTag} />
+          <Filter filters={filters} onFilterSelect={handleChangeTag} />
         </div>
 
         <div className={styles.tabs}>

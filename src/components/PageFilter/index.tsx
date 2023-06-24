@@ -7,7 +7,7 @@ type FilterItem = {
 }
 
 type FilterProps = {
-  filters: FilterItem[]
+  filters: FilterItem[] | any
   onFilterSelect?: (category: string) => void
 }
 
@@ -26,7 +26,7 @@ const Filter = ({ filters, onFilterSelect }: FilterProps) => {
       <div className={styles.filters_container}>
         <p>Mostrar:</p>
         <ul>
-          {filters.map((filter, index) => (
+          {filters.map((filter: any, index: any) => (
             <li
               className={filter.tag === activeFilter?.tag ? styles.active : ''}
               key={index}

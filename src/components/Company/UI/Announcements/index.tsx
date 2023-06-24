@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import styles from './styles.module.css'
 
 const Announcements: FC = () => {
-  const { announcement, setAnnouncement } = useFetchAnnouncement()
+  const { announcement, setAnnouncement }: any = useFetchAnnouncement()
 
   const handleNextAnnouncement = () => {
     setAnnouncement((prevAnnouncement: any) => {
@@ -54,7 +54,7 @@ interface AnnouncementCardProps {
 }
 
 const AnnouncementCard: FC<AnnouncementCardProps> = ({ announ }) => {
-  const { announcement, setAnnouncement } = useFetchAnnouncement()
+  const { announcement, setAnnouncement }: any = useFetchAnnouncement()
   const formattedDate = dayjs(announcement?.createdAt).format('DD MMMM YYYY')
 
   return (

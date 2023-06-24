@@ -5,7 +5,7 @@ import {
   HiEllipsisVertical,
   HiOutlineTrash,
 } from 'react-icons/hi2'
-import { BiUpArrowAlt } from 'react-icons/all'
+import { BiUpArrowAlt } from 'react-icons/bi'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { Video, Comment, PaginatedComments } from '@/types'

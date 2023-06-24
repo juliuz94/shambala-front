@@ -128,13 +128,13 @@ const VideoPlayer = ({ video, videoProgress }: PropTypes) => {
     return result
   }
 
-  const reportChange = useCallback((state, handle) => {
+  const reportChange = useCallback((state: any, handle: any) => {
     if (handle) {
       setIsFullScreen(state)
     }
   }, [handle]);
 
-  const handleToggleFullScreen = (e) => {
+  const handleToggleFullScreen = (e: any) => {
     e.stopPropagation()
     if (isFullScreen) {
       handle.exit()

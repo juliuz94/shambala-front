@@ -7,14 +7,14 @@ import VideoPlayer from './ui/VideoPlayer'
 import VideoTabs from './ui/VideoTabs'
 import VideoComments from './ui/VideoComments'
 import RecommendedVideos from './ui/RecommendedVideos'
-import { BiDownArrowAlt } from 'react-icons/all'
+import { BiDownArrowAlt } from 'react-icons/bi'
 import ROUTES from '@/helpers/routes'
 import styles from './styles.module.css'
 
 const Video = () => {
   const [showComments, setShowComments] = useState(false)
   const [related, setRelated] = useState(null)
-  const [video, setVideo] = useState(null)
+  const [video, setVideo] = useState<any>(null)
   const [comments, setComments] = useState(null)
   const [progress, setProgress] = useState(0)
   const router = useRouter()

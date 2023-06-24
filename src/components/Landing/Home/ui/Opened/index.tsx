@@ -9,7 +9,7 @@ interface OpenedProps {
 }
 
 const Opened = ({ title }: OpenedProps) => {
-  const { landingVideos } = useFetchLandingVideos()
+  const { landingVideos }: any = useFetchLandingVideos()
 
   return (
     <GlobalContainer>
@@ -17,7 +17,7 @@ const Opened = ({ title }: OpenedProps) => {
         <TitleSections title={title} />
         <section className={styles.videos_container}>
           {landingVideos &&
-            landingVideos.map((video) => (
+            landingVideos.map((video: any) => (
               <VideosHome
                 key={video._id}
                 video={{

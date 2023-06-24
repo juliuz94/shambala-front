@@ -101,7 +101,7 @@ const Profile = () => {
 
                 <div className={styles.tags}>
                   {user.tags.map((tag: any) => (
-                    <p>{tag.es}</p>
+                    <p key={tag}>{tag.es}</p>
                   ))}
                 </div>
               </div>
