@@ -90,7 +90,20 @@ const Events = () => {
     fetchEvents()
   }
 
-  const filters = ['Todos', 'Eventos', 'Talleres']
+  const filters = [
+    {
+      tag: 'Todos',
+      category: 'todos',
+    },
+    {
+      tag: 'Eventos',
+      category: 'eventos',
+    },
+    {
+      tag: 'Talleres',
+      category: 'talleres',
+    },
+  ]
 
   const handleChangeTag = (tag: string) => {
     console.log('tag', tag)
