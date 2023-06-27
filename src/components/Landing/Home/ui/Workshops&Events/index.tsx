@@ -1,38 +1,42 @@
+import React from 'react'
 import EventCard from '@/components/Events/ui/EventCard'
 import TitleSections from '@/components/TitleSections'
 import GlobalContainer from '@/components/GlobalContainer'
-import React from 'react'
+import Filter from '@/components/PageFilter'
 import useFetchLandingWorkshop from '@/Hooks/useFetchLandingWorkshop'
 import styles from './styles.module.css'
 
 interface WorkshopsAndEventsProps {
   title: string
-  style?: React.CSSProperties
 }
 
-const WorkshopsAndEvents = ({ title, style }: WorkshopsAndEventsProps) => {
+const WorkshopsAndEvents = ({ title }: WorkshopsAndEventsProps) => {
   const { landingWorkshop } = useFetchLandingWorkshop()
 
-  console.log(landingWorkshop)
+  const show = true
+
+  const filters = [
+    {
+      tag: 'Todos',
+      category: 'todos',
+    },
+    {
+      tag: 'Talleres',
+      category: 'talleres',
+    },
+    {
+      tag: 'Eventos',
+      category: 'eventos',
+    },
+  ]
 
   return (
     <GlobalContainer>
       <main className={styles.container}>
         <TitleSections title={title} />
-        <article className={`${styles.container_tag} ${style}`}>
-          <div className={styles.tags}>
-            <p>Todos</p>
-          </div>
-          <div className={styles.tags}>
-            <p>Talleres</p>
-          </div>
-          <div className={styles.tags}>
-            <p>Eventos</p>
-          </div>
-          <div className={styles.tags}>
-            <p>Conferencia</p>
-          </div>
-        </article>
+        <div className={styles.container_tag}>
+          <Filter filters={filters} show={show} />
+        </div>
         <section className={styles.card_container}>
           <EventCard />
           <EventCard />

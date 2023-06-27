@@ -88,3 +88,15 @@
     padding: 40px 20px;
   }
 }
+
+@media (max-width: 550px) {
+  .content {
+    width: 100%;
+  }
+
+  .plant {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+}

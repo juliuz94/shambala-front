@@ -125,20 +125,22 @@ const Header = () => {
           <div className={styles.user_options_container}>
             <div className={styles.point_counter}>
               <FaLeaf />
-              <p>25</p>
+              {/* <p>25</p> */}
             </div>
 
             <p className={styles.user_name}>{user?.name?.split(' ')[0]}</p>
 
-            <Avatar
-              shape='square'
-              size='large'
-              src={user?.photoURL}
-              className={user?.photoURL ? '' : styles.avatar}
-            >
-              {user?.firstName?.split(' ')[0].split('')[0]}
-              {user?.lastName?.split(' ')[0].split('')[0]}
-            </Avatar>
+            <Link href={'/profile'}>
+              <Avatar
+                shape='square'
+                size='large'
+                src={user?.photoURL}
+                className={user?.photoURL ? '' : styles.avatar}
+              >
+                {user?.firstName?.split(' ')[0].split('')[0]}
+                {user?.lastName?.split(' ')[0].split('')[0]}
+              </Avatar>
+            </Link>
 
             <Dropdown menu={{ items }} placement='bottomRight'>
               <Button className={styles.user_options_button} type='text'>

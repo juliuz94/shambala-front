@@ -51,7 +51,7 @@ const ShowVideoModal = ({
       destroyOnClose={true}
       width={800}
     >
-      <video width='100%' controls>
+      <video width='100%' controls controlsList='nodownload'>
         <source src={selectedVideo?.url} type='video/mp4' />
         Your browser does not support the video tag.
       </video>

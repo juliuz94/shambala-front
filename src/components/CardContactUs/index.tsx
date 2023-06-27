@@ -20,7 +20,7 @@ const CardContactUs = () => {
             <input type='text' placeholder='Ingresa tu correo' />
 
             <p className='text'>Número de teléfono</p>
-            <input type='text' placeholder='+57' />
+            <input type='number' placeholder='Ingresa tu número' />
 
             <p className='text'>Mensaje</p>
             <textarea placeholder='Escríbenos...' />

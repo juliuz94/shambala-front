@@ -5,6 +5,12 @@
   justify-content: flex-end;
 }
 
+.page_filters_section_left {
+  display: flex;
+  width: 100%;
+  max-width: var(--max-width);
+}
+
 .filters_container {
   display: flex;
   align-items: center;

@@ -71,6 +71,11 @@
   margin-bottom: 30px;
 }
 
+.form input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .form input::placeholder,
 .form textarea::placeholder {
   color: rgba(0, 0, 0, 0.317);

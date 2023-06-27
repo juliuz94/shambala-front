@@ -1,9 +1,10 @@
-import styles from './styles.module.css'
+import React from 'react'
+import Link from 'next/link'
 import { Subscribe } from '@/svg'
 import { strings } from '@/constants/strings'
 import { ArrowDownOutlined, MailOutlined } from '@ant-design/icons'
-import React from 'react'
 import TitleImageLanding from '@/components/TitleImageLanding'
+import styles from './styles.module.css'
 
 const FirstView = () => {
   return (
@@ -23,7 +24,9 @@ const FirstView = () => {
           <h3>{strings.ladingPage.email}</h3>
         </section>
 
-        <Subscribe className={styles.btn_subscribe} sizecircle={'63'} />
+        <Link href={'/subscribe'}>
+          <Subscribe className={styles.btn_subscribe} sizecircle={'63'} />
+        </Link>
       </div>
 
       <section className={styles.title_section}>
@@ -40,7 +43,9 @@ const FirstView = () => {
       </section>
 
       <section className={styles.btn_subscribe_mobile}>
-        <Subscribe sizecircle={'20'} />
+        <Link href={'/subscribe'}>
+          <Subscribe sizecircle={'20'} />
+        </Link>
       </section>
     </main>
   )

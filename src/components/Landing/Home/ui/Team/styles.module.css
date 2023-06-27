@@ -48,10 +48,6 @@
   font-size: 15px;
   font-weight: 500;
   line-height: 26px;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .position {
@@ -60,6 +56,19 @@
 }
 
 .position svg {
+  cursor: pointer;
+}
+
+.button {
+  width: fit-content;
+  font-size: 16px;
+  display: flex;
+  gap: 10px;
+
+  background-color: white;
+  border-radius: 8px;
+  border: 0;
+  color: #54c055;
   cursor: pointer;
 }
 

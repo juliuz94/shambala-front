@@ -22,25 +22,6 @@
   margin-bottom: 1.5rem;
 }
 
-.tags {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.1rem 0.8rem;
-  height: 40px;
-  background-color: #e5e7eb;
-  border-radius: 1.5rem;
-  cursor: pointer;
-}
-
-.tags p {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 24px;
-  text-align: center;
-  color: #929292;
-}
-
 @media screen and (max-width: 768px) {
   .container_tag {
     display: none;

@@ -83,7 +83,7 @@ const Community = () => {
 
       <div className={styles.container}>
         <div className={styles.community}>
-          <h1>Foro y Comunidad</h1>
+          <h1>¡Contruyamos Comunidad!</h1>
         </div>
 
         {showPost ? (

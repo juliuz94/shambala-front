@@ -9,6 +9,7 @@ import {
   HiOutlineClock,
 } from 'react-icons/hi2'
 import useFetchInterested from '@/Hooks/useFetchInterested'
+import useFetchUser from '@/Hooks/useFetchUser'
 import { useUserContext } from '@/context/userContext'
 import { Video, Related } from '@/types'
 import dayjs from 'dayjs'
@@ -26,6 +27,8 @@ const VideoHeader = ({ video, progress, related }: PropTypes) => {
   const router = useRouter()
   const { interested } = useFetchInterested(video?._id)
   const [hasClickedInterest, setHasClickedInterest] = useState(false)
+
+  const { userGuest } = useFetchUser(video?.createBy)
 
   // subscribe to new event
   const subscribe = async () => {
@@ -96,7 +99,6 @@ const VideoHeader = ({ video, progress, related }: PropTypes) => {
     setHasClickedInterest(userHasShownInterest)
   }, [interested, user?._id])
 
-
   if (related?.date) {
     dayjs.locale('es')
     const date = dayjs(related.date)
@@ -111,12 +113,12 @@ const VideoHeader = ({ video, progress, related }: PropTypes) => {
           <HiArrowSmallLeft size={25} />
         </Button>
         <h1 className={styles.video_title}>{video?.title}</h1>
-        {/* <div className={styles.creator_container}>
-          <Avatar size='small' src={user.photoURL}>
-            A
+        <div className={styles.creator_container}>
+          <Avatar size='small'>
+            {userGuest?.firstName && userGuest?.firstName?.charAt(0)}
           </Avatar>
-          <p>Autor del video</p>
-        </div> */}
+          <p>{userGuest?.firstName || ''}</p>
+        </div>
       </div>
       <div className={styles.center_column}>
         <Progress

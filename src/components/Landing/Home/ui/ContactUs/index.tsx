@@ -21,7 +21,7 @@ const ContactUs = () => {
               <input type='text' placeholder='Ingresa tu correo' />
 
               <p>Número de teléfono</p>
-              <input type='text' placeholder='+57' />
+              <input type='text' placeholder='Ingresa tu número' />
 
               <p>Mensaje</p>
               <textarea placeholder='Escríbenos...' />

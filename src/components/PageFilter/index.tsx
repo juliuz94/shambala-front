@@ -9,9 +9,10 @@ type FilterItem = {
 type FilterProps = {
   filters: FilterItem[] | any
   onFilterSelect?: (category: string) => void
+  show?: boolean
 }
 
-const Filter = ({ filters, onFilterSelect }: FilterProps) => {
+const Filter = ({ filters, onFilterSelect, show }: FilterProps) => {
   const [activeFilter, setActiveFilter] = useState<FilterItem>(filters[0])
 
   const handleClick = (filter: FilterItem = filters[0]) => {
@@ -22,9 +23,13 @@ const Filter = ({ filters, onFilterSelect }: FilterProps) => {
   }
 
   return (
-    <div className={styles.page_filters_section}>
+    <div
+      className={
+        !show ? styles.page_filters_section : styles.page_filters_section_left
+      }
+    >
       <div className={styles.filters_container}>
-        <p>Mostrar:</p>
+        {!show && <p>Mostrar:</p>}
         <ul>
           {filters.map((filter: any, index: any) => (
             <li

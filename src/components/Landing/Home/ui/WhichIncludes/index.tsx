@@ -23,7 +23,7 @@ const WhichIncludes = () => {
               <div>
                 <img src='/images/svg/CheckCircle.svg' alt='check' />
                 <p>
-                  Acceso a cantidad limitada de videos, talleres y eventos (10%)
+                  Acceso a cantidad limitada de videos, talleres y eventos (25%)
                   de los videos
                 </p>
               </div>
@@ -53,8 +53,8 @@ const WhichIncludes = () => {
               <div>
                 <img src='/images/svg/CheckCircle.svg' alt='check' />
                 <p>
-                  Acceso a cantidad limitada de videos, talleres y eventos (10%)
-                  de los videos
+                  Acceso a cantidad ilimitada de videos, talleres y eventos
+                  (100%) de los videos
                 </p>
               </div>
 
