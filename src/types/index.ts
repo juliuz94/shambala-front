@@ -19,6 +19,7 @@ export type User = {
 } | null
 
 export type Video = {
+  progress: any
   _id: string
   title: string
   url: string
@@ -253,4 +254,34 @@ export interface UserComment {
   createdAt: Date
   updatedAt: Date
   __v: number
+}
+
+export interface Post {
+  _id: string
+  title: string
+  text: string
+  tags: Tag[]
+  likes: any
+  user: User
+  isPublic: boolean
+  category: string
+  community: any
+  createdAt: string
+  updatedAt: string
+  __v: number
+  id: string
+  comments: Comment[]
+}
+
+export interface PostsResponse {
+  docs: Post[]
+  totalDocs: number
+  limit: number
+  totalPages: number
+  page: number
+  pagingCounter: number
+  hasPrevPage: boolean
+  hasNextPage: boolean
+  prevPage: number | null
+  nextPage: number | null
 }

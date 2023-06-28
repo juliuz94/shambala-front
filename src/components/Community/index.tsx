@@ -19,6 +19,7 @@ const Community = () => {
   const [comments, setComments] = useState<CommentData | null>(null)
   const [pageNumber, setPageNumber] = useState(1)
   const [commentsLimit, setCommentsLimit] = useState(10)
+  const [filteredPosts, setFilteredPosts] = useState<Doc[]>([])
 
   const fetchComments = async (id: string, limit: number) => {
     try {
@@ -75,6 +76,19 @@ const Community = () => {
     setCategory(category)
   }
 
+  const handleSearch = (value: string) => {
+    const filtered = posts?.docs.filter((post) =>
+      post.title.toLowerCase().includes(value.toLowerCase())
+    )
+    setFilteredPosts(filtered || [])
+  }
+
+  useEffect(() => {
+    if (showPost) {
+      setFilteredPosts([])
+    }
+  }, [showPost])
+
   return (
     <section className={styles.section}>
       <Head>
@@ -83,7 +97,7 @@ const Community = () => {
 
       <div className={styles.container}>
         <div className={styles.community}>
-          <h1>¡Contruyamos Comunidad!</h1>
+          <h1>¡Construyamos Comunidad!</h1>
         </div>
 
         {showPost ? (
@@ -99,7 +113,7 @@ const Community = () => {
         ) : (
           <>
             <div className={styles.events_options}>
-              <SearchInput />
+              <SearchInput onSearch={handleSearch} />
               <Filter filters={filters} onFilterSelect={handleFilterSelect} />
             </div>
 
@@ -110,17 +124,17 @@ const Community = () => {
                 className={styles.comments}
                 onClick={() => setShowPost(true)}
               >
-                {posts?.totalDocs
-                  ? posts.docs.map((post: Doc, index: number) => (
-                      <Post
-                        post={post}
-                        key={index}
-                        onSelectPost={setSelectedPost}
-                        fetchComments={fetchComments}
-                        commentsLimit={commentsLimit}
-                      />
-                    ))
-                  : ''}
+                {(filteredPosts.length > 0 ? filteredPosts : posts?.docs)?.map(
+                  (post: Doc, index: number) => (
+                    <Post
+                      post={post}
+                      key={index}
+                      onSelectPost={setSelectedPost}
+                      fetchComments={fetchComments}
+                      commentsLimit={commentsLimit}
+                    />
+                  )
+                )}
               </div>
             </div>
           </>

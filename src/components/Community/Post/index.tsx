@@ -41,7 +41,7 @@ const Post = ({ post, onSelectPost, fetchComments, commentsLimit }: Props) => {
         <div className={styles.info}>
           <p>{timeAgo}</p>
           <p>•</p>
-          <p>12 Respuestas</p>
+          <p>0 Respuestas</p>
         </div>
 
         <div className={styles.circle}>

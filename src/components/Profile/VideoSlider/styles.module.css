@@ -8,6 +8,10 @@
   margin: 0 auto;
 }
 
+.videos_row::-webkit-scrollbar {
+  display: none;
+}
+
 .video_row_header {
   display: flex;
   align-items: center;
