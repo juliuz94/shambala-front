@@ -1,9 +1,12 @@
+import Link from 'next/link'
 import {
-  ImFacebook,
-  ImGithub,
+  // ImFacebook,
+  // ImGithub,
+  // ImTwitter,
+  // ImDribbble,
   ImLinkedin,
-  ImTwitter,
-  ImDribbble,
+  ImInstagram,
+  ImYoutube,
 } from 'react-icons/im'
 import { MailOutlined } from '@ant-design/icons'
 import styles from './styles.module.css'
@@ -40,12 +43,34 @@ const Footer = () => {
         <div className={styles.col_2}>
           <p>© 2023 Shambala. All rights reserved.</p>
           <div className={styles.icons}>
-            <ImTwitter size={24} fill='#88E189' />
-            <ImLinkedin size={24} fill='#88E189' />
-            <ImFacebook size={24} fill='#88E189' />
-            <ImGithub size={24} fill='#88E189' />
-            <img src='/images/svg/angel_list.svg' alt='angel list' />
-            <ImDribbble size={24} fill='#88E189' />
+            <Link
+              href={'https://www.instagram.com/shambalacomunidad2/'}
+              rel='noopener noreferrer'
+              target='_blank'
+            >
+              <ImInstagram size={24} fill='#88E189' />
+            </Link>
+
+            <Link
+              href={'https://www.linkedin.com/company/94179942/'}
+              rel='noopener noreferrer'
+              target='_blank'
+            >
+              <ImLinkedin size={24} fill='#88E189' />
+            </Link>
+
+            <Link
+              href={'https://www.youtube.com/channel/UC_zpuusqP4OqRZYorf3yMYg'}
+              rel='noopener noreferrer'
+              target='_blank'
+            >
+              <ImYoutube size={24} fill='#88E189' />
+            </Link>
+            {/* <ImTwitter size={24} fill='#88E189' /> */}
+            {/* <ImFacebook size={24} fill='#88E189' /> */}
+            {/* <ImGithub size={24} fill='#88E189' /> */}
+            {/* <img src='/images/svg/angel_list.svg' alt='angel list' /> */}
+            {/* <ImDribbble size={24} fill='#88E189' /> */}
           </div>
         </div>
       </div>

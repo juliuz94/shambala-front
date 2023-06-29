@@ -1,6 +1,9 @@
+import { useRouter } from 'next/router'
 import styles from './styles.module.css'
 
 const WhichIncludes = () => {
+  const router = useRouter()
+
   return (
     <div className={styles.container}>
       <div className={styles.membership}>
@@ -34,7 +37,12 @@ const WhichIncludes = () => {
               </div>
               <hr className={styles.card_line} />
             </div>
-            <button className={styles.card_button}>Comenzar ahora</button>
+            <button
+              className={styles.card_button}
+              onClick={() => router.push('/login')}
+            >
+              Comenzar ahora
+            </button>
           </div>
 
           <div className={styles.card}>
@@ -85,7 +93,12 @@ const WhichIncludes = () => {
 
               <hr className={styles.card_line} />
             </div>
-            <button className={styles.card_button}>Comenzar ahora</button>
+            <button
+              className={styles.card_button}
+              onClick={() => router.push('/login')}
+            >
+              Comenzar ahora
+            </button>
           </div>
         </div>
       </div>

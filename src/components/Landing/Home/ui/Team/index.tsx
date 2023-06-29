@@ -5,6 +5,7 @@ import GlobalContainer from '@/components/GlobalContainer'
 import { members as membersData } from '@/constants/members'
 import { ImLinkedin } from 'react-icons/im'
 import styles from './styles.module.css'
+import Link from 'next/link'
 
 interface Member {
   name: string
@@ -42,7 +43,13 @@ const Team = () => {
                 <h2>{member.name}</h2>
                 <div className={styles.position}>
                   <h3>{member.position}</h3>
-                  <ImLinkedin size={24} fill='#CBCBCB' />
+                  <Link
+                    href={member.linkedin}
+                    rel='noopener noreferrer'
+                    target='_blank'
+                  >
+                    <ImLinkedin size={24} fill='#CBCBCB' />
+                  </Link>
                 </div>
                 <p>
                   {expandedMember === index

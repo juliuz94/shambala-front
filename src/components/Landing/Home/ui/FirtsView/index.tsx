@@ -24,7 +24,7 @@ const FirstView = () => {
           <h3>{strings.ladingPage.email}</h3>
         </section>
 
-        <Link href={'/subscribe'}>
+        <Link href={'/Subscribe'}>
           <Subscribe className={styles.btn_subscribe} sizecircle={'63'} />
         </Link>
       </div>
@@ -43,7 +43,7 @@ const FirstView = () => {
       </section>
 
       <section className={styles.btn_subscribe_mobile}>
-        <Link href={'/subscribe'}>
+        <Link href={'/Subscribe'}>
           <Subscribe sizecircle={'20'} />
         </Link>
       </section>

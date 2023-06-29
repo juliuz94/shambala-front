@@ -35,9 +35,9 @@ const Header = () => {
   }, [showMenu])
 
   const routes = [
-    { label: 'Empresarial', route: '/enterprise' },
+    { label: 'Empresarial', route: '/Enterprise' },
     { label: 'Nosotros', route: '/about-us' },
-    { label: 'Experiencias', route: '/experiences' },
+    { label: 'Experiencias', route: '/Experiences' },
   ]
 
   const {

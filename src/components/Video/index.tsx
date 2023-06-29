@@ -111,7 +111,7 @@ const Video = () => {
           )}
         </div>
       </div>
-      
+
       {/* <RecommendedVideos /> */}
     </div>
   )

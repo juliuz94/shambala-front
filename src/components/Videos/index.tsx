@@ -28,7 +28,7 @@ const VideosComponent = () => {
   const fetchVideos = async () => {
     setLoadingData(true)
     try {
-      const { data } = await axiosInstance.get(ROUTES.VIDEOS_BY_TAG)
+      const { data } = await axiosInstance.get(`${ROUTES.VIDEOS_BY_TAG}`)
       setVideos(data.docs)
     } catch (error) {
       console.log('[fetchVideos]', error)

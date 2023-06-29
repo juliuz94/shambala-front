@@ -9,7 +9,7 @@ const CardContactUs = () => {
   return (
     <div className={styles.contact}>
       <div className={styles.card}>
-        <img src='/images/png/ContactUsImage.png' alt='bird' />
+        <img src='/images/png/contactUsImage.png' alt='bird' />
 
         <div className={styles.form_container}>
           <div className={styles.form}>
