@@ -22,7 +22,7 @@ const ProfilePage = () => {
     <Splash />
   ) : (
     <Layout>
-      <Profile />
+      <Profile id={router.query.id} />
     </Layout>
   )
 }

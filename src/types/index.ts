@@ -285,3 +285,18 @@ export interface PostsResponse {
   prevPage: number | null
   nextPage: number | null
 }
+
+export type VideoProgress = {
+  user: string
+  progress: number
+  finished: boolean
+}
+
+export type VideoProfile = {
+  progress: VideoProgress
+  _id: string
+  title: string
+  url: string
+  image: string
+  description: string
+}

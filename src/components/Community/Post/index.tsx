@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import moment from 'moment'
 import 'moment/locale/es'
 import { Doc } from '@/Hooks/useFetchPosts'
@@ -55,9 +56,11 @@ const Post = ({ post, onSelectPost, fetchComments, commentsLimit }: Props) => {
 
       <div className={styles.user}>
         {renderProfileImage()}
-        <p>
-          {post.user?.firstName || ''} {post.user?.lastName || ''}
-        </p>
+        <Link href={`/profile/${post.user?._id}`} className={styles.links}>
+          <p>
+            {post.user?.firstName || ''} {post.user?.lastName || ''}
+          </p>
+        </Link>
       </div>
 
       <p className={styles.answer}>Responder</p>

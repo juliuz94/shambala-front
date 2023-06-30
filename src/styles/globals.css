@@ -1,56 +1,65 @@
-:root{
-  --primary-color:#54C055;
-  --secondary-color:#0F72EC;
-  --contrast-text-color:#ffffff;
-  --secondary-contrast-text-color:#929292;
-  --inactive-color:#BDBDBD;
-  --primary-text-color:#111827;
-  --secondary-text-color:#6D6D6D;
-  --general-background-color:#FCFCFC;
-  --background-color:#ffffff;
-  --secondary-background-color:#E0FFE0;
-  --tertiary-background-color:#2B2A2A;
-  --border-color:#E5E7EB;
-  --max-width:1440px;
-  --section-horizontal-padding:2rem;
-  --lading-background-color:#069507;
-  --mobile-max-width:767px;
-  --tablet-min-width:768px;
-  --tablet-max-width:1023px;
-  --desktop-min-width:1024px;
+:root {
+  --primary-color: #54c055;
+  --secondary-color: #0f72ec;
+  --contrast-text-color: #ffffff;
+  --secondary-contrast-text-color: #929292;
+  --inactive-color: #bdbdbd;
+  --primary-text-color: #111827;
+  --secondary-text-color: #6d6d6d;
+  --general-background-color: #fcfcfc;
+  --background-color: #ffffff;
+  --secondary-background-color: #e0ffe0;
+  --tertiary-background-color: #2b2a2a;
+  --border-color: #e5e7eb;
+  --max-width: 1440px;
+  --section-horizontal-padding: 2rem;
+  --lading-background-color: #069507;
+  --mobile-max-width: 767px;
+  --tablet-min-width: 768px;
+  --tablet-max-width: 1023px;
+  --desktop-min-width: 1024px;
 }
 
-*{
-  box-sizing:border-box;
-  padding:0;
-  margin:0;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 html,
-body{
-  max-width:100vw;
-  overflow-x:hidden;
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6{
-  font-family:var(--primary-font);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--primary-font);
 }
 
-p, a, span, button, li{
-  font-family:var(--secondary-font);
+p,
+a,
+span,
+button,
+li {
+  font-family: var(--secondary-font);
 }
 
-a{
-  color:var(--secondary-color);
-  text-decoration:none;
-  cursor:pointer;
+a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  cursor: pointer;
 }
 
-a:hover{
-  opacity:0.8;
-  text-decoration:underline;
+a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
 }
 
-ul{
-  list-style-type:none;
+ul {
+  list-style-type: none;
 }

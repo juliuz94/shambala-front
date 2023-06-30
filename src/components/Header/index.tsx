@@ -19,7 +19,7 @@ const Header = () => {
       key: '1',
       label: (
         <div className={styles.user_option}>
-          <Link href={'/profile'}>
+          <Link href={`/profile/${user._id}`}>
             Perfil
             <UserOutlined />
           </Link>
@@ -130,7 +130,7 @@ const Header = () => {
 
             <p className={styles.user_name}>{user?.name?.split(' ')[0]}</p>
 
-            <Link href={'/profile'}>
+            <Link href={`/profile/${user._id}`}>
               <Avatar
                 shape='square'
                 size='large'
@@ -200,7 +200,16 @@ const Header = () => {
           Talleres & Eventos
         </Link>
 
-        <Link href='/company/123'>Mi Empresa</Link>
+        {user?.community ? (
+          <Link
+            href={`/company/${user?.community._id}`}
+            className={router.pathname === `/company/[id]` ? styles.active : ''}
+          >
+            {user?.community.title}
+          </Link>
+        ) : (
+          ''
+        )}
 
         <Link
           href='/community'
@@ -211,7 +220,7 @@ const Header = () => {
 
         <div className={styles.ham_buttons_container}>
           <button type='button' className={styles.ham_buttons}>
-            <Link href={'/profile'}>
+            <Link href={`/profile/${user._id}`}>
               Perfil
               <UserOutlined />
             </Link>
