@@ -1,4 +1,8 @@
+import { useState } from 'react'
 import { DocComment } from '@/pages/community'
+import { IoMdTrash } from 'react-icons/io/index'
+import { useUserContext } from '@/context/userContext'
+import DeleteCommentModal from '@/components/Modals/DeleteComment'
 import styles from './styles.module.css'
 
 interface PostCommentProps {
@@ -6,6 +10,9 @@ interface PostCommentProps {
 }
 
 const PostComment = ({ comment }: PostCommentProps) => {
+  const { user } = useUserContext()
+  const [deleteCommentModal, setDeleteCommentModal] = useState(false)
+
   const renderProfileImage = () => {
     if (comment?.user?.image) {
       return (
@@ -21,7 +28,18 @@ const PostComment = ({ comment }: PostCommentProps) => {
 
   return (
     <div className={styles.container}>
-      <p className={styles.text}>{comment?.message || ''}</p>
+      <div className={styles.content}>
+        <p className={styles.text}>{comment?.message || ''}</p>
+
+        {comment?.user?._id === user?._id && (
+          <IoMdTrash
+            className={styles.icon}
+            style={{ fill: '#e10b0b' }}
+            size={24}
+            onClick={() => setDeleteCommentModal(true)}
+          />
+        )}
+      </div>
 
       <div className={styles.user}>
         {renderProfileImage()}
@@ -29,6 +47,12 @@ const PostComment = ({ comment }: PostCommentProps) => {
           {comment.user?.firstName || ''} {comment.user?.lastName || ''}
         </p>
       </div>
+
+      <DeleteCommentModal
+        isModalOpen={deleteCommentModal}
+        setIsModalOpen={setDeleteCommentModal}
+        id={comment._id}
+      />
     </div>
   )
 }

@@ -1,6 +1,9 @@
 import { FC, useRef } from 'react'
 import { Button } from 'antd'
-import { IoIosArrowRoundBack, IoIosArrowRoundForward } from 'react-icons/io'
+import {
+  IoIosArrowRoundBack,
+  IoIosArrowRoundForward,
+} from 'react-icons/io/index'
 import VideoCard from '@/components/VideoCard'
 import styles from './styles.module.css'
 

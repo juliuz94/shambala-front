@@ -1,19 +1,52 @@
 import { Avatar, Progress } from 'antd'
 import { useRouter } from 'next/router'
-import { IoIosHeart } from 'react-icons/io'
+import { useState, useEffect } from 'react'
+import { IoIosHeart } from 'react-icons/io/index'
 import { UserOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
+import { useUserContext } from '@/context/userContext'
+import { axiosInstance } from '@/axios/axiosInstance'
+import ROUTES from '@/helpers/routes'
 import styles from './styles.module.css'
 
 const VideoCard = ({ video }: any) => {
+  const { user } = useUserContext()
   const router = useRouter()
+  const [liked, setLiked] = useState(video.like && video.like[user._id])
+
+  const likeVideo = async () => {
+    try {
+      await axiosInstance.patch(`${ROUTES.VIDEOS}/${video._id}`, {
+        ...video,
+        like: [user._id],
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const isNewVideo = (date: string) => {
     const creationDate = dayjs(date)
     const today = dayjs()
     const difference = today.diff(creationDate, 'days')
-    return difference < 7 ? true : false
+    return difference < 7
   }
+
+  const handleLikeClick = async (e: React.MouseEvent) => {
+    e.stopPropagation()
+
+    setLiked((prevLiked: any) => !prevLiked)
+
+    try {
+      await likeVideo()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    setLiked(video.like && video.like[user._id])
+  }, [video.like, user._id])
 
   return (
     <div
@@ -29,8 +62,8 @@ const VideoCard = ({ video }: any) => {
             <p>Nuevo</p>
           </div>
         )}
-        <button className={styles.like_button}>
-          <IoIosHeart />
+        <button className={styles.like_button} onClick={handleLikeClick}>
+          {liked ? <IoIosHeart style={{ fill: 'red' }} /> : <IoIosHeart />}
         </button>
       </div>
       <div className={styles.card_body}>
@@ -52,7 +85,8 @@ const VideoCard = ({ video }: any) => {
       </div>
       {/* <section className={styles.author}>
         <Avatar size={24} icon={<UserOutlined />} />
-        <p> {video.title}</p>
+        <p>
+        </p>
       </section> */}
     </div>
   )

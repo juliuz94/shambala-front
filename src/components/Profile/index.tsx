@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button, Dropdown, type MenuProps } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
 import { VideoProfile } from '@/types'
@@ -14,10 +14,11 @@ import styles from './styles.module.css'
 
 const Profile = ({ id }: any) => {
   const router = useRouter()
-  const { userGuest } = useFetchUser(id)
+  const { userGuest, fetchUser } = useFetchUser(id)
   const { user } = useUserContext()
   const [openEditModal, setOpenEditModal] = useState(false)
   const [showFullBio, setShowFullBio] = useState(false)
+  const [filteredVideos, setFilteredVideos] = useState([])
 
   const { videos, videosWithProgress, loadingData } = useFetchVideos()
 
@@ -99,6 +100,20 @@ const Profile = ({ id }: any) => {
     }
   }
 
+  const handleFilterVideos = () => {
+    if (userGuest && userGuest.tags) {
+      const filtered = allVideos.filter((video) =>
+        video.tags.some((tag: any) => userGuest.tags.includes(tag))
+      )
+      setFilteredVideos(filtered)
+    }
+  }
+
+  useEffect(() => {
+    fetchUser()
+    handleFilterVideos()
+  }, [])
+
   return (
     <div className={styles.section}>
       <Head>
@@ -143,7 +158,9 @@ const Profile = ({ id }: any) => {
 
                 <div className={styles.tags}>
                   {userGuest?.tags &&
-                    userGuest.tags.map((tag: any) => <p key={tag}>{tag.es}</p>)}
+                    userGuest.tags.map((tag: any) => (
+                      <p key={tag._id}>{tag.es}</p>
+                    ))}
                 </div>
 
                 <p>{renderBio()}</p>
@@ -214,12 +231,12 @@ const Profile = ({ id }: any) => {
                   </div>
                 )}
 
-                {newVideos.length > 0 && (
+                {newVideos.length > 0 && filteredVideos.length > 0 && (
                   <div className={styles.slider}>
                     <VideoSlider
                       key={'Recomendados'}
                       title={'Recomendados para ti'}
-                      videos={uniqueVideosArray as any}
+                      videos={filteredVideos}
                     />
                   </div>
                 )}

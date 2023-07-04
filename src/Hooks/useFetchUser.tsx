@@ -17,9 +17,9 @@ const useFetchUser = (id: any) => {
 
   useEffect(() => {
     fetchUser()
-  }, [userGuest])
+  }, [])
 
-  return { userGuest }
+  return { userGuest, fetchUser }
 }
 
 export default useFetchUser

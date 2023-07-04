@@ -1,7 +1,10 @@
 import { useRef } from 'react'
 import { Button } from 'antd'
 import styles from './styles.module.css'
-import { IoIosArrowRoundBack, IoIosArrowRoundForward } from 'react-icons/io'
+import {
+  IoIosArrowRoundBack,
+  IoIosArrowRoundForward,
+} from 'react-icons/io/index'
 import VideoCard from '@/components/VideoCard'
 import { Video } from '@/types'
 
@@ -49,8 +52,8 @@ const VideoSlider = ({ title, videos }: PropTypes) => {
 
       <div className={styles.videos_row} ref={scrollRef}>
         {videos.length > 0 &&
-          videos.map((video) => {
-            return <VideoCard key={video._id} video={video} />
+          videos.map((video, index) => {
+            return <VideoCard key={`${video._id}-${index}`} video={video} />
           })}
       </div>
     </div>

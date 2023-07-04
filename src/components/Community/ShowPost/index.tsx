@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import moment from 'moment'
 import 'moment/locale/es'
 import { Doc } from '@/Hooks/useFetchPosts'
@@ -5,7 +6,6 @@ import { CommentData, DocComment } from '@/types'
 import CommentForm from '../CommentForm'
 import PostComment from '../PostComment'
 import styles from './styles.module.css'
-import { useEffect, useRef } from 'react'
 
 type SetShowPostFunction = (value: boolean) => void
 

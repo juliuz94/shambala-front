@@ -101,5 +101,5 @@
   gap: 20px;
   margin: 15px 30px;
   max-height: 400px;
-  overflow: scroll;
+  overflow: auto;
 }

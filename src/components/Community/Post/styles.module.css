@@ -41,11 +41,20 @@
   color: #9b9595;
 }
 
-.user {
+.content {
   display: flex;
+  gap: 10px;
   align-items: center;
   gap: 10px;
   margin: 10px 0;
+  cursor: pointer;
+}
+
+.user {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   cursor: pointer;
 }
