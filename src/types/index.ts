@@ -1,4 +1,5 @@
 export type User = {
+  tags: any
   firstName: string | null
   lastName: string | null
   _id: string
@@ -293,6 +294,7 @@ export type VideoProgress = {
 }
 
 export type VideoProfile = {
+  tags: any
   progress: VideoProgress
   _id: string
   title: string

@@ -18,7 +18,7 @@ const Profile = ({ id }: any) => {
   const { user } = useUserContext()
   const [openEditModal, setOpenEditModal] = useState(false)
   const [showFullBio, setShowFullBio] = useState(false)
-  const [filteredVideos, setFilteredVideos] = useState([])
+  const [filteredVideos, setFilteredVideos] = useState<any[]>([])
 
   const { videos, videosWithProgress, loadingData } = useFetchVideos()
 
