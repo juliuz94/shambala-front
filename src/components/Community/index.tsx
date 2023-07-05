@@ -48,8 +48,8 @@ const Community = () => {
     //   category: 'PON_TU_GRANO_DE_ARENA',
     // },
     {
-      tag: user.community ? user.community.title : null,
-      category: user.community ? user.community._id : null,
+      tag: user?.community ? user?.community.title : null,
+      category: user?.community ? user?.community._id : null,
     },
   ].filter((filter) => filter.tag !== null)
 
@@ -93,7 +93,7 @@ const Community = () => {
 
   useEffect(() => {
     if (!user) return
-    if (!user.tags || user?.tags.length < 1) {
+    if (!user?.tags || user?.tags.length < 1) {
       setShowUpdateModal(true)
     }
   }, [user])

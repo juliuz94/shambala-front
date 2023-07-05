@@ -1,9 +1,14 @@
-import React, { useState, Dispatch, SetStateAction } from 'react'
+import React, { useState, Dispatch, SetStateAction, useEffect } from 'react'
 import { axiosInstance } from '@/axios/axiosInstance'
 import { useUserContext } from '@/context/userContext'
 import { Button } from 'antd'
 import ROUTES from '@/helpers/routes'
 import useFetchTags from '@/Hooks/useFetchTags'
+import 'react-phone-number-input/style.css'
+import PhoneInput, {
+  formatPhoneNumberIntl,
+  formatPhoneNumber,
+} from 'react-phone-number-input'
 import { Modal, Form, Input } from 'antd'
 import { Tag } from '@/types'
 import { toast } from 'sonner'
@@ -18,6 +23,7 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
   const { user } = useUserContext()
   const { tags } = useFetchTags(100)
   const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+  const [phoneNumber, setPhoneNumber] = useState<any>('')
 
   const handleCloseModal = () => {
     setOpen(false)
@@ -44,9 +50,14 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
   const handleUpdateUser = async () => {
     try {
       const tagIds = selectedTags.map((tag: Tag) => tag._id)
+      const ext = formatPhoneNumberIntl(phoneNumber).split(' ')[0]
+
       await axiosInstance.patch(`${ROUTES.USERS}/${user._id}`, {
         tags: tagIds,
+        country_code: ext,
+        phone_number: formatPhoneNumber(phoneNumber),
       })
+
       toast.success('Se actualizó tu perfil')
       setOpen(false)
     } catch (error) {
@@ -78,13 +89,15 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
             })}
         </div>
 
-        {/* <Form.Item
-          name='phone'
-          label={<label>Número</label>}
-          rules={[{ required: true, message: 'Campo requerido' }]}
-        >
-          <Input type='number' placeholder='Número de celular' />
-        </Form.Item> */}
+        <Form.Item rules={[{ required: true, message: 'Campo requerido' }]}>
+          <PhoneInput
+            className={styles.phone_input}
+            defaultCountry='CO'
+            placeholder='Número de celular'
+            value={phoneNumber}
+            onChange={setPhoneNumber}
+          />
+        </Form.Item>
 
         <Button
           disabled={selectedTags.length < 2}
