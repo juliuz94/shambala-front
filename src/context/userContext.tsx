@@ -48,7 +48,7 @@ export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
       )
       localStorage.setItem('sha_user_token', user.accessToken)
       setAuthInfo(data)
-      router.push('/videos')
+      router.push('/community')
     } catch (error) {
       console.log(error)
     }

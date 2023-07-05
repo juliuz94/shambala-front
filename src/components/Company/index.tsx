@@ -21,7 +21,7 @@ const Company: FC = () => {
   return (
     <main className={styles.company_container}>
       <Head>
-        <title>{user?.community.title || ''}</title>
+        <title>{user?.company.title || ''}</title>
       </Head>
 
       <section className={styles.company_content_container}>
@@ -73,7 +73,7 @@ const Company: FC = () => {
         </div>
 
         <div className={styles.right_column}>
-          <h1>Eventos para {user?.community.title || ''}</h1>
+          <h1>Eventos para {user?.company.title || ''}</h1>
 
           <div className={styles.events_container}>
             {workshop &&

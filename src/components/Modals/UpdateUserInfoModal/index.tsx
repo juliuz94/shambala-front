@@ -4,7 +4,7 @@ import { useUserContext } from '@/context/userContext'
 import { Button } from 'antd'
 import ROUTES from '@/helpers/routes'
 import useFetchTags from '@/Hooks/useFetchTags'
-import { Modal } from 'antd'
+import { Modal, Form, Input } from 'antd'
 import { Tag } from '@/types'
 import { toast } from 'sonner'
 import styles from './styles.module.css'
@@ -77,6 +77,15 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
               )
             })}
         </div>
+
+        {/* <Form.Item
+          name='phone'
+          label={<label>Número</label>}
+          rules={[{ required: true, message: 'Campo requerido' }]}
+        >
+          <Input type='number' placeholder='Número de celular' />
+        </Form.Item> */}
+
         <Button
           disabled={selectedTags.length < 2}
           size='large'

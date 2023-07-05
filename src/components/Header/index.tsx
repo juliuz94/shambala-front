@@ -1,9 +1,9 @@
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { Avatar, Button, Dropdown } from 'antd'
 import type { MenuProps } from 'antd'
-import { useRouter } from 'next/router'
-import Image from 'next/image'
-import Link from 'next/link'
 import { FaLeaf } from 'react-icons/fa'
 import { useUserContext } from '@/context/userContext'
 import { MoreOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons'
@@ -19,7 +19,7 @@ const Header = () => {
       key: '1',
       label: (
         <div className={styles.user_option}>
-          <Link href={`/profile/${user._id}`}>
+          <Link href={`/profile/${user?._id}`}>
             Perfil
             <UserOutlined />
           </Link>
@@ -69,7 +69,7 @@ const Header = () => {
     <div className={styles.nav}>
       <div className={styles.container}>
         <div className={styles.left_items}>
-          <Link href={'/videos'}>
+          <Link href={'/community'}>
             <Image
               width={180}
               height={60}
@@ -81,14 +81,10 @@ const Header = () => {
 
         <div className={styles.center_items}>
           <Link
-            className={
-              router.pathname === '/videos' || router.pathname === '/video/[id]'
-                ? styles.active
-                : ''
-            }
-            href='/videos'
+            href='/community'
+            className={router.pathname === '/community' ? styles.active : ''}
           >
-            Videos
+            Comunidad
           </Link>
 
           <Link
@@ -100,24 +96,28 @@ const Header = () => {
             Talleres & Eventos
           </Link>
 
-          {user?.community ? (
+          {user?.company ? (
             <Link
-              href={`/company/${user?.community._id}`}
+              href={`/company/${user?.company._id}`}
               className={
                 router.pathname === `/company/[id]` ? styles.active : ''
               }
             >
-              {user?.community.title}
+              {user?.company.title}
             </Link>
           ) : (
             ''
           )}
 
           <Link
-            href='/community'
-            className={router.pathname === '/community' ? styles.active : ''}
+            className={
+              router.pathname === '/videos' || router.pathname === '/video/[id]'
+                ? styles.active
+                : ''
+            }
+            href='/videos'
           >
-            Comunidad
+            Videos
           </Link>
         </div>
 
@@ -130,7 +130,7 @@ const Header = () => {
 
             <p className={styles.user_name}>{user?.name?.split(' ')[0]}</p>
 
-            <Link href={`/profile/${user._id}`}>
+            <Link href={`/profile/${user?._id}`}>
               <Avatar
                 shape='square'
                 size='large'
@@ -185,10 +185,10 @@ const Header = () => {
         </div>
 
         <Link
-          className={router.pathname === '/videos' ? styles.active : ''}
-          href='/videos'
+          href='/community'
+          className={router.pathname === '/community' ? styles.active : ''}
         >
-          Videos
+          Comunidad
         </Link>
 
         <Link
@@ -200,27 +200,27 @@ const Header = () => {
           Talleres & Eventos
         </Link>
 
-        {user?.community ? (
+        {user?.company ? (
           <Link
-            href={`/company/${user?.community._id}`}
+            href={`/company/${user?.company._id}`}
             className={router.pathname === `/company/[id]` ? styles.active : ''}
           >
-            {user?.community.title}
+            {user?.company.title}
           </Link>
         ) : (
           ''
         )}
 
         <Link
-          href='/community'
-          className={router.pathname === '/community' ? styles.active : ''}
+          className={router.pathname === '/videos' ? styles.active : ''}
+          href='/videos'
         >
-          Comunidad
+          Videos
         </Link>
 
         <div className={styles.ham_buttons_container}>
           <button type='button' className={styles.ham_buttons}>
-            <Link href={`/profile/${user._id}`}>
+            <Link href={`/profile/${user?._id}`}>
               Perfil
               <UserOutlined />
             </Link>

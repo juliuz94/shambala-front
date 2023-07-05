@@ -19,7 +19,7 @@ export function UseLandingHeader() {
   }
 
   const subscribeNavigate = () => {
-    route.push('/Subscribe')
+    route.push('/subscribe')
   }
 
   const handleContactUs = () => {

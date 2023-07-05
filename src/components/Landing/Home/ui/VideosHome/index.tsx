@@ -36,26 +36,12 @@ const VideosHome = ({ video }: any) => {
           </div>
         )}
 
-        <button className={styles.like_button}>
+        {/* <button className={styles.like_button}>
           <IoIosHeart />
-        </button>
+        </button> */}
       </div>
 
       <div className={styles.card_body}>
-        {video.progress !== null && (
-          <div className={styles.progress_bar_container}>
-            <Progress
-              percent={video?.progress?.progress}
-              status='normal'
-              size='small'
-              strokeColor={{ from: '#B0D0F6', to: '#0F72EC' }}
-              showInfo={false}
-              className={styles.progress_bar}
-            />
-            <p>{video?.progress?.progress.toFixed(0)}%</p>
-          </div>
-        )}
-
         <h1 className={styles.video_title}>{video?.title}</h1>
 
         <p className={styles.video_description}>{video?.description}</p>

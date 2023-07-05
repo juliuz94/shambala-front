@@ -3,8 +3,8 @@ import Experiences from '@/components/Landing/Experiences'
 
 export default function ExperiencesPage() {
   return (
-    <LandingLayout >
+    <LandingLayout>
       <Experiences />
-    </LandingLayout >
+    </LandingLayout>
   )
 }

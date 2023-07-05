@@ -129,7 +129,7 @@ const LoginComponent: FC = () => {
       await createUserWithEmailAndPassword(auth, email, password)
       await updateProfile(auth.currentUser as any, { displayName: name })
       setUser(auth.currentUser)
-      router.push('/videos')
+      router.push('/community')
     } catch (error) {
       console.log(error)
       handleLoginError(error)

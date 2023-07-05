@@ -5,6 +5,7 @@ import { useUserContext } from '@/context/userContext'
 import Post from '@/components/Community/Post'
 import PostForm from '@/components/Community/PostForm'
 import ShowPost from '@/components/Community/ShowPost'
+import UpdateUserInfoModal from '../Modals/UpdateUserInfoModal'
 import SearchInput from '@/components/SearchInput'
 import { axiosInstance } from '@/axios/axiosInstance'
 import { CommentData } from '@/types/index'
@@ -20,6 +21,7 @@ const Community = () => {
   const [pageNumber, setPageNumber] = useState(1)
   const [commentsLimit, setCommentsLimit] = useState(10)
   const [filteredPosts, setFilteredPosts] = useState<Doc[]>([])
+  const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false)
 
   const fetchComments = async (id: string, limit: number) => {
     try {
@@ -41,10 +43,10 @@ const Community = () => {
       tag: 'Retos Ambientales',
       category: 'RETOS_AMBIENTALES',
     },
-    {
-      tag: 'Pon tu grano de arena',
-      category: 'PON_TU_GRANO_DE_ARENA',
-    },
+    // {
+    //   tag: 'Pon tu grano de arena',
+    //   category: 'PON_TU_GRANO_DE_ARENA',
+    // },
     {
       tag: user.community ? user.community.title : null,
       category: user.community ? user.community._id : null,
@@ -88,6 +90,13 @@ const Community = () => {
       setFilteredPosts([])
     }
   }, [showPost])
+
+  useEffect(() => {
+    if (!user) return
+    if (!user.tags || user?.tags.length < 1) {
+      setShowUpdateModal(true)
+    }
+  }, [user])
 
   return (
     <section className={styles.section}>
@@ -144,6 +153,11 @@ const Community = () => {
           className={styles.bg}
           src='/images/svg/community_bg.svg'
           alt='bg'
+        />
+
+        <UpdateUserInfoModal
+          open={showUpdateModal}
+          setOpen={setShowUpdateModal}
         />
       </div>
     </section>

@@ -10,11 +10,9 @@ export default function Login() {
   useEffect(() => {
     const user = localStorage.getItem('sha_user')
     if (user) {
-      router.push('/videos')
+      router.push('/community')
     }
   }, [router])
 
-  return (
-    <LoginComponent />
-  )
+  return <LoginComponent />
 }

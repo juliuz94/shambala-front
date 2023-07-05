@@ -46,7 +46,7 @@ const VideoCard = ({ video }: any) => {
 
   useEffect(() => {
     setLiked(video.like && video.like[user._id])
-  }, [video.like, user._id])
+  }, [video.like, user?._id])
 
   return (
     <div

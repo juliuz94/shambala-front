@@ -3,8 +3,8 @@ import LandingLayout from '@/components/LadingLayout'
 
 export default function EnterprisePage() {
   return (
-    <LandingLayout >
+    <LandingLayout>
       <Enterprise />
-    </LandingLayout >
+    </LandingLayout>
   )
 }
