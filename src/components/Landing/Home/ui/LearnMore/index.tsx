@@ -2,6 +2,9 @@ import VideoStart from '@/components/VideoStart'
 import styles from './styles.module.css'
 
 const LearnMore = () => {
+  const videoUrl = 'https://www.youtube.com/watch?v=CY3bjxGiL8A'
+  const videoId = videoUrl.split('v=')[1]
+
   return (
     <div className={styles.container}>
       <div className={styles.conoce_mas}>
@@ -20,7 +23,7 @@ const LearnMore = () => {
         </div>
 
         <div className={styles.video}>
-          <VideoStart />
+          <VideoStart videoId={videoId} />
         </div>
       </div>
     </div>

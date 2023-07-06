@@ -66,7 +66,11 @@ const VideosComponent = () => {
             <div className={styles.video_options}>
               <SearchInput />
             </div>
-            <VideoRow title='En progreso' videos={videosWithProgress} />
+
+            {videosWithProgress.length > 0 && (
+              <VideoRow title='En progreso' videos={videosWithProgress} />
+            )}
+
             {videos.length > 0 &&
               videos.map((videoCategory, index) => (
                 <VideoRow

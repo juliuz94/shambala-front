@@ -206,8 +206,22 @@ const Profile = ({ id }: any) => {
               </div>
 
               <div className={styles.options_text}>
-                <button type='button'>Enviar</button>
-                <button type='button'>Enviar</button>
+                <button
+                  type='button'
+                  onClick={() =>
+                    router.push('https://x0ligg93mr8.typeform.com/to/CPluoViu')
+                  }
+                >
+                  Enviar
+                </button>
+                <button
+                  type='button'
+                  onClick={() =>
+                    router.push('https://x0ligg93mr8.typeform.com/to/HgWGshEp')
+                  }
+                >
+                  Enviar
+                </button>
               </div>
             </div>
           )}

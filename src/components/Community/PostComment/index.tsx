@@ -6,10 +6,20 @@ import DeleteCommentModal from '@/components/Modals/DeleteComment'
 import styles from './styles.module.css'
 
 interface PostCommentProps {
+  id: string
+  fetchComments: (id: string, limit: number) => Promise<void>
   comment: DocComment
+  commentsLimit: number
+  setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const PostComment = ({ comment }: PostCommentProps) => {
+const PostComment = ({
+  comment,
+  id,
+  fetchComments,
+  commentsLimit,
+  setUpdatePost,
+}: PostCommentProps) => {
   const { user } = useUserContext()
   const [deleteCommentModal, setDeleteCommentModal] = useState(false)
 
@@ -52,6 +62,10 @@ const PostComment = ({ comment }: PostCommentProps) => {
         isModalOpen={deleteCommentModal}
         setIsModalOpen={setDeleteCommentModal}
         id={comment._id}
+        postId={id}
+        fetchComments={fetchComments}
+        commentsLimit={commentsLimit}
+        setUpdatePost={setUpdatePost}
       />
     </div>
   )

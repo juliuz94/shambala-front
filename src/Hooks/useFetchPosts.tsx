@@ -22,6 +22,7 @@ export interface Doc {
   tags: Tag[]
   likes: any[]
   user: User
+  commentsCount: number
   isPublic: boolean
   createdAt: string
   updatedAt: string
@@ -88,6 +89,11 @@ const useFetchPosts = (pageNumber: number, category: string) => {
   useEffect(() => {
     fetchPosts()
   }, [updatePost, pageNumber, category])
+
+  useEffect(() => {
+    setPosts(null)
+    setUpdatePost((prevUpdatePost) => !prevUpdatePost)
+  }, [category])
 
   return { posts, setUpdatePost }
 }

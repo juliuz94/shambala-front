@@ -1,6 +1,9 @@
+import { useRouter } from 'next/router'
 import styles from './styles.module.css'
 
 const Main = () => {
+  const router = useRouter()
+
   return (
     <div className={styles.section}>
       <div className={styles.container}>
@@ -11,59 +14,43 @@ const Main = () => {
           </div>
 
           <div className={styles.cards}>
-            <div className={styles.form_container}>
-              <div className={styles.form}>
-                <p>Nombre completo</p>
-                <input
-                  className={styles.input}
-                  type='text'
-                  placeholder='Tu nombre'
-                />
+            <div className={styles.card}>
+              <div className={styles.card_title}>
+                <div className={styles.card_price}>
+                  <p>Gratis</p>
+                </div>
+                <h2>Gratuita</h2>
+                <hr className={styles.card_line} />
+              </div>
 
-                <p>Email</p>
-                <input
-                  className={styles.input}
-                  type='text'
-                  placeholder='Ingresa tu correo'
-                />
-
-                <p>Seleccionar plan</p>
-                <div className={styles.plan}>
-                  <input
-                    className={styles.checkbox}
-                    type='checkbox'
-                    id='scales'
-                    name='scales'
-                  />
-                  <p>$80.000 COP / Mensuales</p>
+              <div className={styles.card_content}>
+                <div>
+                  <img src='/images/svg/CheckCircle.svg' alt='check' />
+                  <p>
+                    Acceso a cantidad limitada de videos, talleres y eventos
+                    (25%) de los videos
+                  </p>
                 </div>
 
-                <p>Pagar con</p>
-                <button type='button' className={styles.new_button}>
-                  Tarjeta de Crédito
-                </button>
-
-                <p>Número de la tarjeta</p>
-                <input
-                  className={styles.input}
-                  type='number'
-                  placeholder='0000 0000 0000 0000'
-                />
-
-                <p>Mes/Año</p>
-                <input className={styles.input} type='text' placeholder='CVC' />
-
-                <p>Nombre en la tarjeta</p>
-                <input
-                  className={styles.input}
-                  type='text'
-                  placeholder='Tu nombre'
-                />
+                <div>
+                  <img src='/images/svg/CheckCircle.svg' alt='check' />
+                  <p>Acceso limitado al espacio de comunidad</p>
+                </div>
+                <hr className={styles.card_line} />
               </div>
+              <button
+                className={styles.card_button}
+                onClick={() => router.push('/login')}
+              >
+                Pagar ahora
+              </button>
             </div>
 
             <div className={styles.card}>
               <div className={styles.card_title}>
+                <div className={styles.card_price}>
+                  <p>Recomendado</p>
+                </div>
                 <h3>Membresía Completa</h3>
                 <h4>
                   $80.000 COP / <span>Mensuales</span>
@@ -75,8 +62,8 @@ const Main = () => {
                 <div>
                   <img src='/images/svg/CheckCircle.svg' alt='check' />
                   <p>
-                    Acceso a cantidad limitada de videos, talleres y eventos
-                    (10%) de los videos
+                    Acceso a cantidad ilimitada de videos, talleres y eventos
+                    (100%) de los videos
                   </p>
                 </div>
 
@@ -107,7 +94,10 @@ const Main = () => {
 
                 <hr className={styles.card_line} />
               </div>
-              <button className={styles.card_button} type='button'>
+              <button
+                className={styles.card_button}
+                onClick={() => router.push('/login')}
+              >
                 Pagar ahora
               </button>
             </div>

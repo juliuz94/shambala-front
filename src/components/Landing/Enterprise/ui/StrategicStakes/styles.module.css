@@ -26,11 +26,11 @@
 }
 
 .content {
-  max-width: 450px;
+  max-width: 100%;
 }
 
 .content p {
-  margin-top: 20px;
+  margin-bottom: 20px;
   font-weight: 500;
   font-size: 20px;
   line-height: 26px;
@@ -39,11 +39,11 @@
 }
 
 .video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 40px;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 20px;
 }
 

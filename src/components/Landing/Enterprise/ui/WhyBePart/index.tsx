@@ -12,7 +12,7 @@ const WhyBePart = () => {
         <div className={styles.content}>
           <img
             className={styles.plant}
-            src='/images/png/Friends.png'
+            src='/images/png/friends.png'
             alt='plant_1'
           />
 

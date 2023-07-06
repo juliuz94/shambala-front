@@ -8,17 +8,27 @@ type DeleteCommentModalProps = {
   isModalOpen: boolean
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   id: string
+  postId: string
+  fetchComments: (id: string, limit: number) => Promise<void>
+  commentsLimit: number
+  setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const DeleteCommentModal = ({
   isModalOpen,
   setIsModalOpen,
   id,
+  fetchComments,
+  postId,
+  commentsLimit,
+  setUpdatePost,
 }: DeleteCommentModalProps) => {
   const deleteComment = async () => {
     try {
       await axiosInstance.delete(`${ROUTES.POST_COMMENT}/${id}`)
       toast.success('Se borró tu comentario correctamente')
+      fetchComments(postId, commentsLimit)
+      setUpdatePost((prev) => !prev)
       handleOk()
     } catch (error) {
       toast.error('Parece que hubo un error')

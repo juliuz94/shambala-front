@@ -1,10 +1,13 @@
-import styles from './styles.module.css'
 import VideoStart from '@/components/VideoStart'
 import Anwers from '@/components/Landing/Enterprise/ui/Anwers'
-import { BusinessMan, Globe, Person } from '../../../../../../public/images/svg'
+import { BusinessMan, Globe, Person } from '@/../public/images/svg'
 import { strings } from '@/constants/strings'
+import styles from './styles.module.css'
 
 const StrategicStakes = () => {
+  const videoUrl = 'https://www.youtube.com/watch?v=axUu70iVvg0'
+  const videoId = videoUrl.split('v=')[1]
+
   return (
     <div className={styles.container}>
       <div className={styles.conoce_mas}>
@@ -24,8 +27,8 @@ const StrategicStakes = () => {
               construir capacidades organizacionales (Harvard Business Review,
               Marzo 2023)
             </p>
+            <VideoStart videoId={videoId} />
           </div>
-          <VideoStart />
         </div>
 
         <div className={styles.data}>

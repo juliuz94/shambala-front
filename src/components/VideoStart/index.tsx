@@ -1,14 +1,22 @@
 import styles from './styles.module.css'
-import { PlayBtn } from '../../../public/images/svg'
-import Image from 'next/image'
 
-const VideoStart=() => {
+type VideoStartProps = {
+  videoId: string
+}
+
+const VideoStart = ({ videoId }: VideoStartProps) => {
   return (
-    <div className={styles.video_container} >
-      <Image className={styles.play_video} src={PlayBtn} alt={'Play video'} />
-    </div >
+    <div className={styles.youtube_video_container}>
+      <div className={styles.youtube_video}>
+        <iframe
+          src={`https://www.youtube.com/embed/${videoId}`}
+          title='YouTube Video'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+          allowFullScreen
+        ></iframe>
+      </div>
+    </div>
   )
-
 }
 
 export default VideoStart

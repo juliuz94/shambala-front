@@ -45,7 +45,7 @@ const Community = () => {
     },
     // {
     //   tag: 'Pon tu grano de arena',
-    //   category: 'PON_TU_GRANO_DE_ARENA',
+    //   category: 'GRANO_DE_ARENA',
     // },
     {
       tag: user?.community ? user?.community.title : null,
@@ -118,6 +118,7 @@ const Community = () => {
             setComments={setComments}
             commentsLimit={commentsLimit}
             setCommentsLimit={setCommentsLimit}
+            setUpdatePost={setUpdatePost}
           />
         ) : (
           <>

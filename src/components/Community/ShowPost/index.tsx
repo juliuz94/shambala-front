@@ -17,6 +17,7 @@ interface PostProps {
   setComments: React.Dispatch<React.SetStateAction<CommentData | null>>
   commentsLimit: number
   setCommentsLimit: React.Dispatch<React.SetStateAction<number>>
+  setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const ShowPost: React.FC<PostProps> = ({
@@ -27,6 +28,7 @@ const ShowPost: React.FC<PostProps> = ({
   setComments,
   commentsLimit,
   setCommentsLimit,
+  setUpdatePost,
 }) => {
   const commentsRef = useRef<HTMLDivElement>(null)
 
@@ -116,7 +118,14 @@ const ShowPost: React.FC<PostProps> = ({
         <div className={styles.comments} ref={commentsRef}>
           {comments?.docs &&
             comments.docs.map((comment: DocComment, index: number) => (
-              <PostComment comment={comment} key={index} />
+              <PostComment
+                id={post?._id || ''}
+                fetchComments={fetchComments}
+                comment={comment}
+                commentsLimit={commentsLimit}
+                key={index}
+                setUpdatePost={setUpdatePost}
+              />
             ))}
         </div>
 
