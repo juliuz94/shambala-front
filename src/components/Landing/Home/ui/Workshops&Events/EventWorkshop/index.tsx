@@ -19,13 +19,13 @@ interface PropTypes {
   event?: Workshop
 }
 
-const EventCard = ({ small, event }: PropTypes) => {
+const EventWorkshop = ({ small, event }: PropTypes) => {
   const router = useRouter()
 
   return (
     <div
       className={`${styles.event_card} ${small ? styles.small : null}`}
-      onClick={() => router.push(`/event/${event?._id}`)}
+      onClick={() => router.push(`public/event/${event?._id}`)}
     >
       <div className={styles.card_content_mobile}>
         <div className={styles.line} />
@@ -187,4 +187,4 @@ const EventCard = ({ small, event }: PropTypes) => {
   )
 }
 
-export default EventCard
+export default EventWorkshop

@@ -302,3 +302,58 @@ export type VideoProfile = {
   image: string
   description: string
 }
+
+export interface WorkshopTag {
+  _id: string
+  es: string
+  en: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+export interface WorkshopSpeaker {
+  _id: string
+  name: string
+  image: string
+  email: string
+  biography: string
+  linkedin: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+export interface WorkshopCoordinates {
+  lng: number
+  lat: number
+  _id: string
+}
+
+export interface LandWorkshop {
+  _id: string
+  title: string
+  image: string
+  imageGallery: any[]
+  description: string
+  location: string
+  isVirtual: boolean
+  coordinates: WorkshopCoordinates
+  maxUsers: number
+  subscribedUsers: any[]
+  companyWhiteList: any[]
+  companyBlackList: any[]
+  tags: WorkshopTag[]
+  attachments: any[]
+  sponsors: any[]
+  type: string
+  speakers: WorkshopSpeaker[]
+  date: string
+  isPublic: boolean
+  isLandingPage: boolean
+  like: any[]
+  agenda: any[]
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
