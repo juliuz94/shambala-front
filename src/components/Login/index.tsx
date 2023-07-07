@@ -9,9 +9,11 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   fetchSignInMethodsForEmail,
+  sendPasswordResetEmail
 } from 'firebase/auth'
 import { toast } from 'sonner'
 import { Form, Input, Button, Spin, Modal } from 'antd'
+import type { NotificationPlacement } from 'antd/es/notification/interface';
 import styles from './styles.module.css'
 import WaveBackgroundSVG from '@/svg/WaveBackground'
 import { LoadingOutlined } from '@ant-design/icons'
@@ -24,9 +26,11 @@ const LoginComponent: FC = () => {
     type: '',
   })
   const [showCreateUser, setShowCreateUser] = useState(false)
+  const [showResetPassword, setShowResetPassword] = useState(false)
   const provider = new GoogleAuthProvider()
   const auth = getAuth()
   const router = useRouter()
+  const [form] = Form.useForm();
 
   type createAccountType = {
     name: string
@@ -89,7 +93,6 @@ const LoginComponent: FC = () => {
   }
 
   const handleUserUsedDifferentMethod = (methods: string[]) => {
-    console.log(methods)
     toast.error(`Previmente iniciaste sesión con ${methods}`)
     handleResetLoading()
   }
@@ -133,6 +136,24 @@ const LoginComponent: FC = () => {
     } catch (error) {
       console.log(error)
       handleLoginError(error)
+    }
+  }
+
+
+  const handleResetPassword = (values: {email: string}) => {
+    console.log(values)
+    try {
+      sendPasswordResetEmail(auth, values.email)
+      toast.message('Solicitud recibida', {
+        description: 'Si tu email se encuentra en base de datos. Enviaremos un correo para que recuperes tu contraseña',
+        duration: 7000
+      })
+      form.resetFields()
+      setShowResetPassword(false)
+    } catch (error: any) {
+      handleLoginError(error)
+      console.log(error.code)
+      console.log(error.message)
     }
   }
 
@@ -211,7 +232,7 @@ const LoginComponent: FC = () => {
           )}
         </Button>
         <div className={styles.other_options}>
-          <p>
+          <p onClick={() => setShowResetPassword(true)}>
             ¿Olvidaste tu contraseña? <a>Haz click aquí</a>
           </p>
           <p>
@@ -275,6 +296,51 @@ const LoginComponent: FC = () => {
                   />
                 ) : (
                   'Crear cuenta'
+                )}
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+        <Modal
+          title='Recuperar contraseña'
+          open={showResetPassword}
+          onCancel={() => setShowResetPassword(false)}
+          footer={false}
+          width={400}
+          centered
+        >
+          <p>Ingresa tu correo para recuperar tu contraseña</p>
+          <Form
+            layout='vertical'
+            size='small'
+            style={{ marginTop: '1rem' }}
+            form={form}
+            onFinish={handleResetPassword}
+          >
+            <Form.Item
+              name='email'
+              label={<label>Email</label>}
+              className={styles.input_item}
+              rules={[{ required: true, message: 'Este campo es necesario' }]}
+            >
+              <Input className={styles.login_input} size='large' />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                disabled={loading.isLoading}
+                className={`${styles.login_button}`}
+                type='primary'
+                size='large'
+                htmlType='submit'
+              >
+                {loading.isLoading && loading.type === 'signUp' ? (
+                  <Spin
+                    indicator={
+                      <LoadingOutlined style={{ fontSize: 24 }} spin />
+                    }
+                  />
+                ) : (
+                  'Recuperar contraseña'
                 )}
               </Button>
             </Form.Item>

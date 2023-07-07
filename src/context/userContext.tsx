@@ -32,11 +32,9 @@ export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const setAuthInfo = (user: LocalUser | null) => {
     localStorage.setItem('sha_user', JSON.stringify(user))
     setUser(user)
-    toast.success('¡Qué bueno tener de vuelta!')
   }
 
   const handleLogin = async (user: User | null | any) => {
-    console.log(user)
     try {
       const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/findSession`,
@@ -48,6 +46,7 @@ export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
       )
       localStorage.setItem('sha_user_token', user.accessToken)
       setAuthInfo(data)
+      toast.success('¡Qué bueno tener de acá!')
       router.push('/community')
     } catch (error) {
       console.log(error)

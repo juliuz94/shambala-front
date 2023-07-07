@@ -8,10 +8,13 @@ import 'react-phone-number-input/style.css'
 import PhoneInput, {
   formatPhoneNumberIntl,
   formatPhoneNumber,
+  parsePhoneNumber,
+  isPossiblePhoneNumber
 } from 'react-phone-number-input'
 import { Modal, Form, Input } from 'antd'
 import { Tag } from '@/types'
 import { toast } from 'sonner'
+import { worldPhoneNumbers } from '@/helpers/countriesPhoneNumbers'
 import styles from './styles.module.css'
 
 interface PropTypes {
@@ -20,10 +23,11 @@ interface PropTypes {
 }
 
 const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
-  const { user } = useUserContext()
+  const { user, setUser } = useUserContext()
   const { tags } = useFetchTags(100)
   const [selectedTags, setSelectedTags] = useState<Tag[]>([])
   const [phoneNumber, setPhoneNumber] = useState<any>('')
+  const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false)
 
   const handleCloseModal = () => {
     setOpen(false)
@@ -47,16 +51,36 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
     }
   }
 
+  const handlePhoneChange = (phone: string) => {    
+    const parsedPhoneNumber = parsePhoneNumber(phone || '')
+    const country = worldPhoneNumbers.find(country => country.code === parsedPhoneNumber?.country)
+
+    if (!phone || !parsedPhoneNumber) {
+      setIsValidPhoneNumber(false)
+      return
+    }
+
+    setPhoneNumber(phone)
+
+    if (parsedPhoneNumber?.nationalNumber.length === country?.phoneLength) {
+      setIsValidPhoneNumber(true)
+    } else {
+      setIsValidPhoneNumber(false)
+    }
+  }
+
   const handleUpdateUser = async () => {
     try {
       const tagIds = selectedTags.map((tag: Tag) => tag._id)
       const ext = formatPhoneNumberIntl(phoneNumber).split(' ')[0]
 
-      await axiosInstance.patch(`${ROUTES.USERS}/${user._id}`, {
+      const { data } = await axiosInstance.patch(`${ROUTES.USERS}/${user._id}`, {
         tags: tagIds,
         country_code: ext,
-        phone_number: formatPhoneNumber(phoneNumber),
+        phone_number: parsePhoneNumber(phoneNumber)?.nationalNumber,
       })
+
+      setUser(data)
 
       toast.success('Se actualizó tu perfil')
       setOpen(false)
@@ -66,7 +90,7 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
   }
 
   return (
-    <Modal open={open} onCancel={handleCloseModal} footer={false} width={450}>
+    <Modal open={open} closable={false} maskClosable={false} onCancel={handleCloseModal} footer={false} width={450}>
       <div className={styles.modal_content_container}>
         <h3>Queremos saber qué te gusta</h3>
         <p>
@@ -95,12 +119,12 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
             defaultCountry='CO'
             placeholder='Número de celular'
             value={phoneNumber}
-            onChange={setPhoneNumber}
+            onChange={handlePhoneChange}
           />
         </Form.Item>
 
         <Button
-          disabled={selectedTags.length < 2}
+          disabled={selectedTags.length < 2 || !isValidPhoneNumber}
           size='large'
           type='primary'
           onClick={handleUpdateUser}

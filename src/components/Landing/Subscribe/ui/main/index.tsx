@@ -42,7 +42,7 @@ const Main = () => {
                 className={styles.card_button}
                 onClick={() => router.push('/login')}
               >
-                Pagar ahora
+                Iniciar ahora
               </button>
             </div>
 

@@ -206,22 +206,12 @@ const Profile = ({ id }: any) => {
               </div>
 
               <div className={styles.options_text}>
-                <button
-                  type='button'
-                  onClick={() =>
-                    router.push('https://x0ligg93mr8.typeform.com/to/CPluoViu')
-                  }
-                >
+                <a type='button' href='https://x0ligg93mr8.typeform.com/to/CPluoViu' target='_blank'>
                   Enviar
-                </button>
-                <button
-                  type='button'
-                  onClick={() =>
-                    router.push('https://x0ligg93mr8.typeform.com/to/HgWGshEp')
-                  }
-                >
+                </a>
+                <a type='button' href='https://x0ligg93mr8.typeform.com/to/HgWGshEp' target='_blank'>
                   Enviar
-                </button>
+                </a>
               </div>
             </div>
           )}

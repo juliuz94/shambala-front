@@ -7,10 +7,10 @@ import { getStorage } from 'firebase/storage'
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FB_API_KEY,
-  authDomain: 'shambala-84728.firebaseapp.com',
-  projectId: 'shambala-84728',
+  authDomain: 'shambala-8baba.firebaseapp.com',
+  projectId: 'shambala-8baba',
   storageBucket: process.env.NEXT_PUBLIC_FB_STORAGE_BUCKET,
-  messagingSenderId: '1003708320751',
+  messagingSenderId: '78746468615',
   appId: process.env.NEXT_PUBLIC_FB_APP_ID,
 }
 

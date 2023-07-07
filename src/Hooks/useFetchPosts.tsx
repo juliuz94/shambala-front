@@ -66,7 +66,7 @@ const useFetchPosts = (pageNumber: number, category: string) => {
   const fetchPosts = async () => {
     try {
       const { data } = await axiosInstance.get(
-        `${ROUTES.POST}?page=${pageNumber}&category=${category}`
+        `${ROUTES.POST}?page=${pageNumber}&category=${category}&sort=acs`
       )
       if (posts) {
         const postMap = new Map([
