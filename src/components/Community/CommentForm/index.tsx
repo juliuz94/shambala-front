@@ -4,8 +4,8 @@ import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { useUserContext } from '@/context/userContext'
 import { toast } from 'sonner'
+import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
 import styles from './styles.module.css'
-import { User } from '@/types'
 
 interface Props {
   id: string
@@ -25,6 +25,13 @@ const CommentForm = ({
   const context = useUserContext()
   const user = context?.user
 
+  const { renderProfileImage } = useRenderProfileImage(
+    user?.image,
+    user?.firstName,
+    user?.lastName,
+    styles.pfp
+  )
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value)
   }
@@ -41,17 +48,6 @@ const CommentForm = ({
       toast.success('Se agregó tu comentario correctamente')
     } catch (error) {
       toast.error('Parece que hubo un error')
-    }
-  }
-
-  const renderProfileImage = () => {
-    if (user?.image) {
-      return <img src={user.image} className={styles.pfp} alt='profile' />
-    } else {
-      const initials = `${user?.firstName?.[0] || ''}${
-        user?.lastName?.[0] || ''
-      }`
-      return <div className={styles.pfp}>{initials}</div>
     }
   }
 

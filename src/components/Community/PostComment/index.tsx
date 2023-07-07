@@ -4,6 +4,7 @@ import { IoMdTrash } from 'react-icons/io/index'
 import { useUserContext } from '@/context/userContext'
 import DeleteCommentModal from '@/components/Modals/DeleteComment'
 import styles from './styles.module.css'
+import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
 
 interface PostCommentProps {
   id: string
@@ -23,18 +24,12 @@ const PostComment = ({
   const { user } = useUserContext()
   const [deleteCommentModal, setDeleteCommentModal] = useState(false)
 
-  const renderProfileImage = () => {
-    if (comment?.user?.image) {
-      return (
-        <img src={comment?.user.image} className={styles.pfp} alt='profile' />
-      )
-    } else {
-      const initials = `${comment?.user?.firstName?.[0] || ''}${
-        comment?.user?.lastName?.[0] || ''
-      }`
-      return <div className={styles.pfp}>{initials}</div>
-    }
-  }
+  const { renderProfileImage } = useRenderProfileImage(
+    comment?.user.image,
+    comment?.user?.firstName,
+    comment?.user?.lastName,
+    styles.pfp
+  )
 
   return (
     <div className={styles.container}>

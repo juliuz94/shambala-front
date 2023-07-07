@@ -6,6 +6,7 @@ import { CommentData, DocComment } from '@/types'
 import CommentForm from '../CommentForm'
 import PostComment from '../PostComment'
 import styles from './styles.module.css'
+import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
 
 type SetShowPostFunction = (value: boolean) => void
 
@@ -32,16 +33,12 @@ const ShowPost: React.FC<PostProps> = ({
 }) => {
   const commentsRef = useRef<HTMLDivElement>(null)
 
-  const renderProfileImage = () => {
-    if (post?.user?.image) {
-      return <img src={post?.user.image} className={styles.pfp} alt='profile' />
-    } else {
-      const initials = `${post?.user?.firstName?.[0] || ''}${
-        post?.user?.lastName?.[0] || ''
-      }`
-      return <div className={styles.pfp}>{initials}</div>
-    }
-  }
+  const { renderProfileImage } = useRenderProfileImage(
+    post?.user?.image,
+    post?.user?.firstName,
+    post?.user?.lastName,
+    styles.pfp
+  )
 
   const handleGoBack = () => {
     setShowPost(false)

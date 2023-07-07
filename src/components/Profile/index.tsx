@@ -10,6 +10,7 @@ import VideoRowSkeleton from '../Videos/ui/Skeleton'
 import useFetchVideos from '@/Hooks/useFetchVideos'
 import EditProfileModal from '../Modals/EditProfile'
 import useFetchUser from '@/Hooks/useFetchUser'
+import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
 import styles from './styles.module.css'
 
 type ProfileProps = {
@@ -26,16 +27,12 @@ const Profile = ({ id }: ProfileProps) => {
 
   const { videos, videosWithProgress, loadingData } = useFetchVideos()
 
-  const renderProfileImage = () => {
-    if (userGuest?.image) {
-      return <img src={user.image} className={styles.pfp} alt='profile' />
-    } else {
-      const initials = `${userGuest?.firstName?.[0] || ''}${
-        userGuest?.lastName?.[0] || ''
-      }`
-      return <div className={styles.pfp}>{initials}</div>
-    }
-  }
+  const { renderProfileImage } = useRenderProfileImage(
+    userGuest?.image,
+    userGuest?.firstName,
+    userGuest?.lastName,
+    styles.pfp
+  )
 
   const countFinishedVideos = (videos: VideoProfile[]) => {
     let finishedCount = 0

@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import CreatePostModal from '@/components/Modals/CreatePost'
-import styles from './styles.module.css'
 import { useUserContext } from '@/context/userContext'
+import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
+import styles from './styles.module.css'
 
 type PostFormProps = {
   setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
@@ -14,19 +15,15 @@ const PostForm = ({ setUpdatePost, category }: PostFormProps) => {
 
   const { user } = useUserContext()
 
+  const { renderProfileImage } = useRenderProfileImage(
+    user?.image,
+    user?.firstName,
+    user?.lastName,
+    styles.pfp
+  )
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value)
-  }
-
-  const renderProfileImage = () => {
-    if (user?.image) {
-      return <img src={user.image} className={styles.pfp} alt='profile' />
-    } else {
-      const initials = `${user?.firstName?.[0] || ''}${
-        user?.lastName?.[0] || ''
-      }`
-      return <div className={styles.pfp}>{initials}</div>
-    }
   }
 
   return (

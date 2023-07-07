@@ -9,6 +9,7 @@ import { useUserContext } from '@/context/userContext'
 import ROUTES from '@/helpers/routes'
 import styles from './styles.module.css'
 import DeletePostModal from '@/components/Modals/DeletePost'
+import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
 moment.locale('es')
 
 interface PostProps {
@@ -33,20 +34,16 @@ const Post = ({
 
   const timeAgo = moment(post.createdAt).fromNow()
 
+  const { renderProfileImage } = useRenderProfileImage(
+    post?.user?.image,
+    post?.user?.firstName,
+    post?.user?.lastName,
+    styles.pfp
+  )
+
   const handleSelectPost = () => {
     onSelectPost(post)
     fetchComments(post._id, commentsLimit)
-  }
-
-  const renderProfileImage = () => {
-    if (post?.user?.image) {
-      return <img src={post?.user.image} className={styles.pfp} alt='profile' />
-    } else {
-      const initials = `${post?.user?.firstName?.[0] || ''}${
-        post?.user?.lastName?.[0] || ''
-      }`
-      return <div className={styles.pfp}>{initials}</div>
-    }
   }
 
   const likePost = async (e: React.MouseEvent) => {

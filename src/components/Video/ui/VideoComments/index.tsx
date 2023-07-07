@@ -124,7 +124,15 @@ const Comment = ({ comment, refreshData }: CommentProps) => {
     <div className={styles.comment_card}>
       <div className={styles.comment_header}>
         <div className={styles.user_info}>
-          <Avatar size='small' />
+          <Avatar
+            shape='square'
+            size='small'
+            src={user?.photoURL}
+            className={user?.photoURL ? '' : styles.avatar}
+          >
+            {user?.firstName?.split(' ')[0].split('')[0]}
+            {user?.lastName?.split(' ')[0].split('')[0]}
+          </Avatar>
           <p>
             {user?.firstName || ''} {user?.lastName || ''}
           </p>
