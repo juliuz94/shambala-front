@@ -142,6 +142,7 @@ const Community = () => {
                       onSelectPost={setSelectedPost}
                       fetchComments={fetchComments}
                       commentsLimit={commentsLimit}
+                      setUpdatePost={setUpdatePost}
                     />
                   )
                 )}

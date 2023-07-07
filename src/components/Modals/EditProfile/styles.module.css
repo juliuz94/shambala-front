@@ -2,3 +2,27 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.image_upload {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.image_container {
+  width: 100%;
+  height: 200px;
+  background-color: #161616;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.phone_input input {
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid #d9d9d9;
+  padding: 0 6px;
+  outline: none;
+}

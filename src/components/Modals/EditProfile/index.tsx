@@ -1,6 +1,17 @@
 import { useState, useEffect } from 'react'
-import { Button, Form, Input, Modal, Select } from 'antd'
+import { Button, Form, Input, Modal, Select, Upload } from 'antd'
+import { FileImageOutlined, DeleteOutlined } from '@ant-design/icons'
+import { uploadImage } from '@/helpers/uploadImage'
 import { useUserContext } from '@/context/userContext'
+import { FirebaseStorage } from '@/firebase/firebaseApp'
+import { ref } from 'firebase/storage'
+import PhoneInput, {
+  formatPhoneNumberIntl,
+  formatPhoneNumber,
+  parsePhoneNumber,
+  isPossiblePhoneNumber,
+} from 'react-phone-number-input'
+import { worldPhoneNumbers } from '@/helpers/countriesPhoneNumbers'
 import useFetchTags from '@/Hooks/useFetchTags'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
@@ -20,6 +31,12 @@ const EditProfileModal = ({
   const { user } = useUserContext()
   const [isLoading, setIsLoading] = useState(false)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const [fileToUpload, setFileToUpload] = useState<any | null>(null)
+  const [fileBase64, setFileBase64] = useState<any | null>(null)
+  const [phoneNumber, setPhoneNumber] = useState<any>('')
+  const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false)
+
+  const { Dragger } = Upload
 
   const { tags } = useFetchTags(100)
 
@@ -30,18 +47,55 @@ const EditProfileModal = ({
     }
   }, [user])
 
+  const handlePhoneChange = (phone: string) => {
+    const parsedPhoneNumber = parsePhoneNumber(phone || '')
+    const country = worldPhoneNumbers.find(
+      (country) => country.code === parsedPhoneNumber?.country
+    )
+
+    if (!phone || !parsedPhoneNumber) {
+      setIsValidPhoneNumber(false)
+      return
+    }
+
+    setPhoneNumber(phone)
+
+    if (parsedPhoneNumber?.nationalNumber.length === country?.phoneLength) {
+      setIsValidPhoneNumber(true)
+    } else {
+      setIsValidPhoneNumber(false)
+    }
+  }
+
   const handleEditProfile = async (values: {
     name: string
     last_name: string
     bio: string
+    phone_number: number
   }) => {
     setIsLoading(true)
+
+    const ext = formatPhoneNumberIntl(phoneNumber).split(' ')[0]
+
+    // let imageUrl = ''
+
+    // if (fileToUpload) {
+    //   const storageRef = ref(FirebaseStorage, `images/${fileToUpload.name}`)
+    //   const url = await uploadImage(fileToUpload, storageRef, null)
+    //   imageUrl = url
+    //   console.log('url', url)
+    // }
+
+    // console.log('imageUrl', imageUrl)
 
     const editProfile = {
       ...user,
       firstName: values.name,
       lastName: values.last_name,
       bio: values.bio,
+      country_code: ext,
+      phone_number: parsePhoneNumber(phoneNumber)?.nationalNumber,
+      // image: imageUrl,
     }
 
     try {
@@ -63,6 +117,25 @@ const EditProfileModal = ({
     setIsModalOpen(false)
   }
 
+  // const props = {
+  //   name: 'file',
+  //   multiple: false,
+  //   showUploadList: false,
+  //   beforeUpload: (file: any) => {
+  //     setFileToUpload(file)
+  //     const reader = new FileReader()
+  //     reader.readAsDataURL(file)
+  //     reader.onload = function () {
+  //       setFileBase64(reader.result)
+  //     }
+  //   },
+  // }
+
+  // const handleRemoveImage = () => {
+  //   setFileToUpload(null)
+  //   setFileBase64(null)
+  // }
+
   return (
     <Modal
       title='Editar Perfil'
@@ -83,9 +156,33 @@ const EditProfileModal = ({
           last_name: user?.lastName,
           bio: user?.bio,
           tags: selectedTags,
+          phone_number: user?.phone_number,
         }}
       >
         <div className={styles.content}>
+          {/* <div className={styles.image_upload}>
+            <label>Imagen de perfil</label>
+
+            {!fileBase64 ? (
+              <Dragger {...props}>
+                <FileImageOutlined />
+                <p>Cargar imagen</p>
+              </Dragger>
+            ) : (
+              <div className={styles.image_container}>
+                <div
+                  className={styles.delete_backdrop}
+                  onClick={handleRemoveImage}
+                >
+                  <DeleteOutlined />
+                </div>
+                {fileToUpload && (
+                  <img src={fileBase64} alt={fileToUpload.name} />
+                )}
+              </div>
+            )}
+          </div> */}
+
           <Form.Item
             name='name'
             label={<label>Nombre</label>}
@@ -108,6 +205,19 @@ const EditProfileModal = ({
             rules={[{ required: true, message: 'Campo requerido' }]}
           >
             <Input.TextArea placeholder='Biografía' />
+          </Form.Item>
+
+          <Form.Item
+            label={<label>Número</label>}
+            rules={[{ required: true, message: 'Campo requerido' }]}
+          >
+            <PhoneInput
+              className={styles.phone_input}
+              defaultCountry='CO'
+              placeholder='Número de celular'
+              value={user?.phone_number || phoneNumber}
+              onChange={handlePhoneChange}
+            />
           </Form.Item>
 
           <Form.Item

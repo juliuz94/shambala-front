@@ -3,7 +3,7 @@ import { axiosInstance } from '@/axios/axiosInstance'
 import { User } from '@/types'
 import ROUTES from '@/helpers/routes'
 
-const useFetchUser = (id: any) => {
+const useFetchUser = (id: string) => {
   const [userGuest, setUserGuest] = useState<User | null>(null)
 
   const fetchUser = async () => {

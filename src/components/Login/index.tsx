@@ -9,11 +9,11 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   fetchSignInMethodsForEmail,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
 } from 'firebase/auth'
 import { toast } from 'sonner'
 import { Form, Input, Button, Spin, Modal } from 'antd'
-import type { NotificationPlacement } from 'antd/es/notification/interface';
+import type { NotificationPlacement } from 'antd/es/notification/interface'
 import styles from './styles.module.css'
 import WaveBackgroundSVG from '@/svg/WaveBackground'
 import { LoadingOutlined } from '@ant-design/icons'
@@ -30,7 +30,7 @@ const LoginComponent: FC = () => {
   const provider = new GoogleAuthProvider()
   const auth = getAuth()
   const router = useRouter()
-  const [form] = Form.useForm();
+  const [form] = Form.useForm()
 
   type createAccountType = {
     name: string
@@ -115,7 +115,7 @@ const LoginComponent: FC = () => {
         break
 
       default:
-        toast.error('Algió salió mal. Intenta nuevamente')
+        toast.error('Algo salió mal. Intenta nuevamente')
         break
     }
   }
@@ -139,14 +139,14 @@ const LoginComponent: FC = () => {
     }
   }
 
-
-  const handleResetPassword = (values: {email: string}) => {
+  const handleResetPassword = (values: { email: string }) => {
     console.log(values)
     try {
       sendPasswordResetEmail(auth, values.email)
       toast.message('Solicitud recibida', {
-        description: 'Si tu email se encuentra en base de datos. Enviaremos un correo para que recuperes tu contraseña',
-        duration: 7000
+        description:
+          'Si tu email se encuentra en base de datos. Enviaremos un correo para que recuperes tu contraseña',
+        duration: 7000,
       })
       form.resetFields()
       setShowResetPassword(false)

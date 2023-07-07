@@ -1,23 +1,39 @@
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
 import moment from 'moment'
 import 'moment/locale/es'
 import { Doc } from '@/Hooks/useFetchPosts'
-import { IoIosHeart } from 'react-icons/io/index'
+import { IoIosHeartEmpty, IoMdTrash, IoIosHeart } from 'react-icons/io/index'
 import { axiosInstance } from '@/axios/axiosInstance'
+import { useUserContext } from '@/context/userContext'
 import ROUTES from '@/helpers/routes'
 import styles from './styles.module.css'
+import DeletePostModal from '@/components/Modals/DeletePost'
+moment.locale('es')
 
-interface Props {
+interface PostProps {
   post: Doc
   onSelectPost: (post: Doc) => void
   fetchComments: (id: string, limit: number) => Promise<void>
   commentsLimit: number
+  setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Post = ({ post, onSelectPost, fetchComments, commentsLimit }: Props) => {
-  moment.locale('es')
+const Post = ({
+  post,
+  onSelectPost,
+  fetchComments,
+  commentsLimit,
+  setUpdatePost,
+}: PostProps) => {
+  const { user } = useUserContext()
+
+  const [deletePostModal, setDeletePostModal] = useState(false)
+  const [isLiked, setIsLiked] = useState(false)
 
   const timeAgo = moment(post.createdAt).fromNow()
+
+  console.log(post)
 
   const handleSelectPost = () => {
     onSelectPost(post)
@@ -38,11 +54,29 @@ const Post = ({ post, onSelectPost, fetchComments, commentsLimit }: Props) => {
   const likePost = async (e: React.MouseEvent) => {
     e.stopPropagation()
 
-    await axiosInstance.post(`${ROUTES.LIKEPOST}`, {
-      id: post._id,
-      isLike: true,
-    })
+    try {
+      await axiosInstance.post(
+        `${ROUTES.POST}/handleLike?id=${post._id}&isLike=${!isLiked}`
+      )
+      setIsLiked(!isLiked)
+    } catch (error) {
+      console.error(error)
+    }
   }
+
+  const deletePost = (e: React.MouseEvent) => {
+    e.stopPropagation()
+
+    setDeletePostModal(true)
+  }
+
+  useEffect(() => {
+    if (post.likes.some((like) => like._id === user?._id)) {
+      setIsLiked(true)
+    } else {
+      setIsLiked(false)
+    }
+  }, [post, user])
 
   return (
     <div className={styles.container} onClick={handleSelectPost}>
@@ -77,8 +111,37 @@ const Post = ({ post, onSelectPost, fetchComments, commentsLimit }: Props) => {
           </Link>
         </div>
 
-        <IoIosHeart style={{ fill: '#54c055' }} size={24} onClick={likePost} />
+        <div className={styles.icons}>
+          {isLiked ? (
+            <IoIosHeart
+              style={{ fill: '#54c055' }}
+              size={24}
+              onClick={likePost}
+            />
+          ) : (
+            <IoIosHeartEmpty
+              style={{ fill: '#54c055' }}
+              size={24}
+              onClick={likePost}
+            />
+          )}
+
+          {post?.user._id === user._id && (
+            <IoMdTrash
+              style={{ fill: '#54c055' }}
+              size={24}
+              onClick={deletePost}
+            />
+          )}
+        </div>
       </div>
+
+      <DeletePostModal
+        isModalOpen={deletePostModal}
+        setIsModalOpen={setDeletePostModal}
+        id={post?._id as string}
+        setUpdatePost={setUpdatePost}
+      />
 
       <p className={styles.answer}>Responder</p>
     </div>

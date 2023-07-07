@@ -12,7 +12,11 @@ import EditProfileModal from '../Modals/EditProfile'
 import useFetchUser from '@/Hooks/useFetchUser'
 import styles from './styles.module.css'
 
-const Profile = ({ id }: any) => {
+type ProfileProps = {
+  id: string
+}
+
+const Profile = ({ id }: ProfileProps) => {
   const router = useRouter()
   const { userGuest, fetchUser } = useFetchUser(id)
   const { user } = useUserContext()
@@ -206,10 +210,18 @@ const Profile = ({ id }: any) => {
               </div>
 
               <div className={styles.options_text}>
-                <a type='button' href='https://x0ligg93mr8.typeform.com/to/CPluoViu' target='_blank'>
+                <a
+                  type='button'
+                  href='https://x0ligg93mr8.typeform.com/to/CPluoViu'
+                  target='_blank'
+                >
                   Enviar
                 </a>
-                <a type='button' href='https://x0ligg93mr8.typeform.com/to/HgWGshEp' target='_blank'>
+                <a
+                  type='button'
+                  href='https://x0ligg93mr8.typeform.com/to/HgWGshEp'
+                  target='_blank'
+                >
                   Enviar
                 </a>
               </div>
@@ -217,7 +229,7 @@ const Profile = ({ id }: any) => {
           )}
         </div>
 
-        {user._id === id && (
+        {user?._id === id && (
           <>
             {loadingData ? (
               <div style={{ marginTop: '2rem' }}>

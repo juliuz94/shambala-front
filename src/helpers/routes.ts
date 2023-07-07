@@ -16,7 +16,6 @@ type Routes = {
   USERS: string
   ANNOUNCEMENT: string
   CATEGORY: string
-  LIKEPOST: string
 }
 
 const ROUTES: Routes = {
@@ -37,7 +36,6 @@ const ROUTES: Routes = {
   USERS: 'users',
   ANNOUNCEMENT: 'announcements',
   CATEGORY: 'category',
-  LIKEPOST: 'community/handleLike',
 }
 
 export default ROUTES
