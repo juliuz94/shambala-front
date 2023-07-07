@@ -9,6 +9,7 @@ import { BiUpArrowAlt } from 'react-icons/bi'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { Video, Comment, PaginatedComments } from '@/types'
+import { useUserContext } from '@/context/userContext'
 import styles from './styles.module.css'
 
 interface PropTypes {
@@ -94,6 +95,8 @@ type CommentProps = {
 }
 
 const Comment = ({ comment, refreshData }: CommentProps) => {
+  const { user } = useUserContext()
+
   const handleDeleteComment = async () => {
     try {
       const res = await axiosInstance.delete(`${ROUTES.COMMENT}/${comment._id}`)
@@ -106,7 +109,11 @@ const Comment = ({ comment, refreshData }: CommentProps) => {
 
   const PopOverContent = (
     <div className={styles.popover}>
-      <Button type='ghost' className={styles.delete_comment_button}>
+      <Button
+        type='ghost'
+        className={styles.delete_comment_button}
+        onClick={handleDeleteComment}
+      >
         <HiOutlineTrash />
         <p>Borrar</p>
       </Button>
@@ -118,17 +125,17 @@ const Comment = ({ comment, refreshData }: CommentProps) => {
       <div className={styles.comment_header}>
         <div className={styles.user_info}>
           <Avatar size='small' />
-          {/* <p>{user?.displayName}</p> */}
+          <p>
+            {user?.firstName || ''} {user?.lastName || ''}
+          </p>
         </div>
-        <Popover placement='right' content={PopOverContent} trigger='click'>
-          <Button
-            type='ghost'
-            className={styles.comment_options}
-            onClick={handleDeleteComment}
-          >
-            <HiEllipsisVertical />
-          </Button>
-        </Popover>
+        {comment?.user?._id === user._id && (
+          <Popover placement='right' content={PopOverContent} trigger='click'>
+            <Button type='ghost' className={styles.comment_options}>
+              <HiEllipsisVertical />
+            </Button>
+          </Popover>
+        )}
       </div>
 
       <div className={styles.text_container}>

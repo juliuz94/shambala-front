@@ -33,8 +33,6 @@ const Post = ({
 
   const timeAgo = moment(post.createdAt).fromNow()
 
-  console.log(post)
-
   const handleSelectPost = () => {
     onSelectPost(post)
     fetchComments(post._id, commentsLimit)
@@ -126,7 +124,7 @@ const Post = ({
             />
           )}
 
-          {post?.user._id === user._id && (
+          {post?.user?._id === user?._id && (
             <IoMdTrash
               style={{ fill: '#54c055' }}
               size={24}
