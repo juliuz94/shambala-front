@@ -129,11 +129,8 @@ const Community = () => {
 
             <PostForm setUpdatePost={setUpdatePost} category={category} />
 
-            <div className={styles.comments} onClick={() => setShowPost(true)}>
-              <div
-                className={styles.comments}
-                onClick={() => setShowPost(true)}
-              >
+            <div className={styles.comments}>
+              <div className={styles.comments}>
                 {(filteredPosts.length > 0 ? filteredPosts : posts?.docs)?.map(
                   (post: Doc, index: number) => (
                     <Post
@@ -143,6 +140,7 @@ const Community = () => {
                       fetchComments={fetchComments}
                       commentsLimit={commentsLimit}
                       setUpdatePost={setUpdatePost}
+                      setShowPost={setShowPost}
                     />
                   )
                 )}

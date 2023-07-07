@@ -7,9 +7,7 @@ import { FirebaseStorage } from '@/firebase/firebaseApp'
 import { ref } from 'firebase/storage'
 import PhoneInput, {
   formatPhoneNumberIntl,
-  formatPhoneNumber,
   parsePhoneNumber,
-  isPossiblePhoneNumber,
 } from 'react-phone-number-input'
 import { worldPhoneNumbers } from '@/helpers/countriesPhoneNumbers'
 import useFetchTags from '@/Hooks/useFetchTags'
@@ -17,6 +15,7 @@ import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { Tag } from '@/types'
 import { toast } from 'sonner'
+import 'react-phone-number-input/style.css'
 import styles from './styles.module.css'
 
 type EditProfileProps = {
@@ -77,16 +76,13 @@ const EditProfileModal = ({
 
     const ext = formatPhoneNumberIntl(phoneNumber).split(' ')[0]
 
-    // let imageUrl = ''
+    let imageUrl = ''
 
-    // if (fileToUpload) {
-    //   const storageRef = ref(FirebaseStorage, `images/${fileToUpload.name}`)
-    //   const url = await uploadImage(fileToUpload, storageRef, null)
-    //   imageUrl = url
-    //   console.log('url', url)
-    // }
-
-    // console.log('imageUrl', imageUrl)
+    if (fileToUpload) {
+      const storageRef = ref(FirebaseStorage, `images/${fileToUpload.name}`)
+      const url = await uploadImage(fileToUpload, storageRef, null)
+      imageUrl = url
+    }
 
     const editProfile = {
       ...user,
@@ -95,13 +91,14 @@ const EditProfileModal = ({
       bio: values.bio,
       country_code: ext,
       phone_number: parsePhoneNumber(phoneNumber)?.nationalNumber,
-      // image: imageUrl,
+      // image: user?.image !== null ? imageUrl : user?.image,
     }
 
     try {
       await axiosInstance.patch(`${ROUTES.USERS}/${user._id}`, editProfile)
       toast.success('Se actualizó tu perfil')
       handleCancel()
+      handleRemoveImage()
     } catch (error) {
       toast.error('Parece que hubo un error')
     } finally {
@@ -117,24 +114,24 @@ const EditProfileModal = ({
     setIsModalOpen(false)
   }
 
-  // const props = {
-  //   name: 'file',
-  //   multiple: false,
-  //   showUploadList: false,
-  //   beforeUpload: (file: any) => {
-  //     setFileToUpload(file)
-  //     const reader = new FileReader()
-  //     reader.readAsDataURL(file)
-  //     reader.onload = function () {
-  //       setFileBase64(reader.result)
-  //     }
-  //   },
-  // }
+  const props = {
+    name: 'file',
+    multiple: false,
+    showUploadList: false,
+    beforeUpload: (file: any) => {
+      setFileToUpload(file)
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = function () {
+        setFileBase64(reader.result)
+      }
+    },
+  }
 
-  // const handleRemoveImage = () => {
-  //   setFileToUpload(null)
-  //   setFileBase64(null)
-  // }
+  const handleRemoveImage = () => {
+    setFileToUpload(null)
+    setFileBase64(null)
+  }
 
   return (
     <Modal

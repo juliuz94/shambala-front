@@ -7,10 +7,12 @@ import { IoIosHeartEmpty, IoMdTrash, IoIosHeart } from 'react-icons/io/index'
 import { axiosInstance } from '@/axios/axiosInstance'
 import { useUserContext } from '@/context/userContext'
 import ROUTES from '@/helpers/routes'
-import styles from './styles.module.css'
 import DeletePostModal from '@/components/Modals/DeletePost'
 import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
+import styles from './styles.module.css'
 moment.locale('es')
+
+type SetShowPostFunction = (value: boolean) => void
 
 interface PostProps {
   post: Doc
@@ -18,6 +20,7 @@ interface PostProps {
   fetchComments: (id: string, limit: number) => Promise<void>
   commentsLimit: number
   setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
+  setShowPost: SetShowPostFunction
 }
 
 const Post = ({
@@ -26,6 +29,7 @@ const Post = ({
   fetchComments,
   commentsLimit,
   setUpdatePost,
+  setShowPost,
 }: PostProps) => {
   const { user } = useUserContext()
 
@@ -75,7 +79,7 @@ const Post = ({
 
   return (
     <div className={styles.container} onClick={handleSelectPost}>
-      <div className={styles.title}>
+      <div className={styles.title} onClick={() => setShowPost(true)}>
         <h1>{post.title}</h1>
       </div>
 
@@ -86,7 +90,7 @@ const Post = ({
           <p>{post?.commentsCount || 0} Respuestas</p>
         </div>
 
-        <div className={styles.circle}>
+        <div className={styles.circle} onClick={() => setShowPost(true)}>
           <img
             className={styles.arrow}
             src='/images/svg/arrow_right.svg'

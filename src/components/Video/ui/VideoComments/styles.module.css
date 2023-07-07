@@ -20,6 +20,24 @@
   background-color: var(--primary-color);
 }
 
+.pfp {
+  font-family: var(--secondary-font);
+  font-size: 12px;
+  text-align: center;
+
+  padding-top: 5px;
+  width: 24px;
+  height: 24px;
+
+  border-radius: 100%;
+
+  object-fit: cover;
+
+  color: white;
+
+  background-color: var(--primary-color);
+}
+
 .header p {
   font-size: 1rem;
   font-weight: 500;

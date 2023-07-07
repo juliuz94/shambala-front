@@ -67,7 +67,7 @@ const CreateAnnounModal = ({
     }
 
     try {
-      const res = await axiosInstance.post(`${ROUTES.ANNOUNCEMENT}`, announInfo)
+      await axiosInstance.post(`${ROUTES.ANNOUNCEMENT}`, announInfo)
       setIsModalOpen(false)
       setContent('')
       toast.success('Se agregó tu anuncio correctamente')
@@ -131,7 +131,7 @@ const CreateAnnounModal = ({
           </Form.Item>
 
           <div className={styles.image_upload}>
-            <label>Imagen de la productora</label>
+            <label>Imagen</label>
 
             {!fileBase64 ? (
               <Dragger {...props}>

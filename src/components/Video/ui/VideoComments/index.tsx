@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Avatar, Input, Button, Popover } from 'antd'
+import { Input, Button, Popover } from 'antd'
 import {
   HiArrowSmallRight,
   HiEllipsisVertical,
@@ -10,6 +10,7 @@ import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { Video, Comment, PaginatedComments } from '@/types'
 import { useUserContext } from '@/context/userContext'
+import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
 import styles from './styles.module.css'
 
 interface PropTypes {
@@ -97,6 +98,13 @@ type CommentProps = {
 const Comment = ({ comment, refreshData }: CommentProps) => {
   const { user } = useUserContext()
 
+  const { renderProfileImage } = useRenderProfileImage(
+    comment?.user?.image,
+    comment?.user?.firstName,
+    comment?.user?.lastName,
+    styles.pfp
+  )
+
   const handleDeleteComment = async () => {
     try {
       const res = await axiosInstance.delete(`${ROUTES.COMMENT}/${comment._id}`)
@@ -124,15 +132,7 @@ const Comment = ({ comment, refreshData }: CommentProps) => {
     <div className={styles.comment_card}>
       <div className={styles.comment_header}>
         <div className={styles.user_info}>
-          <Avatar
-            shape='square'
-            size='small'
-            src={user?.photoURL}
-            className={user?.photoURL ? '' : styles.avatar}
-          >
-            {user?.firstName?.split(' ')[0].split('')[0]}
-            {user?.lastName?.split(' ')[0].split('')[0]}
-          </Avatar>
+          {renderProfileImage()}
           <p>
             {user?.firstName || ''} {user?.lastName || ''}
           </p>

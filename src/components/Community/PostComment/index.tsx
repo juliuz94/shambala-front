@@ -39,7 +39,7 @@ const PostComment = ({
         {comment?.user?._id === user?._id && (
           <IoMdTrash
             className={styles.icon}
-            style={{ fill: '#e10b0b' }}
+            style={{ fill: '#54c055' }}
             size={24}
             onClick={() => setDeleteCommentModal(true)}
           />
