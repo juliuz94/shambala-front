@@ -6,7 +6,7 @@ import { Form, Input, Button } from 'antd'
 const ContactUs = () => {
   const [form] = Form.useForm()
 
-  const handleSubmitForm = async (values) => {
+  const handleSubmitForm = async (values: any) => {
     try {
       await axios.post('/api/sendEmail', {
         sentTo: 'shambalarevolucionhippieya@gmail.com',
