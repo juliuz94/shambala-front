@@ -5,16 +5,11 @@ import { UserOutlined } from '@ant-design/icons'
 interface CardCommunityProps {
   comment: string
   author: string
-  daysAgo: string
+  daysAgo?: string
   reply?: string
 }
 
-const CardCommunity = ({
-  comment,
-  daysAgo,
-  reply,
-  author,
-}: CardCommunityProps) => {
+const CardCommunity = ({ comment, daysAgo, reply, author }: CardCommunityProps) => {
   return (
     <div className={styles.container}>
       <section className={styles.comment}>
@@ -24,10 +19,14 @@ const CardCommunity = ({
         <Avatar size={26} icon={<UserOutlined />} />
         <p className={styles.author_name}>{author}</p>
       </section>
-      <section className={styles.row_container}>
-        <p className={styles.days_ago}>{daysAgo}</p>•
-        <p className={styles.days_ago}>{reply}</p>
-      </section>
+      {
+        (daysAgo || reply) && (
+          <section className={styles.row_container}>
+            <p className={styles.days_ago}>{daysAgo}</p>•
+            <p className={styles.days_ago}>{reply}</p>
+          </section>
+        )
+      }
     </div>
   )
 }
