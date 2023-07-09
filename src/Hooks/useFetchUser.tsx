@@ -5,7 +5,6 @@ import ROUTES from '@/helpers/routes'
 
 const useFetchUser = (id: string | undefined) => {
   const [userGuest, setUserGuest] = useState<User | null>(null)
-
   const fetchUser = async () => {
     try {
       const { data } = await axiosInstance.get(`${ROUTES.USERS}/${id}`)
@@ -16,8 +15,9 @@ const useFetchUser = (id: string | undefined) => {
   }
 
   useEffect(() => {
+    if (!id) return
     fetchUser()
-  }, [])
+  }, [id])
 
   return { userGuest, fetchUser }
 }

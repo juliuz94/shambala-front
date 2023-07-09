@@ -31,7 +31,6 @@ const useFetchVideoWithProgress = () => {
   const fetchVideosWithProgress = async () => {
     try {
       const { data } = await axiosInstance.get(ROUTES.VIDEOS_WITH_PROGRESS)
-      console.log('fetchVideosWithProgress', data)
       if (data.videos.length > 0) {
         setVideosWithProgress(data.videos)
       }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button, Form, Input, Modal, Select, Upload } from 'antd'
 import { FileImageOutlined, DeleteOutlined } from '@ant-design/icons'
 import { uploadImage } from '@/helpers/uploadImage'
@@ -21,28 +21,30 @@ import styles from './styles.module.css'
 type EditProfileProps = {
   isModalOpen: boolean
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  fetchUser: () => void
 }
 
 const EditProfileModal = ({
   isModalOpen,
   setIsModalOpen,
+  fetchUser
 }: EditProfileProps) => {
-  const { user } = useUserContext()
+  const { user, setUser } = useUserContext()
   const [isLoading, setIsLoading] = useState(false)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [fileToUpload, setFileToUpload] = useState<any | null>(null)
-  const [fileBase64, setFileBase64] = useState<any | null>(null)
+  // const [fileBase64, setFileBase64] = useState<any | null>(null)
+  const [userImage, setUserImage] = useState<any | null>(null)
   const [phoneNumber, setPhoneNumber] = useState<any>('')
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false)
-
-  const { Dragger } = Upload
-
+  const uploadRef = useRef<HTMLInputElement | null>(null)
   const { tags } = useFetchTags(100)
 
   useEffect(() => {
     if (user) {
       const userTagIds = user.tags.map((tag: Tag) => tag._id)
       setSelectedTags(userTagIds)
+      setUserImage(user.image)
     }
   }, [user])
 
@@ -74,31 +76,33 @@ const EditProfileModal = ({
   }) => {
     setIsLoading(true)
 
-    const ext = formatPhoneNumberIntl(phoneNumber).split(' ')[0]
-
-    let imageUrl = ''
-
-    if (fileToUpload) {
-      const storageRef = ref(FirebaseStorage, `images/${fileToUpload.name}`)
-      const url = await uploadImage(fileToUpload, storageRef, null)
-      imageUrl = url
-    }
-
-    const editProfile = {
-      ...user,
-      firstName: values.name,
-      lastName: values.last_name,
-      bio: values.bio,
-      country_code: ext,
-      phone_number: parsePhoneNumber(phoneNumber)?.nationalNumber,
-      // image: user?.image !== null ? imageUrl : user?.image,
-    }
-
     try {
-      await axiosInstance.patch(`${ROUTES.USERS}/${user._id}`, editProfile)
+
+      let imageUrl = ''
+
+      if (fileToUpload) {
+        const storageRef = ref(FirebaseStorage, `images/profile_images/user_${user._id}/${fileToUpload.name}`)
+        const url = await uploadImage(fileToUpload, storageRef, null)
+        imageUrl = url
+      }
+  
+      const ext = formatPhoneNumberIntl(phoneNumber).split(' ')[0]
+      const editProfile = {
+        ...user,
+        firstName: values.name,
+        lastName: values.last_name,
+        bio: values.bio,
+        country_code: ext,
+        phone_number: parsePhoneNumber(phoneNumber)?.nationalNumber,
+        image: imageUrl === '' ? user.image : imageUrl
+      }
+  
+
+      const { data } = await axiosInstance.patch(`${ROUTES.USERS}/${user._id}`, editProfile)
+      setUser(data)
       toast.success('Se actualizó tu perfil')
+      fetchUser()
       handleCancel()
-      handleRemoveImage()
     } catch (error) {
       toast.error('Parece que hubo un error')
     } finally {
@@ -112,25 +116,24 @@ const EditProfileModal = ({
 
   const handleCancel = () => {
     setIsModalOpen(false)
-  }
-
-  const props = {
-    name: 'file',
-    multiple: false,
-    showUploadList: false,
-    beforeUpload: (file: any) => {
-      setFileToUpload(file)
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = function () {
-        setFileBase64(reader.result)
-      }
-    },
-  }
-
-  const handleRemoveImage = () => {
+    setUserImage(null)
     setFileToUpload(null)
-    setFileBase64(null)
+  }
+
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return
+    const file = e.target.files[0]
+    setFileToUpload(file)
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = function () {
+      setUserImage(reader.result)
+    }
+  }
+
+  const handleChangeClick = () => {
+    if (!uploadRef.current) return
+    uploadRef.current.click()
   }
 
   return (
@@ -148,6 +151,7 @@ const EditProfileModal = ({
         name='basic'
         onFinish={handleEditProfile}
         autoComplete='off'
+        layout='vertical'
         initialValues={{
           name: user?.firstName,
           last_name: user?.lastName,
@@ -155,56 +159,63 @@ const EditProfileModal = ({
           tags: selectedTags,
           phone_number: user?.phone_number,
         }}
+        className={styles.form}
       >
         <div className={styles.content}>
-          {/* <div className={styles.image_upload}>
-            <label>Imagen de perfil</label>
-
-            {!fileBase64 ? (
-              <Dragger {...props}>
-                <FileImageOutlined />
-                <p>Cargar imagen</p>
-              </Dragger>
-            ) : (
-              <div className={styles.image_container}>
-                <div
-                  className={styles.delete_backdrop}
-                  onClick={handleRemoveImage}
-                >
-                  <DeleteOutlined />
-                </div>
-                {fileToUpload && (
-                  <img src={fileBase64} alt={fileToUpload.name} />
-                )}
-              </div>
-            )}
-          </div> */}
+          <div className={styles.profile_image}>
+            <div className={styles.profile_image_content} onClick={handleChangeClick}>
+              {
+                !userImage ?
+                  <div className={styles.initials_container}>
+                    <p>
+                      {user?.firstName?.[0] || ''}{user?.lastName?.[0] || ''}
+                    </p>
+                  </div>
+                  :
+                  <div className={styles.image_container}>
+                    <img src={userImage} />
+                  </div>
+              }
+              <input
+                type="file"
+                ref={uploadRef}
+                onChange={onFileChange}
+                style={{ display: 'none' }}
+                accept='image/*'
+                multiple={false}
+              />
+            </div>
+          </div>
 
           <Form.Item
             name='name'
+            className={styles.form_item}
             label={<label>Nombre</label>}
             rules={[{ required: true, message: 'Campo requerido' }]}
           >
-            <Input placeholder='Nombre' />
+            <Input placeholder='Nombre' size='large' />
           </Form.Item>
 
           <Form.Item
             name='last_name'
+            className={styles.form_item}
             label={<label>Apellido</label>}
             rules={[{ required: true, message: 'Campo requerido' }]}
           >
-            <Input placeholder='Apellido' />
+            <Input placeholder='Apellido' size='large' />
           </Form.Item>
 
           <Form.Item
             name='bio'
+            className={styles.form_item}
             label={<label>Biografía</label>}
-            rules={[{ required: true, message: 'Campo requerido' }]}
+            // rules={[{ required: true, message: 'Campo requerido' }]}
           >
-            <Input.TextArea placeholder='Biografía' />
+            <Input.TextArea placeholder='Biografía' size='large' />
           </Form.Item>
 
           <Form.Item
+            className={styles.form_item}
             label={<label>Número</label>}
             rules={[{ required: true, message: 'Campo requerido' }]}
           >
@@ -219,10 +230,11 @@ const EditProfileModal = ({
 
           <Form.Item
             name='tags'
-            label={<label>Etiquetas</label>}
+            className={styles.form_item}
+            label={<label>Intereses</label>}
             rules={[{ required: true, message: 'Campo requerido' }]}
           >
-            <Select mode='multiple' placeholder='Selecciona las etiquetas'>
+            <Select mode='multiple' placeholder='Selecciona las etiquetas' size='large'>
               {tags?.docs.map((tag) => (
                 <Select.Option key={tag._id} value={tag._id}>
                   {tag.es}
@@ -232,13 +244,11 @@ const EditProfileModal = ({
           </Form.Item>
         </div>
 
-        <div className={styles.buttons}>
-          <Form.Item>
-            <Button htmlType='submit' type='default' loading={isLoading}>
-              Guardar
-            </Button>
-          </Form.Item>
-        </div>
+        <Form.Item>
+          <Button htmlType='submit' type='primary' size='large' loading={isLoading} className={styles.submit_button}>
+            Actualizar
+          </Button>
+        </Form.Item>
       </Form>
     </Modal>
   )

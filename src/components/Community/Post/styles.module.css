@@ -71,32 +71,25 @@
   font-family: var(--secondary-font);
   font-size: 12px;
   text-align: center;
-
-  padding-top: 5px;
-
   width: 24px;
   height: 24px;
-
   border-radius: 100%;
-
   object-fit: cover;
-
   color: white;
-
   background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .circle {
   display: flex;
   justify-content: center;
   align-items: center;
-
   width: 43px;
   height: 43px;
-
   border-radius: 100%;
   border: 1.5px solid #54c055;
-
   cursor: pointer;
 }
 
@@ -104,8 +97,13 @@
   font-weight: 500;
   font-size: 13px;
   line-height: 24px;
-
   color: #1e9e20;
-
   cursor: pointer;
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

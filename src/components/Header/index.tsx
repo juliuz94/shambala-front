@@ -134,8 +134,8 @@ const Header = () => {
               <Avatar
                 shape='square'
                 size='large'
-                src={user?.photoURL}
-                className={user?.photoURL ? '' : styles.avatar}
+                src={user?.image}
+                className={user?.image ? '' : styles.avatar}
               >
                 {user?.firstName?.split(' ')[0].split('')[0]}
                 {user?.lastName?.split(' ')[0].split('')[0]}

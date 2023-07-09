@@ -111,14 +111,18 @@ const Profile = ({ id }: ProfileProps) => {
   }
 
   useEffect(() => {
-    fetchUser()
     handleFilterVideos()
-  }, [])
+  }, [id])
+
+  useEffect(() => {
+    if (!id) return 
+    fetchUser()
+  }, [id])
 
   return (
     <div className={styles.section}>
       <Head>
-        <title>Perfil</title>
+        <title>Shambala | Perfil</title>
       </Head>
 
       <div className={styles.container}>
@@ -267,6 +271,7 @@ const Profile = ({ id }: ProfileProps) => {
         <EditProfileModal
           isModalOpen={openEditModal}
           setIsModalOpen={setOpenEditModal}
+          fetchUser={fetchUser}
         />
       </div>
     </div>

@@ -29,7 +29,7 @@ const Post = ({
   fetchComments,
   commentsLimit,
   setUpdatePost,
-  setShowPost,
+  setShowPost
 }: PostProps) => {
   const { user } = useUserContext()
 
@@ -109,7 +109,17 @@ const Post = ({
             </p>
           </Link>
         </div>
+      </div>
 
+      <DeletePostModal
+        isModalOpen={deletePostModal}
+        setIsModalOpen={setDeletePostModal}
+        id={post?._id as string}
+        setUpdatePost={setUpdatePost}
+      />
+
+      <div className={styles.footer}>
+        <p className={styles.answer}>Responder</p>
         <div className={styles.icons}>
           {isLiked ? (
             <IoIosHeart
@@ -134,15 +144,6 @@ const Post = ({
           )}
         </div>
       </div>
-
-      <DeletePostModal
-        isModalOpen={deletePostModal}
-        setIsModalOpen={setDeletePostModal}
-        id={post?._id as string}
-        setUpdatePost={setUpdatePost}
-      />
-
-      <p className={styles.answer}>Responder</p>
     </div>
   )
 }

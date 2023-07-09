@@ -99,6 +99,7 @@
   max-width: 220px;
   height: 150px;
   border-radius: 10px;
+  width: 100%;
 }
 
 .event_type {

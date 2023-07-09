@@ -170,7 +170,7 @@ const EventWorkshop = ({ small, event }: PropTypes) => {
         </div>
 
         <div className={styles.image_container}>
-          {/* <img src={event?.image} alt='img' /> */}
+          <img src={event?.image} alt='img' />
           <div className={styles.event_type}>
             <HiCalendarDays />
             <p>{event?.type === 'EVENT' ? 'Evento' : 'Taller'}</p>

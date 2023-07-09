@@ -21,7 +21,6 @@ const DeletePostModal = ({
     try {
       await axiosInstance.delete(`${ROUTES.POST}/${id}`)
       toast.success('Se borró tu post correctamente')
-      setUpdatePost((prev) => !prev)
       handleOk()
     } catch (error) {
       toast.error('Parece que hubo un error')
@@ -30,6 +29,7 @@ const DeletePostModal = ({
 
   const handleOk = () => {
     setIsModalOpen(false)
+    setUpdatePost((prev) => !prev)
   }
 
   const handleCancel = () => {

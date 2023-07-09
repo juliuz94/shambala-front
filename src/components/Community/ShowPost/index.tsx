@@ -110,8 +110,6 @@ const ShowPost: React.FC<PostProps> = ({
           </p>
         </div>
 
-        <p className={styles.answer}>Responder</p>
-
         <div className={styles.comments} ref={commentsRef}>
           {comments?.docs &&
             comments.docs.map((comment: DocComment, index: number) => (
