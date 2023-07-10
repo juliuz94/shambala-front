@@ -126,7 +126,6 @@ const Event: FC = () => {
         <title>Evento - {workshopFilter[0]?.title}</title>
       </Head>
 
-      <Header />
       <div className={styles.event_header}>
         <div className={styles.event_info}>
           <Button

@@ -1,6 +1,9 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { Avatar, Button } from 'antd'
+import { axiosInstance } from '@/axios/axiosInstance'
+import ROUTES from '@/helpers/routes'
 import {
   HiCalendarDays,
   HiOutlineClock,
@@ -8,6 +11,7 @@ import {
   HiOutlineMapPin,
 } from 'react-icons/hi2'
 import { Workshop } from '@/types'
+import { useUserContext } from '@/context/userContext'
 import dayjs from 'dayjs'
 import locale from 'dayjs/locale/es'
 import styles from './styles.module.css'
@@ -17,10 +21,38 @@ dayjs.locale(locale)
 interface PropTypes {
   small?: boolean
   event?: Workshop
+  fetchEvents?: any
 }
 
-const EventCard = ({ small, event }: PropTypes) => {
+const EventCard = ({ small, event, fetchEvents }: PropTypes) => {
   const router = useRouter()
+  const { user } = useUserContext()
+  const [liked, setLiked] = useState(event?.like.includes(user?._id))
+
+  const likeEvent = async (e: React.MouseEvent) => {
+    e.stopPropagation()
+
+    try {
+      if (event?.like.includes(user?._id)) {
+        const updatedLikes = event?.like.filter(
+          (id: string) => id !== user?._id
+        )
+        setLiked(false)
+        await axiosInstance.patch(`${ROUTES.WORKSHOP}/${event?._id}`, {
+          like: updatedLikes,
+        })
+      } else {
+        const updatedLikes = [...event?.like, user?._id]
+        setLiked(true)
+        await axiosInstance.patch(`${ROUTES.WORKSHOP}/${event?._id}`, {
+          like: updatedLikes,
+        })
+      }
+      fetchEvents()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div
@@ -177,8 +209,8 @@ const EventCard = ({ small, event }: PropTypes) => {
           </div>
 
           <div className={styles.like_event}>
-            <Button type='ghost'>
-              <HiOutlineHeart />
+            <Button type='ghost' onClick={likeEvent}>
+              <HiOutlineHeart style={{ fill: liked ? '#54c055' : '' }} />
             </Button>
           </div>
         </div>

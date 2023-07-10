@@ -110,6 +110,7 @@ interface Sponsor {
 }
 
 export interface Workshop {
+  like: any
   _id: string
   title: string
   image: string

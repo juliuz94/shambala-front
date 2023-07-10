@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Empty, Skeleton } from 'antd'
 import Filter from '@/components/PageFilter'
 import SearchInput from '@/components/SearchInput'
@@ -25,7 +25,7 @@ interface MonthData {
   hasNextPage: boolean
   hasPrevPage: boolean
   limit: number
-  nextPage: number
+  nextPage: number | null
   page: number
   pagingCounter: number
   prevPage: boolean | null
@@ -41,7 +41,11 @@ const Events = () => {
   const [workShopsData, setWorkShopsData] = useState<MonthData>()
   const [filter, setFilter] = useState('ALL')
 
-  const fetchEvents = async (month: Month | null, category: string, search?: string) => {
+  const fetchEvents = async (
+    month: Month | null,
+    category: string,
+    search?: string
+  ) => {
     if (!month || !filter) return
     try {
       setLoading(true)
@@ -49,7 +53,9 @@ const Events = () => {
       setFilter(category)
 
       const { data } = await axiosInstance.get(
-        `${ROUTES.WORKSHOP_PER_MONTH}?month=${month.monthNumber}&type=${category}&search=${search || ''}`
+        `${ROUTES.WORKSHOP_PER_MONTH}?month=${
+          month.monthNumber
+        }&type=${category}&search=${search || ''}`
       )
       setWorkShopsData(data)
     } catch (error) {
@@ -134,6 +140,10 @@ const Events = () => {
     fetchEvents(activeMonth, filter, searchString)
   }
 
+  const handleFetchUpdatedEvent = () => {
+    fetchEvents(activeMonth, filter)
+  }
+
   return (
     <div>
       <Head>
@@ -151,8 +161,9 @@ const Events = () => {
             return (
               <div
                 key={month.key}
-                className={`${styles.tab} ${month.key === activeMonthTag ? styles.active : null
-                  }`}
+                className={`${styles.tab} ${
+                  month.key === activeMonthTag ? styles.active : null
+                }`}
                 onClick={() => handleChangeMonth(month)}
               >
                 <p>{month.label}</p>
@@ -162,20 +173,21 @@ const Events = () => {
         </div>
 
         <div className={styles.events_container}>
-
-          {
-            loading ? (
-              <>
-                <Skeleton />
-                <br />
-                <Skeleton />
-              </>
-            ) : (
-              workShopsData?.docs?.map((workshop) => (
-                <EventCard key={workshop._id} event={workshop} />
-              ))
-            )
-          }
+          {loading ? (
+            <>
+              <Skeleton />
+              <br />
+              <Skeleton />
+            </>
+          ) : (
+            workShopsData?.docs?.map((workshop) => (
+              <EventCard
+                key={workshop._id}
+                event={workshop}
+                fetchEvents={handleFetchUpdatedEvent}
+              />
+            ))
+          )}
 
           {!loading && workShopsData?.docs.length === 0 && (
             <div>
@@ -188,8 +200,8 @@ const Events = () => {
                     {filter === 'filter'
                       ? 'eventos o talleres'
                       : filter === 'EVENT'
-                        ? 'eventos'
-                        : 'talleres'}{' '}
+                      ? 'eventos'
+                      : 'talleres'}{' '}
                     para esta fecha
                   </span>
                 }
