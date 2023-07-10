@@ -902,6 +902,24 @@ export default function PrivacyPolicy() {
         .sub-list {
           list-style-type: circle;
         }
+
+        @media (max-width: 672px) {
+          .content_container {
+            padding: 2rem 1rem;
+          }
+
+          .title {
+            font-size: 1rem;
+          } 
+
+          .subtitle {
+            font-size: 0.95rem;
+          }
+  
+          p, strong {
+            font-size: 0.8rem;
+          }
+        }
       `}</style>
     </LandingLayout>
   )

@@ -21,6 +21,16 @@
   margin-bottom: 20px;
 }
 
+.col_2_links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.internal_link {
+  color: var(--contrast-text-color);
+}
+
 .logo {
   width: 280px;
 }
@@ -60,6 +70,10 @@
   .col_2 {
     flex-direction: column;
     margin-bottom: 10px;
+  }
+
+  .col_2_links {
+    align-items: center;
   }
 
   .waves {

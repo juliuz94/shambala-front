@@ -41,7 +41,12 @@ const Footer = () => {
         </div>
 
         <div className={styles.col_2}>
-          <p>© 2023 Shambala. All rights reserved.</p>
+          <div className={styles.col_2_links}>
+            <p>© 2023 Shambala. All rights reserved.</p>
+            <Link href='/politica-de-privacidad' className={styles.internal_link}>
+              Política de privacidad
+            </Link>
+          </div>
           <div className={styles.icons}>
             <Link
               href={'https://www.instagram.com/shambalacomunidad2/'}
