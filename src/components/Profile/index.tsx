@@ -288,14 +288,14 @@ const Profile = ({ id }: ProfileProps) => {
                     </div>
                   )}
 
-                {/* {finishedVideos.length > 0 && (
+                {finishedVideos.length > 0 && (
                   <div className={styles.slider}>
                     <VideoSlider
                       title='Videos completados'
                       videos={finishedVideos}
                     />
                   </div>
-                )} */}
+                )}
 
                 {newVideos.length > 0 && filteredVideos.length > 0 && (
                   <div className={styles.slider}>

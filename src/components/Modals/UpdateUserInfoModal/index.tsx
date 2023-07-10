@@ -28,6 +28,7 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
   const [phoneNumber, setPhoneNumber] = useState<any>('')
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false)
   const [acceptTerms, setAcceptTerms] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleCloseModal = () => {
     setOpen(false)
@@ -73,6 +74,8 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
 
   const handleUpdateUser = async () => {
     try {
+      setIsLoading(true)
+
       const tagIds = selectedTags.map((tag: Tag) => tag._id)
       const ext = formatPhoneNumberIntl(phoneNumber).split(' ')[0]
 
@@ -97,6 +100,8 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
       setOpen(false)
     } catch (error) {
       console.log('[handleUpdateUser] error', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -146,7 +151,7 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
           onChange={(e) => setAcceptTerms(e.target.checked)}
         >
           <Link
-            href={'/politica-de-privacidad'}
+            href={'/terminos-y-condiciones'}
             target='_blank'
             rel='noopener noreferrer'
           >
@@ -160,6 +165,7 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
           }
           size='large'
           type='primary'
+          loading={isLoading}
           onClick={handleUpdateUser}
         >
           Guardar preferencias
