@@ -21,10 +21,10 @@ const VideosComponent = () => {
   const [videos, setVideos] = useState<Label[]>([])
   const [videosWithProgress, setVideosWithProgress] = useState([])
 
-  const fetchVideos = async () => {
+  const fetchVideos = async (searchString?: string) => {
     setLoadingData(true)
     try {
-      const { data } = await axiosInstance.get(`${ROUTES.VIDEOS_BY_TAG}`)
+      const { data } = await axiosInstance.get(`${ROUTES.VIDEOS_BY_TAG}?search=${searchString || ''}`)
       setVideos(data.docs)
     } catch (error) {
       console.log('[fetchVideos]', error)
@@ -49,6 +49,10 @@ const VideosComponent = () => {
     fetchVideos()
   }, [])
 
+  const handleSearch = (value: string) => {
+    fetchVideos(value)
+  }
+
   return (
     <div>
       <Head>
@@ -64,7 +68,7 @@ const VideosComponent = () => {
         ) : (
           <>
             <div className={styles.video_options}>
-              <SearchInput />
+              {/* <SearchInput onSearch={handleSearch} /> */}
             </div>
 
             {videosWithProgress.length > 0 && (

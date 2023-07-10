@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useCallback, useEffect, useState } from 'react'
-import { Empty } from 'antd'
+import { Empty, Skeleton } from 'antd'
 import Filter from '@/components/PageFilter'
 import SearchInput from '@/components/SearchInput'
 import EventCard from './ui/EventCard'
@@ -34,23 +34,30 @@ interface MonthData {
 }
 
 const Events = () => {
+  const [loading, setLoading] = useState(false)
   const [activeMonthTag, setActiveMonthTag] = useState('1')
   const [activeMonth, setActiveMonth] = useState<Month | null>(null)
   const [months, setMonths] = useState<Month[]>([])
   const [workShopsData, setWorkShopsData] = useState<MonthData>()
   const [filter, setFilter] = useState('ALL')
 
-  const fetchEvents = useCallback(async () => {
-    if (!activeMonth || !filter) return
+  const fetchEvents = async (month: Month | null, category: string, search?: string) => {
+    if (!month || !filter) return
     try {
+      setLoading(true)
+      setActiveMonth(month)
+      setFilter(category)
+
       const { data } = await axiosInstance.get(
-        `${ROUTES.WORKSHOP_PER_MONTH}?month=${activeMonth.monthNumber}&type=${filter}`
+        `${ROUTES.WORKSHOP_PER_MONTH}?month=${month.monthNumber}&type=${category}&search=${search || ''}`
       )
       setWorkShopsData(data)
     } catch (error) {
       console.log('[fetchEvents]', error)
+    } finally {
+      setLoading(false)
     }
-  }, [filter, activeMonth])
+  }
 
   useEffect(() => {
     const currentMonthNumber = dayjs().month()
@@ -77,17 +84,13 @@ const Events = () => {
     ]
     setMonths(monthArray)
     setActiveMonth(monthArray[0])
+    fetchEvents(monthArray[0], filter)
   }, [])
-
-  useEffect(() => {
-    if (months.length < 1) return
-    fetchEvents()
-  }, [fetchEvents, months])
 
   const handleChangeMonth = (month: Month) => {
     setActiveMonthTag(month.key)
     setActiveMonth(month)
-    fetchEvents()
+    fetchEvents(month, filter)
   }
 
   const filters = [
@@ -106,24 +109,29 @@ const Events = () => {
   ]
 
   const handleChangeTag = (tag: string) => {
-    console.log('tag', tag)
     switch (tag) {
-      case 'Todos':
+      case 'todos':
         setFilter('ALL')
+        fetchEvents(activeMonth, 'ALL')
         break
 
-      case 'Eventos':
+      case 'eventos':
         setFilter('EVENT')
+        fetchEvents(activeMonth, 'EVENT')
         break
 
-      case 'Talleres':
+      case 'talleres':
         setFilter('WORKSHOP')
+        fetchEvents(activeMonth, 'WORKSHOP')
         break
 
       default:
         return
     }
-    fetchEvents()
+  }
+
+  const handleOnSearch = (searchString: string) => {
+    fetchEvents(activeMonth, filter, searchString)
   }
 
   return (
@@ -134,7 +142,7 @@ const Events = () => {
 
       <div className={styles.content_container}>
         <div className={styles.events_options}>
-          <SearchInput />
+          <SearchInput onSearch={handleOnSearch} />
           <Filter filters={filters} onFilterSelect={handleChangeTag} />
         </div>
 
@@ -143,9 +151,8 @@ const Events = () => {
             return (
               <div
                 key={month.key}
-                className={`${styles.tab} ${
-                  month.key === activeMonthTag ? styles.active : null
-                }`}
+                className={`${styles.tab} ${month.key === activeMonthTag ? styles.active : null
+                  }`}
                 onClick={() => handleChangeMonth(month)}
               >
                 <p>{month.label}</p>
@@ -155,11 +162,22 @@ const Events = () => {
         </div>
 
         <div className={styles.events_container}>
-          {workShopsData?.docs?.map((workshop) => (
-            <EventCard key={workshop._id} event={workshop} />
-          ))}
 
-          {workShopsData?.docs.length === 0 && (
+          {
+            loading ? (
+              <>
+                <Skeleton />
+                <br />
+                <Skeleton />
+              </>
+            ) : (
+              workShopsData?.docs?.map((workshop) => (
+                <EventCard key={workshop._id} event={workshop} />
+              ))
+            )
+          }
+
+          {!loading && workShopsData?.docs.length === 0 && (
             <div>
               <Empty
                 image={<VscFolderOpened color='#54C055' size={60} />}
@@ -170,8 +188,8 @@ const Events = () => {
                     {filter === 'filter'
                       ? 'eventos o talleres'
                       : filter === 'EVENT'
-                      ? 'eventos'
-                      : 'talleres'}{' '}
+                        ? 'eventos'
+                        : 'talleres'}{' '}
                     para esta fecha
                   </span>
                 }

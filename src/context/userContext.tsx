@@ -46,7 +46,7 @@ export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
       )
       localStorage.setItem('sha_user_token', user.accessToken)
       setAuthInfo(data)
-      toast.success('¡Qué bueno tener de acá!')
+      toast.success('¡Qué bueno tenerte de acá!')
       router.push('/community')
     } catch (error) {
       console.log(error)

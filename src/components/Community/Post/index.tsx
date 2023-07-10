@@ -119,7 +119,7 @@ const Post = ({
       />
 
       <div className={styles.footer}>
-        <p className={styles.answer}>Responder</p>
+        <p className={styles.answer} onClick={() => setShowPost(true)}>Responder</p>
         <div className={styles.icons}>
           {isLiked ? (
             <IoIosHeart

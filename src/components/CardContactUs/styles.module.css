@@ -29,9 +29,12 @@
   padding: 0 40px;
 }
 
-.form p {
+.form label p {
   color: white;
-  margin-bottom: 10px;
+}
+
+.form label::before {
+  content: '' !important;
 }
 
 .form input {
@@ -41,7 +44,7 @@
   border-radius: 80px;
   border: 0;
   padding: 0 20px;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 }
 
 .form input[type='number']::-webkit-inner-spin-button {
@@ -68,19 +71,17 @@
   border: 0;
   padding: 20px;
   resize: none;
-  margin-bottom: 30px;
 }
 
 .form button {
-  font-size: 16px;
   width: 168px;
   height: 56px;
-
   background: #ffffff;
   border-radius: 8px;
   border: 0;
   color: #54c055;
   cursor: pointer;
+  margin-top: 1rem;
 }
 
 @media (max-width: 1126px) {

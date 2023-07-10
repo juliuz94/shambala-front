@@ -19,19 +19,16 @@
   font-family: var(--secondary-font);
   font-size: 20px;
   text-align: center;
-
-  padding-top: 13px;
-
   min-width: 49px;
   min-height: 49px;
   max-width: 49px;
   max-height: 49px;
-
   border-radius: 8px;
-
   color: white;
-
   background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .text_container {

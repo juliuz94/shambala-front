@@ -9,7 +9,7 @@ const ContactUs = () => {
   const handleSubmitForm = async (values: any) => {
     try {
       await axios.post('/api/sendEmail', {
-        sentTo: 'shambalarevolucionhippieya@gmail.com',
+        sentTo: ['shambalarevolucionhippieya@gmail.com', 'daniel@shambala.life'],
         templateId: 'd-103491b60dc648f2a612bfdac960feb7',
         dynamicData: {
           ...values
@@ -89,8 +89,6 @@ const ContactUs = () => {
                     Enviar
                   </Button>
                 </Form.Item>
-
-
               </Form>
             </div>
           </div>
