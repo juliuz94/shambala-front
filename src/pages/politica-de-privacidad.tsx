@@ -755,7 +755,7 @@ export default function PrivacyPolicy() {
             </li>
 
             <li>
-              Una vez recibido el Reclamo completo, incluiremos una leyenda que diga "Reclamo en trámite" en el lugar donde esté ubicado el Dato Personal y el motivo del Reclamo, en un término no mayor a dos (2) días hábiles. Mantendremos la leyenda hasta que el Reclamo sea decidido.
+              Una vez recibido el Reclamo completo, incluiremos una leyenda que diga &quot;Reclamo en trámite&quot; en el lugar donde esté ubicado el Dato Personal y el motivo del Reclamo, en un término no mayor a dos (2) días hábiles. Mantendremos la leyenda hasta que el Reclamo sea decidido.
             </li>
 
             <li>
