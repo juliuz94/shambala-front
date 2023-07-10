@@ -2,12 +2,13 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
-import { Button, Avatar, Progress } from 'antd'
+import { Button, Avatar, Progress, Modal } from 'antd'
 import {
   HiArrowSmallLeft,
   HiCalendarDays,
   HiOutlineClock,
 } from 'react-icons/hi2'
+import { AiFillLinkedin } from 'react-icons/ai'
 import useFetchInterested from '@/Hooks/useFetchInterested'
 import useFetchUser from '@/Hooks/useFetchUser'
 import { useUserContext } from '@/context/userContext'
@@ -27,6 +28,7 @@ const VideoHeader = ({ video, progress, related }: PropTypes) => {
   const router = useRouter()
   const { interested } = useFetchInterested(video?._id)
   const [hasClickedInterest, setHasClickedInterest] = useState(false)
+  const [showSpeakerModal, setShowSpeakerModal] = useState(false)
 
   const { userGuest } = useFetchUser(video?.createBy)
 
@@ -78,8 +80,8 @@ const VideoHeader = ({ video, progress, related }: PropTypes) => {
   let buttonText = related
     ? 'Reservar cupo'
     : hasClickedInterest
-    ? 'Manifestaste tu interés'
-    : '¿Te interesa un evento?'
+      ? 'Manifestaste tu interés'
+      : '¿Te interesa un evento?'
   let buttonDisabled = !related && hasClickedInterest
 
   const CustomButton = ({ className }: { className: string }) => (
@@ -113,12 +115,21 @@ const VideoHeader = ({ video, progress, related }: PropTypes) => {
           <HiArrowSmallLeft size={25} />
         </Button>
         <h1 className={styles.video_title}>{video?.title}</h1>
-        <div className={styles.creator_container}>
-          <Avatar size='small'>
-            {userGuest?.firstName && userGuest?.firstName?.charAt(0)}
-          </Avatar>
-          <p>{userGuest?.firstName || ''}</p>
-        </div>
+        {
+          video?.speakers && video?.speakers?.length > 0 && (
+            <div className={styles.creator_container} onClick={() => setShowSpeakerModal(true)}>
+              <Avatar size='small' src={video.speakers[0].image}>
+                {video.speakers[0].name.split(' ')[0][0]}
+                {video.speakers[0].name.split(' ')[1][0]}
+              </Avatar>
+              <p>{video.speakers[0].name}</p>
+              {
+                video.speakers[0].linkedin && <AiFillLinkedin color='#0077b5' size={18} />
+              }
+            </div>
+          )
+        }
+
       </div>
       <div className={styles.center_column}>
         <Progress
@@ -156,6 +167,32 @@ const VideoHeader = ({ video, progress, related }: PropTypes) => {
           <CustomButton className={styles.classic_button} />
         </div>
       </div>
+      {
+        video?.speakers && video.speakers.length > 0 && (
+          <Modal
+            open={showSpeakerModal}
+            onCancel={() => setShowSpeakerModal(false)}
+            footer={false}
+          >
+            <div className={styles.speaker_modal_content}>
+              <div className={styles.speaker_modal_image}>
+                <img src={video?.speakers[0].image} alt={video?.speakers[0].name} />
+              </div>
+              <p className={styles.speaker_modal_name}>{video?.speakers[0].name}</p>
+              <p className={styles.speaker_modal_bio}>{video?.speakers[0].biography}</p>
+              {
+                video?.speakers[0].linkedin && (
+                  <a style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }} href={video.speakers[0].linkedin} target='_blank'>
+                    Visita su LinkedIn
+                    <AiFillLinkedin color='#0077b5' size={18} />
+                  </a>
+                )
+              }
+            </div>
+          </Modal>
+        )
+      }
+
     </section>
   )
 }

@@ -34,6 +34,7 @@ export type Video = {
   tags: string[]
   attachments: Attachment[]
   sponsors: string[]
+  speakers: Speaker[],
   sections: {
     _id: string
     title?: string
@@ -223,6 +224,18 @@ export interface CommentData {
   hasNextPage: boolean
   prevPage: null
   nextPage: null
+}
+
+export interface Speaker {
+  biography: string;
+  createdAt: string;
+  email: string;
+  image: string;
+  linkedin: string;
+  name: string;
+  updatedAt: string;
+  __v: number;
+  _id: string;
 }
 
 export interface DocComment {

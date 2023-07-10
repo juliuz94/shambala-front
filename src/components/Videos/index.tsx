@@ -5,7 +5,7 @@ import VideoRow from './ui/VideoRow'
 import VideoRowSkeleton from './ui/Skeleton'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
-import { Video } from '@/types'
+import { Video, VideoProfile } from '@/types'
 import styles from './styles.module.css'
 
 type Label = {
@@ -20,6 +20,7 @@ const VideosComponent = () => {
   const [loadingData, setLoadingData] = useState(false)
   const [videos, setVideos] = useState<Label[]>([])
   const [videosWithProgress, setVideosWithProgress] = useState([])
+  const [unfinishedVideos, setUnfinishedVideos] = useState([])
 
   const fetchVideos = async (searchString?: string) => {
     setLoadingData(true)
@@ -37,7 +38,10 @@ const VideosComponent = () => {
     try {
       const { data } = await axiosInstance.get(ROUTES.VIDEOS_WITH_PROGRESS)
       if (data.videos.length > 0) {
+        const unfinished = data.videos.filter((video: VideoProfile) => !video.progress.finished )
         setVideosWithProgress(data.videos)
+        setUnfinishedVideos(unfinished)
+        
       }
     } catch (error) {
       console.log('[fetchVideosWithProgress]', error)
@@ -72,7 +76,7 @@ const VideosComponent = () => {
             </div>
 
             {videosWithProgress.length > 0 && (
-              <VideoRow title='En progreso' videos={videosWithProgress} />
+              <VideoRow title='En progreso' videos={unfinishedVideos} />
             )}
 
             {videos.length > 0 &&

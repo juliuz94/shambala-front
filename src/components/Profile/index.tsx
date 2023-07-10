@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { Button, Dropdown, type MenuProps } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
-import { VideoProfile } from '@/types'
+import { VideoProfile, Video } from '@/types'
 import { useUserContext } from '@/context/userContext'
 import VideoSlider from './VideoSlider'
 import VideoRowSkeleton from '../Videos/ui/Skeleton'
@@ -24,8 +24,10 @@ const Profile = ({ id }: ProfileProps) => {
   const [openEditModal, setOpenEditModal] = useState(false)
   const [showFullBio, setShowFullBio] = useState(false)
   const [filteredVideos, setFilteredVideos] = useState<any[]>([])
+  const [unfinishedVideos, setUnfinishedVideos] = useState<Video[]>([])
+  const [finishedVideos, setFinishedVideos] = useState<Video[]>([])
 
-  const { videos, videosWithProgress, loadingData } = useFetchVideos()
+  const { videos, videosWithProgress, loadingData, fetchVideosByTags } = useFetchVideos()
 
   const { renderProfileImage } = useRenderProfileImage(
     userGuest?.image,
@@ -43,6 +45,15 @@ const Profile = ({ id }: ProfileProps) => {
     })
     return finishedCount
   }
+
+  useEffect(() => {
+    const finished = videosWithProgress.filter((video: VideoProfile) => video.progress.finished)
+    const unFinished = videosWithProgress.filter((video: VideoProfile) => !video.progress.finished)
+
+    setFinishedVideos(finished)
+    setUnfinishedVideos(unFinished)
+
+  }, [videosWithProgress])
 
   const allVideos: VideoProfile[] = []
   videos.forEach((videoCategory: any) => {
@@ -101,18 +112,37 @@ const Profile = ({ id }: ProfileProps) => {
     }
   }
 
-  const handleFilterVideos = () => {
-    if (userGuest && userGuest.tags) {
-      const filtered = allVideos.filter((video) =>
-        video.tags.some((tag: any) => userGuest.tags.includes(tag))
-      )
-      setFilteredVideos(filtered)
-    }
-  }
+  const handleFilterVideos = async () => {
+    if (!userGuest) return 
+    const userTags = userGuest.tags
+    const tagsString = userTags.reduce((acc: string, cur: any, index: number) => {
+      if (index === 0) {
+        return `tags=${cur._id}`
+      } else {
+        return `${acc}&tags=${cur._id}`
+      }
+    }, '')
 
+    const data = await fetchVideosByTags(tagsString)
+    if (data) {
+      const videos = data.docs.reduce((acc: any, cur: any) => {
+        const tagVideos = cur.videos
+        return [...acc, ...tagVideos]
+      }, [])
+      setFilteredVideos(videos)
+    }
+
+    // if (userGuest && userGuest.tags) {
+    //   const filtered = allVideos.filter((video) =>
+    //     video.tags.some((tag: any) => userGuest.tags.includes(tag))
+    //   )
+    //   setFilteredVideos(filtered)
+    // }
+  }
+  
   useEffect(() => {
     handleFilterVideos()
-  }, [id])
+  }, [userGuest])
 
   useEffect(() => {
     if (!id) return 
@@ -193,11 +223,11 @@ const Profile = ({ id }: ProfileProps) => {
                     <h3>0</h3>
                     <p>Eventos</p>
                   </div>
-
+{/* 
                   <div className={styles.projects_text}>
                     <h3>0</h3>
                     <p>Puntos</p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             )}
@@ -239,11 +269,20 @@ const Profile = ({ id }: ProfileProps) => {
               </div>
             ) : (
               <>
-                {videosWithProgress.length > 0 && (
+                {unfinishedVideos.length > 0 && (
                   <div className={styles.slider}>
                     <VideoSlider
                       title='En progreso'
-                      videos={videosWithProgress}
+                      videos={unfinishedVideos}
+                    />
+                  </div>
+                )}
+
+                {finishedVideos.length > 0 && (
+                  <div className={styles.slider}>
+                    <VideoSlider
+                      title='Videos completados'
+                      videos={finishedVideos}
                     />
                   </div>
                 )}

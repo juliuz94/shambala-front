@@ -57,7 +57,7 @@ const VideoCard = ({ video }: any) => {
   return (
     <div
       className={styles.video_card}
-      onClick={() => router.push(`video/${video._id}`)}
+      onClick={() => router.push(`/video/${video._id}`)}
     >
       <div
         className={styles.card_header}

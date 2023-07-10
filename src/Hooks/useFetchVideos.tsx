@@ -15,6 +15,7 @@ const useFetchVideoWithProgress = () => {
   const [loadingData, setLoadingData] = useState(false)
   const [videos, setVideos] = useState<Label[]>([])
   const [videosWithProgress, setVideosWithProgress] = useState([])
+  const [videosByTag, setVideosByTag] = useState([])
 
   const fetchVideos = async () => {
     setLoadingData(true)
@@ -39,12 +40,27 @@ const useFetchVideoWithProgress = () => {
     }
   }
 
+  const fetchVideosByTags = async (tagIds?: string) => {
+    if (!tagIds) return 
+    try {
+      const { data } = await axiosInstance.get(`${ROUTES.VIDEOS_BY_TAG}?${tagIds}`)
+      console.log('data -->', data)
+      if (data.docs.length > 0) {
+        return data 
+      } else {
+        return null
+      }
+    } catch (error) {
+      console.log('[fetchVideosByTags]', error)
+    }
+  }
+
   useEffect(() => {
     fetchVideosWithProgress()
     fetchVideos()
   }, [])
 
-  return { videos, videosWithProgress, loadingData }
+  return { videos, videosWithProgress, loadingData, fetchVideosByTags }
 }
 
 export default useFetchVideoWithProgress
