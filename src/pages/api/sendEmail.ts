@@ -10,19 +10,18 @@ export default async function sendMessage(req: any, res: any) {
       to: sentTo,
       from: {
         email: 'no-reply@shambala.life',
-        name: 'Shambala'
+        name: 'Shambala',
       },
       templateId: templateId,
       // subject: "Gracias por tu confianza",
       dynamicTemplateData: {
-        ...dynamicData
-      }
+        ...dynamicData,
+      },
     })
     res.status(200).end()
   } catch (error) {
     console.error('sendMessage', error)
     console.log(JSON.stringify(error))
     res.status(500).end()
-  }  
+  }
 }
-

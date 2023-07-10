@@ -5,7 +5,7 @@ import VideoRow from './ui/VideoRow'
 import VideoRowSkeleton from './ui/Skeleton'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
-import { Video, VideoProfile } from '@/types'
+import { Video, VideoProfile, NewVideoProfile } from '@/types'
 import styles from './styles.module.css'
 
 type Label = {
@@ -19,13 +19,17 @@ type Label = {
 const VideosComponent = () => {
   const [loadingData, setLoadingData] = useState(false)
   const [videos, setVideos] = useState<Label[]>([])
-  const [videosWithProgress, setVideosWithProgress] = useState([])
+  const [videosWithProgress, setVideosWithProgress] = useState<
+    NewVideoProfile[]
+  >([])
   const [unfinishedVideos, setUnfinishedVideos] = useState([])
 
   const fetchVideos = async (searchString?: string) => {
     setLoadingData(true)
     try {
-      const { data } = await axiosInstance.get(`${ROUTES.VIDEOS_BY_TAG}?search=${searchString || ''}`)
+      const { data } = await axiosInstance.get(
+        `${ROUTES.VIDEOS_BY_TAG}?search=${searchString || ''}`
+      )
       setVideos(data.docs)
     } catch (error) {
       console.log('[fetchVideos]', error)
@@ -38,10 +42,11 @@ const VideosComponent = () => {
     try {
       const { data } = await axiosInstance.get(ROUTES.VIDEOS_WITH_PROGRESS)
       if (data.videos.length > 0) {
-        const unfinished = data.videos.filter((video: VideoProfile) => !video.progress.finished )
+        const unfinished = data.videos.filter(
+          (video: VideoProfile) => !video.progress.finished
+        )
         setVideosWithProgress(data.videos)
         setUnfinishedVideos(unfinished)
-        
       }
     } catch (error) {
       console.log('[fetchVideosWithProgress]', error)
@@ -75,7 +80,7 @@ const VideosComponent = () => {
               {/* <SearchInput onSearch={handleSearch} /> */}
             </div>
 
-            {videosWithProgress.length > 0 && (
+            {videosWithProgress.some((video) => !video.progress.finished) && (
               <VideoRow title='En progreso' videos={unfinishedVideos} />
             )}
 

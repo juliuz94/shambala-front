@@ -1,25 +1,33 @@
-import styles from './styles.module.css'
+import { useState } from 'react'
 import axios from 'axios'
 import { toast } from 'sonner'
 import { Form, Input, Button } from 'antd'
+import styles from './styles.module.css'
 
 const ContactUs = () => {
   const [form] = Form.useForm()
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmitForm = async (values: any) => {
     try {
+      setIsLoading(true)
+
       await axios.post('/api/sendEmail', {
-        sentTo: ['shambalarevolucionhippieya@gmail.com', 'daniel@shambala.life'],
+        sentTo: [
+          'shambalarevolucionhippieya@gmail.com',
+          'daniel@shambala.life',
+        ],
         templateId: 'd-103491b60dc648f2a612bfdac960feb7',
         dynamicData: {
-          ...values
-        }
+          ...values,
+        },
       })
     } catch (error) {
       console.log(error)
     } finally {
       toast.success('Tu mensaje ha sido enviado')
       form.resetFields()
+      setIsLoading(false)
     }
   }
 
@@ -46,9 +54,15 @@ const ContactUs = () => {
                   name='name'
                   label={<p>Nombre completo</p>}
                   className={styles.input_item}
-                  rules={[{ required: true, message: 'Este campo es requerido' }]}
+                  rules={[
+                    { required: true, message: 'Este campo es requerido' },
+                  ]}
                 >
-                  <Input className={styles.login_input} size='large' placeholder='Tu nombre' />
+                  <Input
+                    className={styles.login_input}
+                    size='large'
+                    placeholder='Tu nombre'
+                  />
                 </Form.Item>
                 {/* <input type='text' placeholder='Tu nombre' /> */}
 
@@ -56,9 +70,15 @@ const ContactUs = () => {
                   name='email'
                   label={<p>Email</p>}
                   className={styles.input_item}
-                  rules={[{ required: true, message: 'Este campo es requerido' }]}
+                  rules={[
+                    { required: true, message: 'Este campo es requerido' },
+                  ]}
                 >
-                  <Input className={styles.login_input} size='large' placeholder='Ingresa tu correo' />
+                  <Input
+                    className={styles.login_input}
+                    size='large'
+                    placeholder='Ingresa tu correo'
+                  />
                 </Form.Item>
                 {/* <input type='text' placeholder='Ingresa tu correo' /> */}
 
@@ -66,9 +86,15 @@ const ContactUs = () => {
                   name='phone'
                   label={<p>Número de teléfono</p>}
                   className={styles.input_item}
-                  rules={[{ required: true, message: 'Este campo es requerido' }]}
+                  rules={[
+                    { required: true, message: 'Este campo es requerido' },
+                  ]}
                 >
-                  <Input className={styles.login_input} size='large' placeholder='Ingresa tu número' />
+                  <Input
+                    className={styles.login_input}
+                    size='large'
+                    placeholder='Ingresa tu número'
+                  />
                 </Form.Item>
                 {/* <input type='text' placeholder='Ingresa tu número' /> */}
 
@@ -76,16 +102,20 @@ const ContactUs = () => {
                   name='message'
                   label={<p>Mensaje</p>}
                   className={styles.input_item}
-                  rules={[{ required: true, message: 'Este campo es requerido' }]}
+                  rules={[
+                    { required: true, message: 'Este campo es requerido' },
+                  ]}
                 >
-                  <Input.TextArea className={styles.login_input} size='large' placeholder='Deja tu mensaje...' />
+                  <Input.TextArea
+                    className={styles.login_input}
+                    size='large'
+                    placeholder='Deja tu mensaje...'
+                  />
                 </Form.Item>
                 {/* <textarea placeholder='Escríbenos...' /> */}
 
                 <Form.Item className={styles.input_item}>
-                  <Button
-                    htmlType='submit'
-                  >
+                  <Button htmlType='submit' loading={isLoading}>
                     Enviar
                   </Button>
                 </Form.Item>

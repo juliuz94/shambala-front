@@ -1,4 +1,5 @@
-import React, { useState, Dispatch, SetStateAction, useEffect } from 'react'
+import Link from 'next/link'
+import React, { useState, Dispatch, SetStateAction } from 'react'
 import { axiosInstance } from '@/axios/axiosInstance'
 import { useUserContext } from '@/context/userContext'
 import { Button } from 'antd'
@@ -7,11 +8,9 @@ import useFetchTags from '@/Hooks/useFetchTags'
 import 'react-phone-number-input/style.css'
 import PhoneInput, {
   formatPhoneNumberIntl,
-  formatPhoneNumber,
   parsePhoneNumber,
-  isPossiblePhoneNumber
 } from 'react-phone-number-input'
-import { Modal, Form, Input } from 'antd'
+import { Modal, Form, Checkbox } from 'antd'
 import { Tag } from '@/types'
 import { toast } from 'sonner'
 import { worldPhoneNumbers } from '@/helpers/countriesPhoneNumbers'
@@ -28,6 +27,7 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([])
   const [phoneNumber, setPhoneNumber] = useState<any>('')
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false)
+  const [acceptTerms, setAcceptTerms] = useState(false)
 
   const handleCloseModal = () => {
     setOpen(false)
@@ -51,9 +51,11 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
     }
   }
 
-  const handlePhoneChange = (phone: string) => {    
+  const handlePhoneChange = (phone: string) => {
     const parsedPhoneNumber = parsePhoneNumber(phone || '')
-    const country = worldPhoneNumbers.find(country => country.code === parsedPhoneNumber?.country)
+    const country = worldPhoneNumbers.find(
+      (country) => country.code === parsedPhoneNumber?.country
+    )
 
     if (!phone || !parsedPhoneNumber) {
       setIsValidPhoneNumber(false)
@@ -74,10 +76,19 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
       const tagIds = selectedTags.map((tag: Tag) => tag._id)
       const ext = formatPhoneNumberIntl(phoneNumber).split(' ')[0]
 
-      const { data } = await axiosInstance.patch(`${ROUTES.USERS}/${user._id}`, {
-        tags: tagIds,
-        country_code: ext,
-        phone_number: parsePhoneNumber(phoneNumber)?.nationalNumber,
+      const { data } = await axiosInstance.patch(
+        `${ROUTES.USERS}/${user._id}`,
+        {
+          tags: tagIds,
+          country_code: ext,
+          phone_number: parsePhoneNumber(phoneNumber)?.nationalNumber,
+        }
+      )
+
+      await axiosInstance.post(`${ROUTES.TERMS_ACCEPTANCE}`, {
+        userId: user._id,
+        acceptedTerms: acceptTerms,
+        termsName: 'general terms of use',
       })
 
       setUser(data)
@@ -90,7 +101,14 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
   }
 
   return (
-    <Modal open={open} closable={false} maskClosable={false} onCancel={handleCloseModal} footer={false} width={450}>
+    <Modal
+      open={open}
+      closable={false}
+      maskClosable={false}
+      onCancel={handleCloseModal}
+      footer={false}
+      width={450}
+    >
       <div className={styles.modal_content_container}>
         <h3>Queremos saber qué te gusta</h3>
         <p>
@@ -123,8 +141,23 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
           />
         </Form.Item>
 
+        <Checkbox
+          checked={acceptTerms}
+          onChange={(e) => setAcceptTerms(e.target.checked)}
+        >
+          <Link
+            href={'/politica-de-privacidad'}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Aceptar términos y condiciones
+          </Link>
+        </Checkbox>
+
         <Button
-          disabled={selectedTags.length < 2 || !isValidPhoneNumber}
+          disabled={
+            selectedTags.length < 2 || !isValidPhoneNumber || !acceptTerms
+          }
           size='large'
           type='primary'
           onClick={handleUpdateUser}

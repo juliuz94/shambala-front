@@ -16,6 +16,7 @@ type Routes = {
   USERS: string
   ANNOUNCEMENT: string
   CATEGORY: string
+  TERMS_ACCEPTANCE: string
 }
 
 const ROUTES: Routes = {
@@ -36,6 +37,7 @@ const ROUTES: Routes = {
   USERS: 'users',
   ANNOUNCEMENT: 'announcements',
   CATEGORY: 'category',
+  TERMS_ACCEPTANCE: 'terms-acceptance',
 }
 
 export default ROUTES

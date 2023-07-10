@@ -27,7 +27,7 @@ type EditProfileProps = {
 const EditProfileModal = ({
   isModalOpen,
   setIsModalOpen,
-  fetchUser
+  fetchUser,
 }: EditProfileProps) => {
   const { user, setUser } = useUserContext()
   const [isLoading, setIsLoading] = useState(false)
@@ -77,15 +77,17 @@ const EditProfileModal = ({
     setIsLoading(true)
 
     try {
-
       let imageUrl = ''
 
       if (fileToUpload) {
-        const storageRef = ref(FirebaseStorage, `images/profile_images/user_${user._id}/${fileToUpload.name}`)
+        const storageRef = ref(
+          FirebaseStorage,
+          `images/profile_images/user_${user._id}/${fileToUpload.name}`
+        )
         const url = await uploadImage(fileToUpload, storageRef, null)
         imageUrl = url
       }
-  
+
       const ext = formatPhoneNumberIntl(phoneNumber).split(' ')[0]
       const editProfile = {
         ...user,
@@ -94,11 +96,13 @@ const EditProfileModal = ({
         bio: values.bio,
         country_code: ext,
         phone_number: parsePhoneNumber(phoneNumber)?.nationalNumber,
-        image: imageUrl === '' ? user.image : imageUrl
+        image: imageUrl === '' ? user.image : imageUrl,
       }
-  
 
-      const { data } = await axiosInstance.patch(`${ROUTES.USERS}/${user._id}`, editProfile)
+      const { data } = await axiosInstance.patch(
+        `${ROUTES.USERS}/${user._id}`,
+        editProfile
+      )
       setUser(data)
       toast.success('Se actualizó tu perfil')
       fetchUser()
@@ -163,21 +167,24 @@ const EditProfileModal = ({
       >
         <div className={styles.content}>
           <div className={styles.profile_image}>
-            <div className={styles.profile_image_content} onClick={handleChangeClick}>
-              {
-                !userImage ?
-                  <div className={styles.initials_container}>
-                    <p>
-                      {user?.firstName?.[0] || ''}{user?.lastName?.[0] || ''}
-                    </p>
-                  </div>
-                  :
-                  <div className={styles.image_container}>
-                    <img src={userImage} />
-                  </div>
-              }
+            <div
+              className={styles.profile_image_content}
+              onClick={handleChangeClick}
+            >
+              {!userImage ? (
+                <div className={styles.initials_container}>
+                  <p>
+                    {user?.firstName?.[0] || ''}
+                    {user?.lastName?.[0] || ''}
+                  </p>
+                </div>
+              ) : (
+                <div className={styles.image_container}>
+                  <img src={userImage} />
+                </div>
+              )}
               <input
-                type="file"
+                type='file'
                 ref={uploadRef}
                 onChange={onFileChange}
                 style={{ display: 'none' }}
@@ -234,7 +241,11 @@ const EditProfileModal = ({
             label={<label>Intereses</label>}
             rules={[{ required: true, message: 'Campo requerido' }]}
           >
-            <Select mode='multiple' placeholder='Selecciona las etiquetas' size='large'>
+            <Select
+              mode='multiple'
+              placeholder='Selecciona las etiquetas'
+              size='large'
+            >
               {tags?.docs.map((tag) => (
                 <Select.Option key={tag._id} value={tag._id}>
                   {tag.es}
@@ -245,7 +256,13 @@ const EditProfileModal = ({
         </div>
 
         <Form.Item>
-          <Button htmlType='submit' type='primary' size='large' loading={isLoading} className={styles.submit_button}>
+          <Button
+            htmlType='submit'
+            type='primary'
+            size='large'
+            loading={isLoading}
+            className={styles.submit_button}
+          >
             Actualizar
           </Button>
         </Form.Item>

@@ -27,7 +27,8 @@ const Profile = ({ id }: ProfileProps) => {
   const [unfinishedVideos, setUnfinishedVideos] = useState<Video[]>([])
   const [finishedVideos, setFinishedVideos] = useState<Video[]>([])
 
-  const { videos, videosWithProgress, loadingData, fetchVideosByTags } = useFetchVideos()
+  const { videos, videosWithProgress, loadingData, fetchVideosByTags } =
+    useFetchVideos()
 
   const { renderProfileImage } = useRenderProfileImage(
     userGuest?.image,
@@ -47,12 +48,15 @@ const Profile = ({ id }: ProfileProps) => {
   }
 
   useEffect(() => {
-    const finished = videosWithProgress.filter((video: VideoProfile) => video.progress.finished)
-    const unFinished = videosWithProgress.filter((video: VideoProfile) => !video.progress.finished)
+    const finished = videosWithProgress.filter(
+      (video: VideoProfile) => video.progress.finished
+    )
+    const unFinished = videosWithProgress.filter(
+      (video: VideoProfile) => !video.progress.finished
+    )
 
     setFinishedVideos(finished)
     setUnfinishedVideos(unFinished)
-
   }, [videosWithProgress])
 
   const allVideos: VideoProfile[] = []
@@ -113,15 +117,18 @@ const Profile = ({ id }: ProfileProps) => {
   }
 
   const handleFilterVideos = async () => {
-    if (!userGuest) return 
+    if (!userGuest) return
     const userTags = userGuest.tags
-    const tagsString = userTags.reduce((acc: string, cur: any, index: number) => {
-      if (index === 0) {
-        return `tags=${cur._id}`
-      } else {
-        return `${acc}&tags=${cur._id}`
-      }
-    }, '')
+    const tagsString = userTags.reduce(
+      (acc: string, cur: any, index: number) => {
+        if (index === 0) {
+          return `tags=${cur._id}`
+        } else {
+          return `${acc}&tags=${cur._id}`
+        }
+      },
+      ''
+    )
 
     const data = await fetchVideosByTags(tagsString)
     if (data) {
@@ -139,13 +146,13 @@ const Profile = ({ id }: ProfileProps) => {
     //   setFilteredVideos(filtered)
     // }
   }
-  
+
   useEffect(() => {
     handleFilterVideos()
   }, [userGuest])
 
   useEffect(() => {
-    if (!id) return 
+    if (!id) return
     fetchUser()
   }, [id])
 
@@ -223,7 +230,7 @@ const Profile = ({ id }: ProfileProps) => {
                     <h3>0</h3>
                     <p>Eventos</p>
                   </div>
-{/* 
+                  {/* 
                   <div className={styles.projects_text}>
                     <h3>0</h3>
                     <p>Puntos</p>
@@ -269,23 +276,26 @@ const Profile = ({ id }: ProfileProps) => {
               </div>
             ) : (
               <>
-                {unfinishedVideos.length > 0 && (
-                  <div className={styles.slider}>
-                    <VideoSlider
-                      title='En progreso'
-                      videos={unfinishedVideos}
-                    />
-                  </div>
-                )}
+                {unfinishedVideos.length > 0 &&
+                  !unfinishedVideos.some(
+                    (video) => video.progress.finished
+                  ) && (
+                    <div className={styles.slider}>
+                      <VideoSlider
+                        title='En progreso'
+                        videos={unfinishedVideos}
+                      />
+                    </div>
+                  )}
 
-                {finishedVideos.length > 0 && (
+                {/* {finishedVideos.length > 0 && (
                   <div className={styles.slider}>
                     <VideoSlider
                       title='Videos completados'
                       videos={finishedVideos}
                     />
                   </div>
-                )}
+                )} */}
 
                 {newVideos.length > 0 && filteredVideos.length > 0 && (
                   <div className={styles.slider}>
