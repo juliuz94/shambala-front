@@ -10,7 +10,11 @@ const FileCard = ({ file }: { file: Attachment}) => {
   const [loadingDownload, setLoadingDownload] = useState(false)
 
   const handleDownload = (url: string, fileName: string) => {
-    downloadFile(url, fileName, () => setLoadingDownload(true), () => setLoadingDownload(false))
+    if (url.includes('https://firebasestorage.googleapis.com')) {
+      downloadFile(url, fileName, () => setLoadingDownload(true), () => setLoadingDownload(false))
+    } else {
+      window && window.open(url)
+    }
   }
 
   return (
