@@ -1,65 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
+import { TypePost } from '@/types'
 
-export interface TypePost {
-  docs: Doc[]
-  totalDocs: number
-  limit: number
-  totalPages: number
-  page: number
-  pagingCounter: number
-  hasPrevPage: boolean
-  hasNextPage: boolean
-  prevPage: any
-  nextPage: any
+type ReturnTypeOfUseFetchPosts = {
+  posts: TypePost | null
+  setUpdatePost: Dispatch<SetStateAction<boolean>>
 }
 
-export interface Doc {
-  _id: string
-  title: string
-  text: string
-  tags: Tag[]
-  likes: any[]
-  user: User
-  commentsCount: number
-  isPublic: boolean
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
+type UseFetchPostsHook = (
+  pageNumber: number,
+  category: string,
+  setPageNumber: Dispatch<SetStateAction<number>>
+) => ReturnTypeOfUseFetchPosts
 
-export interface Tag {
-  _id: string
-  es: string
-  en: string
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
-
-export interface User {
-  firstName: any
-  lastName: any
-  vulnerable: boolean
-  _id: string
-  uid: string
-  email: string
-  emailWork: any
-  nationalIdType: any
-  nationalId: any
-  bio: any
-  image: any
-  invitedBy: any
-  company: string
-  isVolunteer: boolean
-  type: string
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
-
-const useFetchPosts = (pageNumber: number, category: string) => {
+const useFetchPosts: UseFetchPostsHook = (
+  pageNumber,
+  category,
+  setPageNumber
+) => {
   const [posts, setPosts] = useState<TypePost | null>(null)
   const [updatePost, setUpdatePost] = useState(false)
 
@@ -68,12 +27,12 @@ const useFetchPosts = (pageNumber: number, category: string) => {
       const { data } = await axiosInstance.get(
         `${
           ROUTES.POST
-        }?page=${pageNumber}&category=${category}&sort=acs&search=${''}`
+        }?page=${pageNumber}&category=${category}&sort=asc&search=${''}`
       )
 
       if (posts) {
         const postMap = new Map([
-          // ...(posts.docs.map((doc) => [doc._id, doc]) || []),
+          ...(posts.docs.map((doc) => [doc._id, doc]) || []),
           ...data.docs.map((doc: { _id: any }) => [doc._id, doc]),
         ])
         const uniquePosts = Array.from(postMap.values())
@@ -96,6 +55,7 @@ const useFetchPosts = (pageNumber: number, category: string) => {
   useEffect(() => {
     setPosts(null)
     setUpdatePost((prevUpdatePost) => !prevUpdatePost)
+    setPageNumber(1)
   }, [category])
 
   return { posts, setUpdatePost }

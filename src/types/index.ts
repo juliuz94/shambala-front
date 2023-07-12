@@ -15,6 +15,7 @@ export type User = {
   isVolunteer: boolean
   type: string | null
   createdAt: string
+  stripe_id: string | null
   updatedAt: string
   __v: number
 } | null
@@ -384,3 +385,51 @@ export interface LandWorkshop {
   updatedAt: string
   __v: number
 }
+
+export interface DocPost {
+  _id: string
+  title: string
+  text: string
+  tags: Tag[]
+  likes: any[]
+  user: User
+  commentsCount: number
+  isPublic: boolean
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+export interface TypePost {
+  docs: DocPost[]
+  totalDocs: number
+  limit: number
+  totalPages: number
+  page: number
+  pagingCounter: number
+  hasPrevPage: boolean
+  hasNextPage: boolean
+  prevPage: any
+  nextPage: any
+}
+
+export type Benefit = string
+
+export type Pricing = {
+  currency: string
+  amount: number
+  _id: string
+}
+
+export type Plan = {
+  _id: string
+  title: string
+  benefits: Benefit[]
+  pricing: Pricing
+  recurrence: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+export type Plans = Plan[]

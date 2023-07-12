@@ -1,8 +1,35 @@
 import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { useUserContext } from '@/context/userContext'
+import LoginModal from '@/components/Modals/Login'
+import ROUTES from '@/helpers/routes'
+import { axiosInstance } from '@/axios/axiosInstance'
+import useFetchPlans from '@/Hooks/useFetchPlans'
 import styles from './styles.module.css'
 
 const Main = () => {
+  const { user } = useUserContext()
   const router = useRouter()
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+
+  const { plans } = useFetchPlans()
+
+  // const redirectUser = async () => {
+  //   if (user && user.stripe_id === null) {
+  //     const { data } = await axiosInstance.get(
+  //       `${ROUTES.GENERATE_LINK}?plan=${plans[0]?._id}&mongo_user_id=${user?._id}`
+  //     )
+  //     console.log('data', data)
+  //   }
+  // }
+
+  // const handlePagarAhora = () => {
+  //   if (user === null) {
+  //     setIsLoginModalOpen(true)
+  //   } else {
+  //     redirectUser()
+  //   }
+  // }
 
   return (
     <div className={styles.section}>
@@ -96,7 +123,7 @@ const Main = () => {
               </div>
               <button
                 className={styles.card_button}
-                onClick={() => router.push('/login')}
+                //  onClick={handlePagarAhora}
               >
                 Pagar ahora
               </button>
@@ -108,6 +135,11 @@ const Main = () => {
         className={styles.bg}
         src='/images/svg/waves_subscribe.svg'
         alt='bg'
+      />
+
+      <LoginModal
+        isModalOpen={isLoginModalOpen}
+        setIsModalOpen={setIsLoginModalOpen}
       />
     </div>
   )

@@ -15,6 +15,7 @@ type UserContextType = {
   user: LocalUser | null
   setUser: (user: LocalUser | null) => void
   handleLogin: (user: LocalUser) => void
+  handleLoginModal: (user: LocalUser) => void
   logOut: (user: LocalUser | null) => void
 }
 
@@ -24,6 +25,7 @@ const { Provider } = UserContext
 export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter()
   const auth = getAuth()
+
   const userInfo = process.browser && localStorage.getItem('sha_user')
   const [user, setUser] = useState<LocalUser | null>(
     userInfo ? JSON.parse(userInfo) : null
@@ -53,6 +55,24 @@ export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   }
 
+  const handleLoginModal = async (user: User | null | any) => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/findSession`,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.accessToken}`,
+          },
+        }
+      )
+      localStorage.setItem('sha_user_token', user.accessToken)
+      setAuthInfo(data)
+      toast.success('¡Qué bueno tenerte acá!')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const logOut = async () => {
     await signOut(auth)
     router.push('/')
@@ -69,6 +89,7 @@ export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
         user: user,
         setUser: (data) => setAuthInfo(data),
         handleLogin: (user) => handleLogin(user),
+        handleLoginModal: (user) => handleLoginModal(user),
         logOut: logOut,
       }}
     >

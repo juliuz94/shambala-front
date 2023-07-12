@@ -17,6 +17,8 @@ type Routes = {
   ANNOUNCEMENT: string
   CATEGORY: string
   TERMS_ACCEPTANCE: string
+  PLANS: string
+  GENERATE_LINK: string
 }
 
 const ROUTES: Routes = {
@@ -38,6 +40,8 @@ const ROUTES: Routes = {
   ANNOUNCEMENT: 'announcements',
   CATEGORY: 'category',
   TERMS_ACCEPTANCE: 'terms-acceptance',
+  PLANS: 'plans',
+  GENERATE_LINK: 'stripe/generateLink',
 }
 
 export default ROUTES

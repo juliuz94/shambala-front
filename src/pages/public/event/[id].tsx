@@ -2,7 +2,6 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Inter } from 'next/font/google'
 import { FC, useState } from 'react'
-import Header from '@/components/Header'
 import { Avatar, Button, Tabs, Steps } from 'antd'
 import {
   HiOutlineArrowSmallLeft,

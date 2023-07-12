@@ -1,11 +1,10 @@
-import { useEffect } from 'react'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import LoginComponent from '@/components/Login'
-import { useUserContext } from '@/context/userContext'
 
 export default function Login() {
   const router = useRouter()
-  // const { user } = useUserContext()
 
   useEffect(() => {
     const user = localStorage.getItem('sha_user')
@@ -14,5 +13,13 @@ export default function Login() {
     }
   }, [router])
 
-  return <LoginComponent />
+  return (
+    <>
+      <Head>
+        <title>Login</title>
+      </Head>
+
+      <LoginComponent />
+    </>
+  )
 }

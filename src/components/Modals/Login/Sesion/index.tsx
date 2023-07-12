@@ -1,5 +1,4 @@
-import { useState, FC } from 'react'
-import { useRouter } from 'next/router'
+import { useState } from 'react'
 import Image from 'next/image'
 import {
   getAuth,
@@ -13,14 +12,16 @@ import {
 } from 'firebase/auth'
 import { toast } from 'sonner'
 import { Form, Input, Button, Spin, Modal } from 'antd'
-import type { NotificationPlacement } from 'antd/es/notification/interface'
-import styles from './styles.module.css'
-import WaveBackgroundSVG from '@/svg/WaveBackground'
 import { LoadingOutlined } from '@ant-design/icons'
 import { useUserContext } from '@/context/userContext'
+import styles from './styles.module.css'
 
-const LoginComponent: FC = () => {
-  const { setUser, handleLogin } = useUserContext()
+type SesionProps = {
+  handleOk: () => void
+}
+
+const Sesion = ({ handleOk }: SesionProps) => {
+  const { setUser, handleLoginModal } = useUserContext()
   const [loading, setLoading] = useState({
     isLoading: false,
     type: '',
@@ -29,7 +30,6 @@ const LoginComponent: FC = () => {
   const [showResetPassword, setShowResetPassword] = useState(false)
   const provider = new GoogleAuthProvider()
   const auth = getAuth()
-  const router = useRouter()
   const [form] = Form.useForm()
 
   type createAccountType = {
@@ -52,8 +52,8 @@ const LoginComponent: FC = () => {
     })
     try {
       const result = await signInWithPopup(auth, provider)
-      console.log(result)
-      handleLogin(result.user)
+      handleLoginModal(result.user)
+      handleOk()
     } catch (error) {
       handleLoginError(error)
     }
@@ -84,7 +84,6 @@ const LoginComponent: FC = () => {
         data.password
       )
       setUser(result.user)
-      router.push('/community')
     } catch (error) {
       handleLoginError(error)
     }
@@ -131,8 +130,7 @@ const LoginComponent: FC = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password)
       await updateProfile(auth.currentUser as any, { displayName: name })
-      handleLogin(auth.currentUser)
-      router.push('/community')
+      handleLoginModal(auth.currentUser)
     } catch (error) {
       console.log(error)
       handleLoginError(error)
@@ -159,7 +157,6 @@ const LoginComponent: FC = () => {
 
   return (
     <div className={styles.login_page}>
-      <WaveBackgroundSVG className={styles.background_image} />
       <div className={styles.login_content_container}>
         <Image
           width={200}
@@ -351,4 +348,4 @@ const LoginComponent: FC = () => {
   )
 }
 
-export default LoginComponent
+export default Sesion

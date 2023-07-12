@@ -3,10 +3,13 @@ import { useEffect, useState } from 'react'
 import { UseLandingHeader } from '@/Hooks/useLandingHeader'
 import CustomModal from '@/components/Custom/CustomModal/CustomModal'
 import CardContactUs from '@/components/CardContactUs'
+import { useUserContext } from '@/context/userContext'
 import styles from './styles.module.css'
 
 const Header = () => {
+  const { user } = useUserContext()
   const [showMenu, setShowMenu] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 1100px)')
@@ -33,6 +36,10 @@ const Header = () => {
       document.body.style.height = 'auto'
     }
   }, [showMenu])
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const routes = [
     { label: 'Empresarial', route: '/enterprise' },
@@ -70,18 +77,22 @@ const Header = () => {
 
             <p onClick={handleContactUs}>Contactanos</p>
 
-            <button
-              className={styles.session_button}
-              type='button'
-              onClick={loginNavigate}
-            >
-              Iniciar sesión
-            </button>
+            {isClient && user === null && (
+              <button
+                className={styles.session_button}
+                type='button'
+                onClick={loginNavigate}
+                key='session-button'
+              >
+                Iniciar sesión
+              </button>
+            )}
 
             <button
               className={styles.signup_button}
               type='button'
               onClick={subscribeNavigate}
+              key='signup-button'
             >
               Inscríbete
             </button>
@@ -110,18 +121,22 @@ const Header = () => {
 
           <p onClick={handleContactUs}>Contactanos</p>
 
-          <button
-            className={styles.session_button_mb}
-            type='button'
-            onClick={loginNavigate}
-          >
-            Iniciar sesión
-          </button>
+          {isClient && user === null && (
+            <button
+              className={styles.session_button_mb}
+              type='button'
+              onClick={loginNavigate}
+              key='session-button-mb'
+            >
+              Iniciar sesión
+            </button>
+          )}
 
           <button
             className={styles.signup_button_mb}
             type='button'
             onClick={subscribeNavigate}
+            key='signup-button-mb'
           >
             Inscríbete
           </button>

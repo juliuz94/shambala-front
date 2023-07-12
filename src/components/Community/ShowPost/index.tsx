@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import moment from 'moment'
 import 'moment/locale/es'
-import { Doc } from '@/Hooks/useFetchPosts'
+import { DocPost } from '@/types'
 import { CommentData, DocComment } from '@/types'
 import CommentForm from '../CommentForm'
 import PostComment from '../PostComment'
@@ -12,7 +12,7 @@ type SetShowPostFunction = (value: boolean) => void
 
 interface PostProps {
   setShowPost: SetShowPostFunction
-  post: Doc | null
+  post: DocPost | null
   comments: CommentData | null
   fetchComments: (id: string, limit: number) => Promise<void>
   setComments: React.Dispatch<React.SetStateAction<CommentData | null>>

@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import useFetchPosts, { Doc } from '@/Hooks/useFetchPosts'
+import useFetchPosts from '@/Hooks/useFetchPosts'
+import { DocPost } from '@/types'
 import { useUserContext } from '@/context/userContext'
 import Post from '@/components/Community/Post'
 import PostForm from '@/components/Community/PostForm'
@@ -16,11 +17,11 @@ import styles from './styles.module.css'
 const Community = () => {
   const { user } = useUserContext()
   const [showPost, setShowPost] = useState(false)
-  const [selectedPost, setSelectedPost] = useState<Doc | null>(null)
+  const [selectedPost, setSelectedPost] = useState<DocPost | null>(null)
   const [comments, setComments] = useState<CommentData | null>(null)
   const [pageNumber, setPageNumber] = useState(1)
   const [commentsLimit, setCommentsLimit] = useState(10)
-  const [filteredPosts, setFilteredPosts] = useState<Doc[]>([])
+  const [filteredPosts, setFilteredPosts] = useState<DocPost[]>([])
   const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false)
 
   const fetchComments = async (id: string, limit: number) => {
@@ -54,7 +55,11 @@ const Community = () => {
   ].filter((filter) => filter.tag !== null)
 
   const [category, setCategory] = useState(filters[0].category)
-  const { posts, setUpdatePost } = useFetchPosts(pageNumber, category)
+  const { posts, setUpdatePost } = useFetchPosts(
+    pageNumber,
+    category,
+    setPageNumber
+  )
 
   const handleScroll = () => {
     const bottom =
@@ -132,7 +137,7 @@ const Community = () => {
             <div className={styles.comments}>
               <div className={styles.comments}>
                 {(filteredPosts.length > 0 ? filteredPosts : posts?.docs)?.map(
-                  (post: Doc, index: number) => (
+                  (post: DocPost, index: number) => (
                     <Post
                       post={post}
                       key={index}

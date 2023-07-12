@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import moment from 'moment'
 import 'moment/locale/es'
-import { Doc } from '@/Hooks/useFetchPosts'
+import { DocPost } from '@/types'
 import { IoIosHeartEmpty, IoMdTrash, IoIosHeart } from 'react-icons/io/index'
 import { axiosInstance } from '@/axios/axiosInstance'
 import { useUserContext } from '@/context/userContext'
@@ -15,8 +15,8 @@ moment.locale('es')
 type SetShowPostFunction = (value: boolean) => void
 
 interface PostProps {
-  post: Doc
-  onSelectPost: (post: Doc) => void
+  post: DocPost
+  onSelectPost: (post: DocPost) => void
   fetchComments: (id: string, limit: number) => Promise<void>
   commentsLimit: number
   setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
@@ -29,7 +29,7 @@ const Post = ({
   fetchComments,
   commentsLimit,
   setUpdatePost,
-  setShowPost
+  setShowPost,
 }: PostProps) => {
   const { user } = useUserContext()
 
@@ -119,7 +119,9 @@ const Post = ({
       />
 
       <div className={styles.footer}>
-        <p className={styles.answer} onClick={() => setShowPost(true)}>Responder</p>
+        <p className={styles.answer} onClick={() => setShowPost(true)}>
+          Responder
+        </p>
         <div className={styles.icons}>
           {isLiked ? (
             <IoIosHeart
