@@ -18,9 +18,10 @@ import styles from './styles.module.css'
 
 type SesionProps = {
   handleOk: () => void
+  setHasClickedPayNow: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Sesion = ({ handleOk }: SesionProps) => {
+const Sesion = ({ handleOk, setHasClickedPayNow }: SesionProps) => {
   const { setUser, handleLoginModal } = useUserContext()
   const [loading, setLoading] = useState({
     isLoading: false,
@@ -54,6 +55,7 @@ const Sesion = ({ handleOk }: SesionProps) => {
       const result = await signInWithPopup(auth, provider)
       handleLoginModal(result.user)
       handleOk()
+      setHasClickedPayNow(true)
     } catch (error) {
       handleLoginError(error)
     }
@@ -84,6 +86,7 @@ const Sesion = ({ handleOk }: SesionProps) => {
         data.password
       )
       setUser(result.user)
+      setHasClickedPayNow(true)
     } catch (error) {
       handleLoginError(error)
     }

@@ -10,7 +10,3 @@
   flex-direction: row;
   overflow-x: auto;
 }
-
-.card_container::-webkit-scrollbar {
-  display: none;
-}

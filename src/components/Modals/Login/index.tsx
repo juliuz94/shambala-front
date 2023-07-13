@@ -6,9 +6,14 @@ import { useUserContext } from '@/context/userContext'
 type Props = {
   isModalOpen: boolean
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setHasClickedPayNow: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const LoginModal = ({ isModalOpen, setIsModalOpen }: Props) => {
+const LoginModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  setHasClickedPayNow,
+}: Props) => {
   const { user } = useUserContext()
   console.log('user', user)
 
@@ -30,7 +35,7 @@ const LoginModal = ({ isModalOpen, setIsModalOpen }: Props) => {
       okButtonProps={{ style: { display: 'none' } }}
       destroyOnClose={true}
     >
-      <Sesion handleOk={handleOk} />
+      <Sesion handleOk={handleOk} setHasClickedPayNow={setHasClickedPayNow} />
     </Modal>
   )
 }

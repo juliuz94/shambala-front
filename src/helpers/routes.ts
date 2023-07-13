@@ -19,6 +19,7 @@ type Routes = {
   TERMS_ACCEPTANCE: string
   PLANS: string
   GENERATE_LINK: string
+  SUBSCRIPTION: string
 }
 
 const ROUTES: Routes = {
@@ -42,6 +43,7 @@ const ROUTES: Routes = {
   TERMS_ACCEPTANCE: 'terms-acceptance',
   PLANS: 'plans',
   GENERATE_LINK: 'stripe/generateLink',
+  SUBSCRIPTION: 'users/subscription',
 }
 
 export default ROUTES

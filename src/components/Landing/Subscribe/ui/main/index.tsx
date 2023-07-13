@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useUserContext } from '@/context/userContext'
 import LoginModal from '@/components/Modals/Login'
 import ROUTES from '@/helpers/routes'
 import { axiosInstance } from '@/axios/axiosInstance'
+import { toast } from 'sonner'
 import useFetchPlans from '@/Hooks/useFetchPlans'
 import styles from './styles.module.css'
 
@@ -11,25 +12,54 @@ const Main = () => {
   const { user } = useUserContext()
   const router = useRouter()
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+  const [hasClickedPayNow, setHasClickedPayNow] = useState(false)
+  const [alreadyApproved, setAlreadyApproved] = useState(false)
 
   const { plans } = useFetchPlans()
 
-  // const redirectUser = async () => {
-  //   if (user && user.stripe_id === null) {
-  //     const { data } = await axiosInstance.get(
-  //       `${ROUTES.GENERATE_LINK}?plan=${plans[0]?._id}&mongo_user_id=${user?._id}`
-  //     )
-  //     console.log('data', data)
-  //   }
-  // }
+  const checkSubscription = async () => {
+    try {
+      const subscription = await axiosInstance.get(`${ROUTES.SUBSCRIPTION}`)
+      console.log('status', subscription.data.status)
+      if (
+        hasClickedPayNow &&
+        (subscription.data.status === null ||
+          subscription.data.status === 'CREATE' ||
+          subscription.data.status === 'CANCEL')
+      ) {
+        redirectUser()
+        toast.success('Redireccionando a Stripe')
+      } else if (subscription.data.status === 'APPROVED') {
+        setAlreadyApproved(true)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-  // const handlePagarAhora = () => {
-  //   if (user === null) {
-  //     setIsLoginModalOpen(true)
-  //   } else {
-  //     redirectUser()
-  //   }
-  // }
+  const redirectUser = async () => {
+    const { data } = await axiosInstance.get(
+      `${ROUTES.GENERATE_LINK}?plan=${plans[0]?._id}&mongo_user_id=${user?._id}`
+    )
+
+    if (data && data.url) {
+      window.location.href = data.url
+    }
+  }
+
+  const handlePagarAhora = () => {
+    if (user === null) {
+      setIsLoginModalOpen(true)
+    } else {
+      setHasClickedPayNow(true)
+    }
+  }
+
+  useEffect(() => {
+    if (user !== null) {
+      checkSubscription()
+    }
+  }, [user, hasClickedPayNow])
 
   return (
     <div className={styles.section}>
@@ -121,12 +151,23 @@ const Main = () => {
 
                 <hr className={styles.card_line} />
               </div>
-              <button
-                className={styles.card_button}
-                //  onClick={handlePagarAhora}
-              >
-                Pagar ahora
-              </button>
+              {!alreadyApproved ? (
+                <button
+                  className={styles.card_button}
+                  onClick={handlePagarAhora}
+                  type='button'
+                >
+                  Pagar ahora
+                </button>
+              ) : (
+                <button
+                  className={styles.button_approved}
+                  type='button'
+                  disabled
+                >
+                  Ya cuentas con una membresía
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -140,6 +181,7 @@ const Main = () => {
       <LoginModal
         isModalOpen={isLoginModalOpen}
         setIsModalOpen={setIsLoginModalOpen}
+        setHasClickedPayNow={setHasClickedPayNow}
       />
     </div>
   )

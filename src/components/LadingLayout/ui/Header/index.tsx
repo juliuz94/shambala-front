@@ -97,8 +97,7 @@ const Header = () => {
               >
                 Ir a la plataforma
               </button>
-            )
-            }
+            )}
 
             <button
               className={styles.signup_button}
@@ -133,7 +132,7 @@ const Header = () => {
 
           <p onClick={handleContactUs}>Contactanos</p>
 
-          {isClient && user === null && (
+          {isClient && user === null ? (
             <button
               className={styles.session_button_mb}
               type='button'
@@ -141,6 +140,15 @@ const Header = () => {
               key='session-button-mb'
             >
               Iniciar sesión
+            </button>
+          ) : (
+            <button
+              className={styles.session_button_mb}
+              type='button'
+              onClick={() => router.push('/community')}
+              key='session-button-mb'
+            >
+              Ir a la plataforma
             </button>
           )}
 
