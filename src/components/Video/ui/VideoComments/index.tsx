@@ -134,7 +134,7 @@ const Comment = ({ comment, refreshData }: CommentProps) => {
         <div className={styles.user_info}>
           {renderProfileImage()}
           <p>
-            {user?.firstName || ''} {user?.lastName || ''}
+            {comment?.user?.firstName || ''} {comment.user?.lastName || ''}
           </p>
         </div>
         {comment?.user?._id === user._id && (

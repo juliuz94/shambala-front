@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { UseLandingHeader } from '@/Hooks/useLandingHeader'
 import CustomModal from '@/components/Custom/CustomModal/CustomModal'
@@ -10,6 +11,7 @@ const Header = () => {
   const { user } = useUserContext()
   const [showMenu, setShowMenu] = useState(false)
   const [isClient, setIsClient] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 1100px)')
@@ -77,7 +79,7 @@ const Header = () => {
 
             <p onClick={handleContactUs}>Contactanos</p>
 
-            {isClient && user === null && (
+            {isClient && user === null ? (
               <button
                 className={styles.session_button}
                 type='button'
@@ -86,7 +88,17 @@ const Header = () => {
               >
                 Iniciar sesión
               </button>
-            )}
+            ) : (
+              <button
+                className={styles.session_button}
+                type='button'
+                onClick={() => router.push('/community')}
+                key='session-button'
+              >
+                Ir a la plataforma
+              </button>
+            )
+            }
 
             <button
               className={styles.signup_button}
