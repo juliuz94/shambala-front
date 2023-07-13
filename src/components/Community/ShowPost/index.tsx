@@ -106,7 +106,7 @@ const ShowPost: React.FC<PostProps> = ({
         <div className={styles.user}>
           {renderProfileImage()}
           <p>
-            {post?.user.firstName || ''} {post?.user.lastName || ''}
+            {post?.user?.firstName || ''} {post?.user?.lastName || ''}
           </p>
         </div>
 
