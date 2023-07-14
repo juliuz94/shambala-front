@@ -14,13 +14,13 @@ import {
 import { toast } from 'sonner'
 import { Form, Input, Button, Spin, Modal } from 'antd'
 import type { NotificationPlacement } from 'antd/es/notification/interface'
-import styles from './styles.module.css'
 import WaveBackgroundSVG from '@/svg/WaveBackground'
 import { LoadingOutlined } from '@ant-design/icons'
 import { useUserContext } from '@/context/userContext'
+import styles from './styles.module.css'
 
 const LoginComponent: FC = () => {
-  const { setUser, handleLogin } = useUserContext()
+  const { handleLogin } = useUserContext()
   const [loading, setLoading] = useState({
     isLoading: false,
     type: '',
@@ -52,7 +52,6 @@ const LoginComponent: FC = () => {
     })
     try {
       const result = await signInWithPopup(auth, provider)
-      console.log(result)
       handleLogin(result.user)
     } catch (error) {
       handleLoginError(error)
@@ -61,7 +60,7 @@ const LoginComponent: FC = () => {
     handleResetLoading()
   }
 
-  const singInWithForm = async (data: any) => {
+  const signInWithForm = async (data: any) => {
     setLoading({
       isLoading: true,
       type: 'email&password',
@@ -83,8 +82,7 @@ const LoginComponent: FC = () => {
         data.email,
         data.password
       )
-      setUser(result.user)
-      router.push('/community')
+      handleLogin(result.user)
     } catch (error) {
       handleLoginError(error)
     }
@@ -172,7 +170,7 @@ const LoginComponent: FC = () => {
         <Form
           layout='vertical'
           className={styles.login_form}
-          onFinish={singInWithForm}
+          onFinish={signInWithForm}
         >
           <Form.Item
             name='email'

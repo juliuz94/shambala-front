@@ -22,7 +22,7 @@ type SesionProps = {
 }
 
 const Sesion = ({ handleOk, setHasClickedPayNow }: SesionProps) => {
-  const { setUser, handleLoginModal } = useUserContext()
+  const { handleLoginModal } = useUserContext()
   const [loading, setLoading] = useState({
     isLoading: false,
     type: '',
@@ -63,7 +63,7 @@ const Sesion = ({ handleOk, setHasClickedPayNow }: SesionProps) => {
     handleResetLoading()
   }
 
-  const singInWithForm = async (data: any) => {
+  const signInWithForm = async (data: any) => {
     setLoading({
       isLoading: true,
       type: 'email&password',
@@ -85,7 +85,7 @@ const Sesion = ({ handleOk, setHasClickedPayNow }: SesionProps) => {
         data.email,
         data.password
       )
-      setUser(result.user)
+      handleLoginModal(result.user)
       setHasClickedPayNow(true)
     } catch (error) {
       handleLoginError(error)
@@ -172,7 +172,7 @@ const Sesion = ({ handleOk, setHasClickedPayNow }: SesionProps) => {
         <Form
           layout='vertical'
           className={styles.login_form}
-          onFinish={singInWithForm}
+          onFinish={signInWithForm}
         >
           <Form.Item
             name='email'

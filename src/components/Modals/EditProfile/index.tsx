@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Button, Form, Input, Modal, Select, Upload } from 'antd'
-import { FileImageOutlined, DeleteOutlined } from '@ant-design/icons'
+import { Button, Form, Input, Modal, Select } from 'antd'
 import { uploadImage } from '@/helpers/uploadImage'
 import { useUserContext } from '@/context/userContext'
 import { FirebaseStorage } from '@/firebase/firebaseApp'
@@ -82,7 +81,7 @@ const EditProfileModal = ({
       if (fileToUpload) {
         const storageRef = ref(
           FirebaseStorage,
-          `images/profile_images/user_${user._id}/${fileToUpload.name}`
+          `images/profile_images/user_${user?._id}/${fileToUpload.name}`
         )
         const url = await uploadImage(fileToUpload, storageRef, null)
         imageUrl = url
@@ -100,7 +99,7 @@ const EditProfileModal = ({
       }
 
       const { data } = await axiosInstance.patch(
-        `${ROUTES.USERS}/${user._id}`,
+        `${ROUTES.USERS}/${user?._id}`,
         editProfile
       )
       setUser(data)

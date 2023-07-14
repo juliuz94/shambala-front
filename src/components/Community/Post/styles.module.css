@@ -93,6 +93,10 @@
   cursor: pointer;
 }
 
+.delete {
+  cursor: pointer;
+}
+
 .answer {
   font-weight: 500;
   font-size: 13px;

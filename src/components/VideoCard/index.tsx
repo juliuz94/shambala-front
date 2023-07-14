@@ -13,18 +13,18 @@ const VideoCard = ({ video }: any) => {
   const { user } = useUserContext()
   const router = useRouter()
   const [liked, setLiked] = useState(
-    video.like && video.like.includes(user._id)
+    video.like && video.like.includes(user?._id)
   )
 
   const likeVideo = async () => {
     try {
       if (liked) {
         await axiosInstance.patch(`${ROUTES.VIDEOS}/${video._id}`, {
-          like: video.like.filter((id: string) => id !== user._id),
+          like: video.like.filter((id: string) => id !== user?._id),
         })
       } else {
         await axiosInstance.patch(`${ROUTES.VIDEOS}/${video._id}`, {
-          like: [...video.like, user._id],
+          like: [...video.like, user?._id],
         })
       }
     } catch (error) {
@@ -51,8 +51,8 @@ const VideoCard = ({ video }: any) => {
   }
 
   useEffect(() => {
-    setLiked(video.like && video.like.includes(user._id))
-  }, [video.like, user._id])
+    setLiked(video.like && video.like.includes(user?._id))
+  }, [video.like, user?._id])
 
   return (
     <div

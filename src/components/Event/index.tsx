@@ -299,7 +299,7 @@ const Event: FC = () => {
 
             <div className={styles.event_subscription_right_column}>
               {event.subscribedUsers.some(
-                (userInEvent) => userInEvent._id === user._id
+                (userInEvent) => userInEvent._id === user?._id
               ) ? (
                 <div className={styles.event_info_price}>
                   <p className={'event_info_text'}>

@@ -5,8 +5,9 @@ import { DocPost } from '@/types'
 import { CommentData, DocComment } from '@/types'
 import CommentForm from '../CommentForm'
 import PostComment from '../PostComment'
-import styles from './styles.module.css'
 import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
+import parse from 'html-react-parser'
+import styles from './styles.module.css'
 
 type SetShowPostFunction = (value: boolean) => void
 
@@ -58,6 +59,12 @@ const ShowPost: React.FC<PostProps> = ({
     }
   }
 
+  const convertImageUrlToImageTag = (htmlString: string) => {
+    const imageRegEx = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg)/g
+
+    return htmlString.replace(imageRegEx, '<img src="$&" alt="dynamic image"/>')
+  }
+
   useEffect(() => {
     const commentDiv = commentsRef.current
 
@@ -98,10 +105,9 @@ const ShowPost: React.FC<PostProps> = ({
           </div>
         </div>
 
-        <div
-          className={styles.text}
-          dangerouslySetInnerHTML={{ __html: post?.text || '' }}
-        />
+        <div className={styles.text}>
+          {post && parse(convertImageUrlToImageTag(post.text))}
+        </div>
 
         <div className={styles.user}>
           {renderProfileImage()}

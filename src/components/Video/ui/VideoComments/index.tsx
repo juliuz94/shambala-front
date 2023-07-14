@@ -137,7 +137,7 @@ const Comment = ({ comment, refreshData }: CommentProps) => {
             {comment?.user?.firstName || ''} {comment.user?.lastName || ''}
           </p>
         </div>
-        {comment?.user?._id === user._id && (
+        {comment?.user?._id === user?._id && (
           <Popover placement='right' content={PopOverContent} trigger='click'>
             <Button type='ghost' className={styles.comment_options}>
               <HiEllipsisVertical />

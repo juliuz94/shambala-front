@@ -27,7 +27,7 @@ const useFetchPosts: UseFetchPostsHook = (
       const { data } = await axiosInstance.get(
         `${
           ROUTES.POST
-        }?page=${pageNumber}&category=${category}&sort=asc&search=${''}`
+        }?page=${pageNumber}&category=${category}&sort=acs&search=${''}`
       )
 
       if (posts) {

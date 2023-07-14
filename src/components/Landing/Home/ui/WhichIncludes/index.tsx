@@ -95,7 +95,7 @@ const WhichIncludes = () => {
             </div>
             <button
               className={styles.card_button}
-              onClick={() => router.push('/login')}
+              onClick={() => router.push('/subscribe')}
             >
               Comenzar ahora
             </button>

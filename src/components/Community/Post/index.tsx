@@ -139,6 +139,7 @@ const Post = ({
 
           {post?.user?._id === user?._id && (
             <IoMdTrash
+              className={styles.delete}
               style={{ fill: '#54c055' }}
               size={24}
               onClick={deletePost}

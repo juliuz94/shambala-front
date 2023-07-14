@@ -80,7 +80,7 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
       const ext = formatPhoneNumberIntl(phoneNumber).split(' ')[0]
 
       const { data } = await axiosInstance.patch(
-        `${ROUTES.USERS}/${user._id}`,
+        `${ROUTES.USERS}/${user?._id}`,
         {
           tags: tagIds,
           country_code: ext,
@@ -89,7 +89,7 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
       )
 
       await axiosInstance.post(`${ROUTES.TERMS_ACCEPTANCE}`, {
-        userId: user._id,
+        userId: user?._id,
         acceptedTerms: acceptTerms,
         termsName: 'general terms of use',
       })
