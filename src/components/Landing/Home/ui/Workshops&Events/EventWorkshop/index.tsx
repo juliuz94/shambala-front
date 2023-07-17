@@ -122,10 +122,12 @@ const EventWorkshop = ({ small, event }: PropTypes) => {
             </p>
           </div>
 
-          <div className={styles.event_location}>
-            <HiOutlineMapPin />
-            <p>{event?.location}</p>
-          </div>
+          {!event?.isVirtual && (
+            <div className={styles.event_location}>
+              <HiOutlineMapPin />
+              <p>{event?.location}</p>
+            </div>
+          )}
 
           <p className={styles.event_description}>{event?.description}</p>
           {event && event?.speakers.length > 0 && (

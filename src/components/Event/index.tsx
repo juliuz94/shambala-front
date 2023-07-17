@@ -214,10 +214,12 @@ const Event: FC = () => {
             <HiOutlineClock />
             <p>{dayjs(event?.date).format('MMM D, YYYY')}</p>
           </div>
-          <div className={styles.event_location}>
-            <HiOutlineMapPin />
-            <p>{event?.location}</p>
-          </div>
+          {!event.isVirtual && (
+            <div className={styles.event_location}>
+              <HiOutlineMapPin />
+              <p>{event?.location}</p>
+            </div>
+          )}
           {event?.sponsors.length > 0 && (
             <div className={styles.sponsors}>
               <p>Presentado por:</p>

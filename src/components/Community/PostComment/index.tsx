@@ -1,10 +1,11 @@
+import Link from 'next/link'
 import { useState } from 'react'
 import { DocComment } from '@/pages/community'
 import { IoMdTrash } from 'react-icons/io/index'
 import { useUserContext } from '@/context/userContext'
 import DeleteCommentModal from '@/components/Modals/DeleteComment'
-import styles from './styles.module.css'
 import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
+import styles from './styles.module.css'
 
 interface PostCommentProps {
   id: string
@@ -48,9 +49,11 @@ const PostComment = ({
 
       <div className={styles.user}>
         {renderProfileImage()}
-        <p>
-          {comment.user?.firstName || ''} {comment.user?.lastName || ''}
-        </p>
+        <Link href={`/profile/${comment.user?._id}`} className={styles.links}>
+          <p>
+            {comment.user?.firstName || ''} {comment.user?.lastName || ''}
+          </p>
+        </Link>
       </div>
 
       <DeleteCommentModal

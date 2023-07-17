@@ -24,6 +24,14 @@
   cursor: pointer;
 }
 
+.links {
+  color: black;
+}
+
+.links:hover {
+  text-decoration: none;
+}
+
 .pfp {
   font-family: var(--secondary-font);
   font-size: 12px;

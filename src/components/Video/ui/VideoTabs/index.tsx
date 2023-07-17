@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Tabs, Tag, Button, Spin } from 'antd'
-import { Video } from '@/types'
-import styles from './styles.module.css'
-import { Attachment } from '@/types'
+import { Tabs } from 'antd'
+import { Video, Attachment } from '@/types'
 import FileCard from '@/components/FileCard'
+import styles from './styles.module.css'
 
 interface PropTypes {
   video: Video | null
@@ -29,7 +28,7 @@ const VideoTabs = ({ video }: PropTypes) => {
 
   return (
     <div className={styles.tabs_container}>
-      <Tabs items={items}/>
+      <Tabs items={items} />
     </div>
   )
 }
@@ -98,32 +97,3 @@ const VideoFiles = ({ video }: PropTypes) => {
     </div>
   )
 }
-
-// const FileCard = ({ file }: { file: Attachment}) => {
-//   const [loadingDownload, setLoadingDownload] = useState(false)
-
-//   const handleDownload = (url: string, fileName: string) => {
-//     downloadFile(url, fileName, () => setLoadingDownload(true), () => setLoadingDownload(false))
-//   }
-
-//   return (
-//     <div key={file._id} className={`${styles.attachment_card}`}>
-//       <div className={styles.attachment_data}>
-//         <p className={styles.attachment_title}>
-//           {file.title}
-//           {
-//             file.guide && <Tag color='green'>Guía</Tag>
-//           }
-//         </p>
-//         <p className={styles.attachment_description}>
-//           {file.description}
-//         </p>
-//       </div>
-//       <div className={styles.attachment_actions}>
-//         <Button disabled={loadingDownload} className={styles.attachment_button} onClick={() => handleDownload(file.url, file.title)}>
-//           {!loadingDownload ? <HiCloudArrowDown />: <Spin indicator={<LoadingOutlined style={{ fontSize: 20 }} spin />} />}
-//         </Button>
-//       </div>
-//     </div>
-//   )
-// }
