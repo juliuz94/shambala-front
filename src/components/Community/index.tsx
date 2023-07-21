@@ -132,7 +132,11 @@ const Community = () => {
               <Filter filters={filters} onFilterSelect={handleFilterSelect} />
             </div>
 
-            <PostForm setUpdatePost={setUpdatePost} category={category} />
+            <PostForm
+              setPageNumber={setPageNumber}
+              setUpdatePost={setUpdatePost}
+              category={category}
+            />
 
             <div className={styles.comments}>
               <div className={styles.comments}>
@@ -146,6 +150,7 @@ const Community = () => {
                       commentsLimit={commentsLimit}
                       setUpdatePost={setUpdatePost}
                       setShowPost={setShowPost}
+                      setPageNumber={setPageNumber}
                     />
                   )
                 )}

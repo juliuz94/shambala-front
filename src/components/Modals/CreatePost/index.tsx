@@ -16,6 +16,7 @@ type CreatePostModalProps = {
   title: string
   setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
   setTitle: React.Dispatch<React.SetStateAction<string>>
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>
   category: string
 }
 
@@ -26,6 +27,7 @@ const CreatePostModal = ({
   setUpdatePost,
   setTitle,
   category,
+  setPageNumber,
 }: CreatePostModalProps) => {
   const { tags } = useFetchTags()
 
@@ -61,6 +63,7 @@ const CreatePostModal = ({
     try {
       await axiosInstance.post(`${ROUTES.POST}`, postInfo)
       setIsModalOpen(false)
+      setPageNumber(1)
       setUpdatePost((prev) => !prev)
       setTitle('')
       setContent('')

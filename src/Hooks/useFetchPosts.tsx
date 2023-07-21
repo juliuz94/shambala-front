@@ -30,18 +30,13 @@ const useFetchPosts: UseFetchPostsHook = (
         }?page=${pageNumber}&category=${category}&sort=acs&search=${''}`
       )
 
-      if (posts) {
-        const postMap = new Map([
-          ...(posts.docs.map((doc) => [doc._id, doc]) || []),
-          ...data.docs.map((doc: { _id: any }) => [doc._id, doc]),
-        ])
-        const uniquePosts = Array.from(postMap.values())
+      if (pageNumber === 1) {
+        setPosts(data)
+      } else if (pageNumber > 1) {
         setPosts((prevPosts) => ({
           ...data,
-          docs: uniquePosts,
+          docs: prevPosts ? [...prevPosts.docs, ...data.docs] : [...data.docs],
         }))
-      } else {
-        setPosts(data)
       }
     } catch (error) {
       console.log('error')

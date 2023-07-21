@@ -7,9 +7,14 @@ import styles from './styles.module.css'
 type PostFormProps = {
   setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
   category: string
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>
 }
 
-const PostForm = ({ setUpdatePost, category }: PostFormProps) => {
+const PostForm = ({
+  setUpdatePost,
+  category,
+  setPageNumber,
+}: PostFormProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [inputText, setInputText] = useState('')
 
@@ -55,6 +60,7 @@ const PostForm = ({ setUpdatePost, category }: PostFormProps) => {
         setTitle={setInputText}
         setUpdatePost={setUpdatePost}
         category={category}
+        setPageNumber={setPageNumber}
       />
     </div>
   )

@@ -21,6 +21,7 @@ interface PostProps {
   commentsLimit: number
   setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
   setShowPost: SetShowPostFunction
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>
 }
 
 const Post = ({
@@ -30,6 +31,7 @@ const Post = ({
   commentsLimit,
   setUpdatePost,
   setShowPost,
+  setPageNumber,
 }: PostProps) => {
   const { user } = useUserContext()
 
@@ -116,6 +118,7 @@ const Post = ({
         setIsModalOpen={setDeletePostModal}
         id={post?._id as string}
         setUpdatePost={setUpdatePost}
+        setPageNumber={setPageNumber}
       />
 
       <div className={styles.footer}>

@@ -9,6 +9,7 @@ type DeletePostModalProps = {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   id: string
   setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>
 }
 
 const DeletePostModal = ({
@@ -16,12 +17,15 @@ const DeletePostModal = ({
   setIsModalOpen,
   id,
   setUpdatePost,
+  setPageNumber,
 }: DeletePostModalProps) => {
   const deletePost = async () => {
     try {
       await axiosInstance.delete(`${ROUTES.POST}/${id}`)
       toast.success('Se borró tu post correctamente')
-      handleOk()
+      setIsModalOpen(false)
+      setPageNumber(1)
+      setUpdatePost((prev) => !prev)
     } catch (error) {
       toast.error('Parece que hubo un error')
     }
@@ -29,7 +33,6 @@ const DeletePostModal = ({
 
   const handleOk = () => {
     setIsModalOpen(false)
-    setUpdatePost((prev) => !prev)
   }
 
   const handleCancel = () => {
