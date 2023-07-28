@@ -10,6 +10,7 @@ type Routes = {
   POST: string
   TAGS: string
   POST_COMMENT: string
+  PIN_COMMENT: string
   STATISTICS: string
   LANDING_VIDEOS: string
   LANDING_WORKSHOP: string
@@ -34,6 +35,7 @@ const ROUTES: Routes = {
   POST: 'community/post',
   TAGS: 'tags',
   POST_COMMENT: 'community/post/comment',
+  PIN_COMMENT: 'community/pin-comment',
   STATISTICS: 'users/statistics',
   LANDING_VIDEOS: 'landing/videos',
   LANDING_WORKSHOP: 'landing/workshop',

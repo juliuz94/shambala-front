@@ -1,6 +1,7 @@
 import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
+import { defaultCategories } from '@/constants/posts'
 import { TypePost } from '@/types'
 
 type ReturnTypeOfUseFetchPosts = {
@@ -11,23 +12,32 @@ type ReturnTypeOfUseFetchPosts = {
 type UseFetchPostsHook = (
   pageNumber: number,
   category: string,
+  searchString: string,
   setPageNumber: Dispatch<SetStateAction<number>>
 ) => ReturnTypeOfUseFetchPosts
 
 const useFetchPosts: UseFetchPostsHook = (
   pageNumber,
   category,
+  searchString,
   setPageNumber
 ) => {
   const [posts, setPosts] = useState<TypePost | null>(null)
   const [updatePost, setUpdatePost] = useState(false)
 
   const fetchPosts = async () => {
+    let paramsString
+    if (defaultCategories.includes(category)) {
+      paramsString = `?page=${pageNumber}&category=${category}&sort=acs&search=${searchString}`
+    } else {
+      paramsString = `?page=${pageNumber}&category=NULL&community=${category}&sort=acs&search=${searchString}`
+    }
+
+    console.log('paramsString', paramsString)
+
     try {
       const { data } = await axiosInstance.get(
-        `${
-          ROUTES.POST
-        }?page=${pageNumber}&category=${category}&sort=acs&search=${''}`
+        `${ROUTES.POST}${paramsString}`
       )
 
       if (pageNumber === 1) {
@@ -45,7 +55,7 @@ const useFetchPosts: UseFetchPostsHook = (
 
   useEffect(() => {
     fetchPosts()
-  }, [updatePost, pageNumber, category])
+  }, [updatePost, pageNumber, category, searchString])
 
   useEffect(() => {
     setPosts(null)

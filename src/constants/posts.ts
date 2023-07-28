@@ -1,0 +1,1 @@
+export const defaultCategories  = ['AGORA_VIRTUAL', 'RETOS_AMBIENTALES']

@@ -1,10 +1,13 @@
 import Link from 'next/link'
 import { useState } from 'react'
+import { Button } from 'antd'
 import { DocComment } from '@/pages/community'
-import { IoMdTrash } from 'react-icons/io/index'
+import { BsPinFill, BsPin, BsTrashFill } from 'react-icons/bs'
 import { useUserContext } from '@/context/userContext'
 import DeleteCommentModal from '@/components/Modals/DeleteComment'
 import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
+import { axiosInstance } from '@/axios/axiosInstance'
+import ROUTES from '@/helpers/routes'
 import styles from './styles.module.css'
 
 interface PostCommentProps {
@@ -32,28 +35,57 @@ const PostComment = ({
     styles.pfp
   )
 
+  const handlePinComment = async () => {
+    try {
+      const res = await axiosInstance.post(`${ROUTES.PIN_COMMENT}`, {
+        commentId: comment._id
+      })
+      fetchComments(id, commentsLimit)
+      console.log('res >', res)
+    } catch (error) {
+      console.log('[handlePinComment]', error)
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <p className={styles.text}>{comment?.message || ''}</p>
-
-        {comment?.user?._id === user?._id && (
-          <IoMdTrash
-            className={styles.icon}
-            style={{ fill: '#54c055' }}
-            size={24}
-            onClick={() => setDeleteCommentModal(true)}
-          />
-        )}
       </div>
 
-      <div className={styles.user}>
-        {renderProfileImage()}
-        <Link href={`/profile/${comment.user?._id}`} className={styles.links}>
-          <p>
-            {comment.user?.firstName || ''} {comment.user?.lastName || ''}
-          </p>
-        </Link>
+      <div className={styles.comment_footer}>
+        <div className={styles.user}>
+          {renderProfileImage()}
+          <Link href={`/profile/${comment.user?._id}`} className={styles.links}>
+            <p>
+              {comment.user?.firstName || ''} {comment.user?.lastName || ''}
+            </p>
+          </Link>
+          {comment.anchored &&
+            <div className={styles.anchored_comment}>
+              <p>Destacado</p>
+              <BsPinFill />
+            </div>
+          }
+        </div>
+        <div className={styles.comment_options}>
+          {(comment?.user?._id === user?._id || user?.type && user?.type === 'admin') && (
+            <Button className={styles.comment_button} type='ghost'>
+              <BsTrashFill
+                style={{ fill: '#54c055' }}
+                onClick={() => setDeleteCommentModal(true)}
+              />
+            </Button>
+          )}
+          {
+            user?.type && user?.type === 'admin' &&
+            <Button className={`${styles.comment_button}`} onClick={() => handlePinComment()} type='ghost'>
+              {
+                comment.anchored ? <BsPinFill /> : <BsPin />
+              }
+            </Button>
+          }
+        </div>
       </div>
 
       <DeleteCommentModal

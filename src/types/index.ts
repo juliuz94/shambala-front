@@ -248,6 +248,7 @@ export interface DocComment {
   isPublic: boolean
   createdAt: Date
   updatedAt: Date
+  anchored: boolean
   __v: number
 }
 

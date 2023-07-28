@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import useFetchPosts from '@/Hooks/useFetchPosts'
 import { DocPost } from '@/types'
+import { DocComment } from '@/pages/community'
 import { useUserContext } from '@/context/userContext'
 import Post from '@/components/Community/Post'
 import PostForm from '@/components/Community/PostForm'
@@ -20,6 +21,7 @@ const Community = () => {
   const [selectedPost, setSelectedPost] = useState<DocPost | null>(null)
   const [comments, setComments] = useState<CommentData | null>(null)
   const [pageNumber, setPageNumber] = useState(1)
+  const [searchString, setSearchString] = useState('')
   const [commentsLimit, setCommentsLimit] = useState(10)
   const [filteredPosts, setFilteredPosts] = useState<DocPost[]>([])
   const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false)
@@ -58,6 +60,7 @@ const Community = () => {
   const { posts, setUpdatePost } = useFetchPosts(
     pageNumber,
     category,
+    searchString,
     setPageNumber
   )
 
@@ -84,10 +87,7 @@ const Community = () => {
   }
 
   const handleSearch = (value: string) => {
-    const filtered = posts?.docs.filter((post) =>
-      post.title.toLowerCase().includes(value.toLowerCase())
-    )
-    setFilteredPosts(filtered || [])
+    setSearchString(value)
   }
 
   useEffect(() => {
@@ -138,23 +138,22 @@ const Community = () => {
               category={category}
             />
 
+
             <div className={styles.comments}>
-              <div className={styles.comments}>
-                {(filteredPosts.length > 0 ? filteredPosts : posts?.docs)?.map(
-                  (post: DocPost, index: number) => (
-                    <Post
-                      post={post}
-                      key={index}
-                      onSelectPost={setSelectedPost}
-                      fetchComments={fetchComments}
-                      commentsLimit={commentsLimit}
-                      setUpdatePost={setUpdatePost}
-                      setShowPost={setShowPost}
-                      setPageNumber={setPageNumber}
-                    />
-                  )
-                )}
-              </div>
+              {(filteredPosts.length > 0 ? filteredPosts : posts?.docs)?.map(
+                (post: DocPost, index: number) => (
+                  <Post
+                    post={post}
+                    key={index}
+                    onSelectPost={setSelectedPost}
+                    fetchComments={fetchComments}
+                    commentsLimit={commentsLimit}
+                    setUpdatePost={setUpdatePost}
+                    setShowPost={setShowPost}
+                    setPageNumber={setPageNumber}
+                  />
+                )
+              )}
             </div>
           </>
         )}

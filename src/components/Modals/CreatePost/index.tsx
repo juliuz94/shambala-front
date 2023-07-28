@@ -5,6 +5,7 @@ import ROUTES from '@/helpers/routes'
 import { axiosInstance } from '@/axios/axiosInstance'
 import useFetchTags from '@/Hooks/useFetchTags'
 import { toast } from 'sonner'
+import { defaultCategories } from '@/constants/posts'
 import 'react-quill/dist/quill.snow.css'
 import dynamic from 'next/dynamic'
 const ReactQuill = dynamic(import('react-quill'), { ssr: false })
@@ -57,7 +58,8 @@ const CreatePostModal = ({
       title: values.title,
       text: content,
       tags: values.tags,
-      category,
+      category: defaultCategories.includes(category) ? category : 'NULL',
+      community: defaultCategories.includes(category) ? null : category,
     }
 
     try {

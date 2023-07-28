@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react'
 import moment from 'moment'
 import 'moment/locale/es'
 import { DocPost } from '@/types'
-import { IoIosHeartEmpty, IoMdTrash, IoIosHeart } from 'react-icons/io/index'
+import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io/index'
+import { BsTrashFill } from 'react-icons/bs'
 import { axiosInstance } from '@/axios/axiosInstance'
 import { useUserContext } from '@/context/userContext'
 import ROUTES from '@/helpers/routes'
@@ -140,11 +141,11 @@ const Post = ({
             />
           )}
 
-          {post?.user?._id === user?._id && (
-            <IoMdTrash
+          {(post?.user?._id === user?._id || user?.type === 'admin') && (
+            <BsTrashFill
               className={styles.delete}
               style={{ fill: '#54c055' }}
-              size={24}
+              size={20}
               onClick={deletePost}
             />
           )}
