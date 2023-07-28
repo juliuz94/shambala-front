@@ -47,6 +47,7 @@ export type Video = {
 }
 
 export interface Comment {
+  likes: any
   _id: string
   videoId: string
   user: User

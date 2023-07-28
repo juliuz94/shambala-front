@@ -72,6 +72,11 @@
   padding: 0;
 }
 
+.icons {
+  display: flex;
+  cursor: pointer;
+}
+
 .popover {
   width: 80px;
 }

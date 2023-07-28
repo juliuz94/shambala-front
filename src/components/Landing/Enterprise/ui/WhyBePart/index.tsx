@@ -1,6 +1,9 @@
+import { useRouter } from 'next/router'
 import styles from './styles.module.css'
 
 const WhyBePart = () => {
+  const router = useRouter()
+
   return (
     <div className={styles.container}>
       <div className={styles.hacer_parte}>
@@ -69,7 +72,11 @@ const WhyBePart = () => {
         </div>
 
         <div className={styles.button_container}>
-          <button type='button' className={styles.button}>
+          <button
+            type='button'
+            className={styles.button}
+            onClick={() => router.push('/experiences')}
+          >
             Conoce qué experiencias tenemos pensadas para tu empresa
           </button>
         </div>

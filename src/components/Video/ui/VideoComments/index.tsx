@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Input, Button, Popover } from 'antd'
 import {
   HiArrowSmallRight,
@@ -6,6 +6,7 @@ import {
   HiOutlineTrash,
 } from 'react-icons/hi2'
 import { BiUpArrowAlt } from 'react-icons/bi'
+import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io/index'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { Video, Comment, PaginatedComments } from '@/types'
@@ -97,6 +98,7 @@ type CommentProps = {
 
 const Comment = ({ comment, refreshData }: CommentProps) => {
   const { user } = useUserContext()
+  const [isLiked, setIsLiked] = useState(false)
 
   const { renderProfileImage } = useRenderProfileImage(
     comment?.user?.image,
@@ -114,6 +116,30 @@ const Comment = ({ comment, refreshData }: CommentProps) => {
       console.log('[handleDeleteComment]', error)
     }
   }
+
+  const handleLikeComment = async (e: React.MouseEvent) => {
+    e.stopPropagation()
+
+    try {
+      await axiosInstance.patch(
+        `${ROUTES.VIDEOS}/comment/like/${comment._id}`,
+        {
+          isLike: !isLiked,
+        }
+      )
+      setIsLiked(!isLiked)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    if (comment?.likes?.includes(user?._id)) {
+      setIsLiked(true)
+    } else {
+      setIsLiked(false)
+    }
+  }, [comment, user])
 
   const PopOverContent = (
     <div className={styles.popover}>
@@ -137,13 +163,30 @@ const Comment = ({ comment, refreshData }: CommentProps) => {
             {comment?.user?.firstName || ''} {comment.user?.lastName || ''}
           </p>
         </div>
-        {comment?.user?._id === user?._id && (
-          <Popover placement='right' content={PopOverContent} trigger='click'>
-            <Button type='ghost' className={styles.comment_options}>
-              <HiEllipsisVertical />
-            </Button>
-          </Popover>
-        )}
+
+        <div className={styles.icons}>
+          {comment?.user?._id === user?._id && (
+            <Popover placement='right' content={PopOverContent} trigger='click'>
+              <Button type='ghost' className={styles.comment_options}>
+                <HiEllipsisVertical />
+              </Button>
+            </Popover>
+          )}
+
+          {isLiked ? (
+            <IoIosHeart
+              style={{ fill: '#54c055' }}
+              size={24}
+              onClick={handleLikeComment}
+            />
+          ) : (
+            <IoIosHeartEmpty
+              style={{ fill: '#54c055' }}
+              size={24}
+              onClick={handleLikeComment}
+            />
+          )}
+        </div>
       </div>
 
       <div className={styles.text_container}>

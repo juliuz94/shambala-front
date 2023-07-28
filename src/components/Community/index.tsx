@@ -2,7 +2,6 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import useFetchPosts from '@/Hooks/useFetchPosts'
 import { DocPost } from '@/types'
-import { DocComment } from '@/pages/community'
 import { useUserContext } from '@/context/userContext'
 import Post from '@/components/Community/Post'
 import PostForm from '@/components/Community/PostForm'
@@ -137,7 +136,6 @@ const Community = () => {
               setUpdatePost={setUpdatePost}
               category={category}
             />
-
 
             <div className={styles.comments}>
               {(filteredPosts.length > 0 ? filteredPosts : posts?.docs)?.map(

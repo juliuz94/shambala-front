@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from 'antd'
 import { DocComment } from '@/pages/community'
+import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io/index'
 import { BsPinFill, BsPin, BsTrashFill } from 'react-icons/bs'
 import { useUserContext } from '@/context/userContext'
 import DeleteCommentModal from '@/components/Modals/DeleteComment'
@@ -27,6 +28,7 @@ const PostComment = ({
 }: PostCommentProps) => {
   const { user } = useUserContext()
   const [deleteCommentModal, setDeleteCommentModal] = useState(false)
+  const [isLiked, setIsLiked] = useState(false)
 
   const { renderProfileImage } = useRenderProfileImage(
     comment?.user.image,
@@ -38,7 +40,7 @@ const PostComment = ({
   const handlePinComment = async () => {
     try {
       const res = await axiosInstance.post(`${ROUTES.PIN_COMMENT}`, {
-        commentId: comment._id
+        commentId: comment._id,
       })
       fetchComments(id, commentsLimit)
       console.log('res >', res)
@@ -46,6 +48,27 @@ const PostComment = ({
       console.log('[handlePinComment]', error)
     }
   }
+
+  const handleLikeComment = async (e: React.MouseEvent) => {
+    e.stopPropagation()
+
+    try {
+      await axiosInstance.post(
+        `${ROUTES.POST_COMMENT}/handleLike?id=${comment._id}&isLike=${!isLiked}`
+      )
+      setIsLiked(!isLiked)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    if (comment?.likes?.includes(user?._id)) {
+      setIsLiked(true)
+    } else {
+      setIsLiked(false)
+    }
+  }, [comment, user])
 
   return (
     <div className={styles.container}>
@@ -61,15 +84,16 @@ const PostComment = ({
               {comment.user?.firstName || ''} {comment.user?.lastName || ''}
             </p>
           </Link>
-          {comment.anchored &&
+          {comment.anchored && (
             <div className={styles.anchored_comment}>
               <p>Destacado</p>
               <BsPinFill />
             </div>
-          }
+          )}
         </div>
         <div className={styles.comment_options}>
-          {(comment?.user?._id === user?._id || user?.type && user?.type === 'admin') && (
+          {(comment?.user?._id === user?._id ||
+            (user?.type && user?.type === 'admin')) && (
             <Button className={styles.comment_button} type='ghost'>
               <BsTrashFill
                 style={{ fill: '#54c055' }}
@@ -77,14 +101,28 @@ const PostComment = ({
               />
             </Button>
           )}
-          {
-            user?.type && user?.type === 'admin' &&
-            <Button className={`${styles.comment_button}`} onClick={() => handlePinComment()} type='ghost'>
-              {
-                comment.anchored ? <BsPinFill /> : <BsPin />
-              }
+          {user?.type && user?.type === 'admin' && (
+            <Button
+              className={`${styles.comment_button}`}
+              onClick={() => handlePinComment()}
+              type='ghost'
+            >
+              {comment.anchored ? <BsPinFill /> : <BsPin />}
             </Button>
-          }
+          )}
+          {isLiked ? (
+            <IoIosHeart
+              style={{ fill: '#54c055' }}
+              size={24}
+              onClick={handleLikeComment}
+            />
+          ) : (
+            <IoIosHeartEmpty
+              style={{ fill: '#54c055' }}
+              size={24}
+              onClick={handleLikeComment}
+            />
+          )}
         </div>
       </div>
 

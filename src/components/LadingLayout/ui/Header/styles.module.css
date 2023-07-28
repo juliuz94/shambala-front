@@ -75,6 +75,67 @@
   cursor: pointer;
 }
 
+.user_options_container {
+  width: 15%;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.point_counter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--secondary-background-color);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+.point_counter svg {
+  fill: var(--primary-color);
+}
+
+.point_counter p {
+  font-size: 0.75rem;
+}
+
+.user_name {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.avatar {
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  color: white;
+  background-color: var(--primary-color);
+}
+
+.user_options_button {
+  min-width: 30px;
+  min-height: 30px;
+  padding: 0;
+}
+
+.user_option {
+  width: 130px;
+}
+
+.user_option a {
+  color: var(--primary-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+}
+
 .menu,
 .hamburger_menu {
   display: none;

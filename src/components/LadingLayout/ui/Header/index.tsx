@@ -1,17 +1,53 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { Button, Dropdown } from 'antd'
+import { MoreOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons'
+import type { MenuProps } from 'antd'
+import { FaLeaf } from 'react-icons/fa'
 import { UseLandingHeader } from '@/Hooks/useLandingHeader'
 import CustomModal from '@/components/Custom/CustomModal/CustomModal'
 import CardContactUs from '@/components/CardContactUs'
 import { useUserContext } from '@/context/userContext'
+import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
 import styles from './styles.module.css'
 
 const Header = () => {
-  const { user } = useUserContext()
+  const { user, logOut } = useUserContext()
   const [showMenu, setShowMenu] = useState(false)
   const [isClient, setIsClient] = useState(false)
+  const { renderProfileImage } = useRenderProfileImage(
+    user?.image,
+    user?.firstName,
+    user?.lastName,
+    styles.avatar
+  )
   const router = useRouter()
+
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <div className={styles.user_option}>
+          <Link href={`/profile/${user?._id}`}>
+            Perfil
+            <UserOutlined />
+          </Link>
+        </div>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <div className={styles.user_option}>
+          <a onClick={logOut}>
+            Salir
+            <LoginOutlined />
+          </a>
+        </div>
+      ),
+    },
+  ]
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 1100px)')
@@ -79,26 +115,6 @@ const Header = () => {
 
             <p onClick={handleContactUs}>Contactanos</p>
 
-            {isClient && user === null ? (
-              <button
-                className={styles.session_button}
-                type='button'
-                onClick={loginNavigate}
-                key='session-button'
-              >
-                Iniciar sesión
-              </button>
-            ) : (
-              <button
-                className={styles.session_button}
-                type='button'
-                onClick={() => router.push('/community')}
-                key='session-button'
-              >
-                Ir a la plataforma
-              </button>
-            )}
-
             <button
               className={styles.signup_button}
               type='button'
@@ -107,6 +123,39 @@ const Header = () => {
             >
               Inscríbete
             </button>
+
+            {isClient &&
+              (user === null ? (
+                <button
+                  className={styles.session_button}
+                  type='button'
+                  onClick={loginNavigate}
+                  key='session-button'
+                >
+                  Iniciar sesión
+                </button>
+              ) : (
+                <div className={styles.user_options_container}>
+                  <div className={styles.point_counter}>
+                    <FaLeaf />
+                    {/* <p>25</p> */}
+                  </div>
+
+                  <p className={styles.user_name}>
+                    {user?.name ? user?.name?.split(' ')[0] : ''}
+                  </p>
+
+                  <Link href={user?._id ? `/profile/${user?._id}` : '#'}>
+                    {renderProfileImage()}
+                  </Link>
+
+                  <Dropdown menu={{ items }} placement='bottomRight'>
+                    <Button className={styles.user_options_button} type='text'>
+                      <MoreOutlined />
+                    </Button>
+                  </Dropdown>
+                </div>
+              ))}
           </div>
 
           <div className={styles.menu} onClick={() => setShowMenu(true)}>
