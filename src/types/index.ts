@@ -435,3 +435,18 @@ export type Plan = {
 }
 
 export type Plans = Plan[]
+
+export type Notification = {
+  _id: string;
+  title: string;
+  user: string;
+  user_dispatch: User;
+  documentRef: string;
+  read: boolean;
+  notifyByEmail: boolean;
+  event_type: string;
+  document_data: any;
+  createdAt: string;
+  updatedAt: string;
+  __v: number; 
+}

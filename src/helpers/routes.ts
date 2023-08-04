@@ -21,6 +21,8 @@ type Routes = {
   PLANS: string
   GENERATE_LINK: string
   SUBSCRIPTION: string
+  NOTIFICATIONS: string,
+  NOTIFICATIONS_BY_USER: string
 }
 
 const ROUTES: Routes = {
@@ -46,6 +48,8 @@ const ROUTES: Routes = {
   PLANS: 'plans',
   GENERATE_LINK: 'stripe/generateLink',
   SUBSCRIPTION: 'users/subscription',
+  NOTIFICATIONS: 'notifications',
+  NOTIFICATIONS_BY_USER: 'notifications/by-user'
 }
 
 export default ROUTES

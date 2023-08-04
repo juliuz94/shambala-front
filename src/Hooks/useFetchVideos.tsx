@@ -44,7 +44,6 @@ const useFetchVideoWithProgress = () => {
     if (!tagIds) return 
     try {
       const { data } = await axiosInstance.get(`${ROUTES.VIDEOS_BY_TAG}?${tagIds}`)
-      console.log('data -->', data)
       if (data.docs.length > 0) {
         return data 
       } else {

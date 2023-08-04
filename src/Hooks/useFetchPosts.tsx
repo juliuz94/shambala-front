@@ -33,8 +33,6 @@ const useFetchPosts: UseFetchPostsHook = (
       paramsString = `?page=${pageNumber}&category=NULL&community=${category}&sort=acs&search=${searchString}`
     }
 
-    console.log('paramsString', paramsString)
-
     try {
       const { data } = await axiosInstance.get(
         `${ROUTES.POST}${paramsString}`

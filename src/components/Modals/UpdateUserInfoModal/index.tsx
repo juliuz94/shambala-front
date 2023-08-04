@@ -151,7 +151,7 @@ const UpdateUserInfoModal = ({ open, setOpen }: PropTypes) => {
           onChange={(e) => setAcceptTerms(e.target.checked)}
         >
           <Link
-            href={'/terminos-y-condiciones'}
+            href={'/politica-de-privacidad'}
             target='_blank'
             rel='noopener noreferrer'
           >

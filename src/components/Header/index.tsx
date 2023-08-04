@@ -2,17 +2,22 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { Avatar, Button, Dropdown } from 'antd'
+import { Avatar, Button, Dropdown, Badge, Popover } from 'antd'
 import type { MenuProps } from 'antd'
 import { FaLeaf } from 'react-icons/fa'
+import { HiBell } from 'react-icons/hi2'
 import { useUserContext } from '@/context/userContext'
+import fetchNotificationsByUser from '@/Hooks/useFetchNotifications'
 import { MoreOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons'
+import { getNotificationMessage } from '@/helpers/getNotificationMessage'
+import { Notification } from '@/types'
 import styles from './styles.module.css'
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
   const { user, logOut } = useUserContext()
   const router = useRouter()
+  const { notifications, paginationData, refreshNotifications, setNotificationAsRead } = fetchNotificationsByUser(false, 1)
 
   const items: MenuProps['items'] = [
     {
@@ -64,6 +69,51 @@ const Header = () => {
       document.body.style.height = 'auto'
     }
   }, [showMenu])
+
+  const notificationsContent = (
+    <div className={styles.notifications_container}>
+      {
+        notifications.length > 1 ? notifications.map((notification: Notification) => {
+          return (
+            <div key={notification._id} className={styles.notification_card}>
+              <div className={styles.notification_data}>
+                <div className={styles.notification_avatar_container}>
+                  <Avatar
+                    size='small'
+                    shape='square'
+                    className={notification.user_dispatch?.image ? '' : styles.avatar}
+                    src={notification.user_dispatch?.image}
+                  >
+                    <p style={{ fontSize: '0.5rem', textTransform: 'uppercase' }}>
+                      {notification.user_dispatch?.firstName?.split('')[0]}
+                      {notification.user_dispatch?.lastName?.split('')[0]}
+                    </p>
+                  </Avatar>
+                </div>
+                <p className={styles.notification_message}>
+                  {getNotificationMessage(notification)}
+                </p>
+              </div>
+              <div className={styles.notification_options}>
+                <Button type='link' onClick={() => setNotificationAsRead(notification._id, false)}>
+                  Marcar como leída
+                </Button>
+              </div>
+            </div>
+          )
+        })
+          :
+          <div className={styles.notifications_empty_state}>
+            <p>
+              No tienes nuevas notificaciones
+            </p>
+          </div>
+      }
+      <Button type='primary' onClick={() => router.push('/notifications')}>
+        Ver todas las notificaciones
+      </Button>
+    </div>
+  )
 
   return (
     <div className={styles.nav}>
@@ -123,12 +173,19 @@ const Header = () => {
 
         <div className={styles.right_items}>
           <div className={styles.user_options_container}>
+            <Popover placement='bottomLeft' title='Notificaciones' content={notificationsContent} trigger="click">
+              <Badge count={notifications.length} overflowCount={9} size='small' color='#54c055'>
+                <Button className={styles.notifications_button}>
+                  <HiBell />
+                </Button>
+              </Badge>
+            </Popover>
             <div className={styles.point_counter}>
               <FaLeaf />
               {/* <p>25</p> */}
             </div>
 
-            <p className={styles.user_name}>{user?.name?.split(' ')[0]}</p>
+            {/* <p className={styles.user_name}>{user?.name?.split(' ')[0]}</p> */}
 
             <Link href={`/profile/${user?._id}`}>
               <Avatar

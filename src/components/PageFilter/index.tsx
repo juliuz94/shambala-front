@@ -8,7 +8,7 @@ type FilterItem = {
 
 type FilterProps = {
   filters: FilterItem[] | any
-  onFilterSelect?: (category: string) => void
+  onFilterSelect?: (category: any) => void
   show?: boolean
 }
 
