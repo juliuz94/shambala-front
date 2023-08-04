@@ -293,6 +293,10 @@ const Event: FC = () => {
                 <label className='event_info_label'>Hora</label>
                 <p className='event_info_text'>5:30 PM</p>
               </div>
+              <div className={styles.event_info_price_mb}>
+                <label className='event_info_label_mb'>Precio</label>
+                <p className='event_info_text_mb'>GRATIS</p>
+              </div>
               {/* <div className={styles.event_info_block}>
                 <label className='event_info_label'>Duración</label>
                 <p className='event_info_text'>60 minutos</p>
@@ -332,6 +336,8 @@ const Event: FC = () => {
       <style jsx global>{`
         .event_info_label,
         .event_info_text,
+        .event_info_label_mb,
+        .event_info_text_mb,
         .event_info_button {
           font-family: ${inter.style.fontFamily};
         }

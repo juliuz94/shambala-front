@@ -17,7 +17,12 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
   const { user, logOut } = useUserContext()
   const router = useRouter()
-  const { notifications, paginationData, refreshNotifications, setNotificationAsRead } = fetchNotificationsByUser(false, 1)
+  const {
+    notifications,
+    paginationData,
+    refreshNotifications,
+    setNotificationAsRead,
+  } = fetchNotificationsByUser(false, 1)
 
   const items: MenuProps['items'] = [
     {
@@ -72,8 +77,8 @@ const Header = () => {
 
   const notificationsContent = (
     <div className={styles.notifications_container}>
-      {
-        notifications.length > 1 ? notifications.map((notification: Notification) => {
+      {notifications.length > 1 ? (
+        notifications.map((notification: Notification) => {
           return (
             <div key={notification._id} className={styles.notification_card}>
               <div className={styles.notification_data}>
@@ -81,10 +86,14 @@ const Header = () => {
                   <Avatar
                     size='small'
                     shape='square'
-                    className={notification.user_dispatch?.image ? '' : styles.avatar}
+                    className={
+                      notification.user_dispatch?.image ? '' : styles.avatar
+                    }
                     src={notification.user_dispatch?.image}
                   >
-                    <p style={{ fontSize: '0.5rem', textTransform: 'uppercase' }}>
+                    <p
+                      style={{ fontSize: '0.5rem', textTransform: 'uppercase' }}
+                    >
                       {notification.user_dispatch?.firstName?.split('')[0]}
                       {notification.user_dispatch?.lastName?.split('')[0]}
                     </p>
@@ -95,20 +104,21 @@ const Header = () => {
                 </p>
               </div>
               <div className={styles.notification_options}>
-                <Button type='link' onClick={() => setNotificationAsRead(notification._id, false)}>
+                <Button
+                  type='link'
+                  onClick={() => setNotificationAsRead(notification._id, false)}
+                >
                   Marcar como leída
                 </Button>
               </div>
             </div>
           )
         })
-          :
-          <div className={styles.notifications_empty_state}>
-            <p>
-              No tienes nuevas notificaciones
-            </p>
-          </div>
-      }
+      ) : (
+        <div className={styles.notifications_empty_state}>
+          <p>No tienes nuevas notificaciones</p>
+        </div>
+      )}
       <Button type='primary' onClick={() => router.push('/notifications')}>
         Ver todas las notificaciones
       </Button>
@@ -173,8 +183,18 @@ const Header = () => {
 
         <div className={styles.right_items}>
           <div className={styles.user_options_container}>
-            <Popover placement='bottomLeft' title='Notificaciones' content={notificationsContent} trigger="click">
-              <Badge count={notifications.length} overflowCount={9} size='small' color='#54c055'>
+            <Popover
+              placement='bottomLeft'
+              title='Notificaciones'
+              content={notificationsContent}
+              trigger='click'
+            >
+              <Badge
+                count={notifications.length}
+                overflowCount={9}
+                size='small'
+                color='#54c055'
+              >
                 <Button className={styles.notifications_button}>
                   <HiBell />
                 </Button>
@@ -207,10 +227,30 @@ const Header = () => {
           </div>
         </div>
 
-        <div className={styles.menu} onClick={() => setShowMenu(true)}>
-          <div className={styles.line} />
-          <div className={styles.line} />
-          <div className={styles.line} />
+        <div className={styles.mobile_icons}>
+          <Popover
+            placement='bottomLeft'
+            title='Notificaciones'
+            content={notificationsContent}
+            trigger='click'
+          >
+            <Badge
+              count={notifications.length}
+              overflowCount={9}
+              size='small'
+              color='#54c055'
+            >
+              <Button className={styles.notifications_button}>
+                <HiBell />
+              </Button>
+            </Badge>
+          </Popover>
+
+          <div className={styles.menu} onClick={() => setShowMenu(true)}>
+            <div className={styles.line} />
+            <div className={styles.line} />
+            <div className={styles.line} />
+          </div>
         </div>
       </div>
 
@@ -225,7 +265,7 @@ const Header = () => {
         <div className={styles.user_options_container}>
           <div className={styles.point_counter}>
             <FaLeaf />
-            <p>25</p>
+            {/* <p>25</p> */}
           </div>
 
           <p className={styles.user_name}>{user?.name?.split(' ')[0]}</p>

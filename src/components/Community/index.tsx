@@ -13,6 +13,7 @@ import { CommentData } from '@/types/index'
 import ROUTES from '@/helpers/routes'
 import Filter from '@/components/PageFilter'
 import styles from './styles.module.css'
+import ShowRulesModal from '../Modals/ShowRules'
 
 const Community = () => {
   const { user } = useUserContext()
@@ -24,6 +25,7 @@ const Community = () => {
   const [commentsLimit, setCommentsLimit] = useState(10)
   const [filteredPosts, setFilteredPosts] = useState<DocPost[]>([])
   const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false)
+  const [showRulesModal, setShowRulesModal] = useState<boolean>(false)
 
   const fetchComments = async (id: string, limit: number) => {
     try {
@@ -111,6 +113,12 @@ const Community = () => {
       <div className={styles.container}>
         <div className={styles.community}>
           <h1>¡Construyamos Comunidad!</h1>
+          <div
+            className={styles.rules_container}
+            onClick={() => setShowRulesModal(true)}
+          >
+            <button className={styles.rules}>Reglas del juego</button>
+          </div>
         </div>
 
         {showPost ? (
@@ -165,6 +173,11 @@ const Community = () => {
         <UpdateUserInfoModal
           open={showUpdateModal}
           setOpen={setShowUpdateModal}
+        />
+
+        <ShowRulesModal
+          isModalOpen={showRulesModal}
+          setIsModalOpen={setShowRulesModal}
         />
       </div>
     </section>

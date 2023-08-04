@@ -80,7 +80,7 @@
   min-width: 300px;
   max-width: 300px;
   max-height: 300px;
-  overflow: scroll;
+  overflow: auto;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -203,7 +203,8 @@
 }
 
 .menu,
-.hamburger_menu {
+.hamburger_menu,
+.mobile_icons {
   display: none;
 }
 
@@ -236,6 +237,12 @@
     height: 3px;
     border-radius: 10px;
     background: #54c055;
+  }
+
+  .mobile_icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   .hamburger_menu {

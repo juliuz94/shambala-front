@@ -311,12 +311,54 @@
   }
 }
 
-@media (max-width: 750px) {
+.event_info_price_mb {
+  display: none;
+}
+
+.event_info_price_mb label {
+  font-size: 0.9rem;
+}
+
+.event_info_price_mb p {
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+@media (max-width: 670px) {
+  .event_container {
+    padding-bottom: 0px;
+  }
+
   .event_info_price {
     display: none;
   }
 
+  .event_info_text_mb {
+    color: var(--secondary-color);
+  }
+
+  .event_info_price_mb {
+    display: block;
+  }
+
+  .event_subscription {
+    position: static;
+    height: auto;
+  }
+
+  .event_subscription_content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+  }
+
+  .event_subscription_right_column {
+    flex-direction: column;
+    gap: 0;
+    margin: 10px 0;
+  }
+
   .event_subscription_right_column button {
-    display: none;
+    margin-top: 10px;
   }
 }
