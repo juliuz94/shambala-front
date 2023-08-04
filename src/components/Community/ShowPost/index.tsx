@@ -117,8 +117,9 @@ const ShowPost: React.FC<PostProps> = ({
         </div>
 
         <div className={styles.comments} ref={commentsRef}>
-          {
-            comments?.docs?.filter((comment: DocComment) => comment.anchored === true).map((comment: DocComment, index: number) => (
+          {comments?.docs
+            ?.filter((comment: DocComment) => comment.anchored === true)
+            .map((comment: DocComment, index: number) => (
               <PostComment
                 id={post?._id || ''}
                 fetchComments={fetchComments}
@@ -128,8 +129,9 @@ const ShowPost: React.FC<PostProps> = ({
                 setUpdatePost={setUpdatePost}
               />
             ))}
-          {
-            comments?.docs?.filter((comment: DocComment) => !comment.anchored === true).map((comment: DocComment, index: number) => (
+          {comments?.docs
+            ?.filter((comment: DocComment) => !comment.anchored === true)
+            .map((comment: DocComment, index: number) => (
               <PostComment
                 id={post?._id || ''}
                 fetchComments={fetchComments}

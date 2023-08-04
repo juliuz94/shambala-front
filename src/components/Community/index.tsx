@@ -12,8 +12,8 @@ import { axiosInstance } from '@/axios/axiosInstance'
 import { CommentData } from '@/types/index'
 import ROUTES from '@/helpers/routes'
 import Filter from '@/components/PageFilter'
-import styles from './styles.module.css'
 import ShowRulesModal from '../Modals/ShowRules'
+import styles from './styles.module.css'
 
 const Community = () => {
   const { user } = useUserContext()
@@ -121,6 +121,7 @@ const Community = () => {
           </div>
         </div>
 
+        {/* Eliminar el showPost, su componente, su state y su useEffect */}
         {showPost ? (
           <ShowPost
             post={selectedPost}
