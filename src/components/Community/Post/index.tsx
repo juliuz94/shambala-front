@@ -18,9 +18,6 @@ type SetShowPostFunction = (value: boolean) => void
 
 interface PostProps {
   post: DocPost
-  onSelectPost: (post: DocPost) => void
-  fetchComments: (id: string, limit: number) => Promise<void>
-  commentsLimit: number
   setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
   setShowPost: SetShowPostFunction
   setPageNumber: React.Dispatch<React.SetStateAction<number>>
@@ -28,9 +25,6 @@ interface PostProps {
 
 const Post = ({
   post,
-  onSelectPost,
-  fetchComments,
-  commentsLimit,
   setUpdatePost,
   setShowPost,
   setPageNumber,
@@ -52,8 +46,6 @@ const Post = ({
 
   const handleSelectPost = () => {
     router.push(`/community/post/${post._id}`)
-    // onSelectPost(post)
-    // fetchComments(post._id, commentsLimit)
   }
 
   const likePost = async (e: React.MouseEvent) => {

@@ -4,6 +4,7 @@ import ROUTES from '@/helpers/routes'
 
 const useFetchAnnouncement = () => {
   const [announcement, setAnnouncement] = useState(null)
+  const [updateAnnoun, setUpdateAnnoun] = useState(false)
 
   const fetchAnnouncement = async () => {
     try {
@@ -16,13 +17,13 @@ const useFetchAnnouncement = () => {
 
   useEffect(() => {
     fetchAnnouncement()
-  }, [])
+  }, [updateAnnoun])
 
-  const refreshData = async () => {
-    fetchAnnouncement()
+  return {
+    announcement,
+    setAnnouncement,
+    setUpdateAnnoun,
   }
-
-  return { announcement, setAnnouncement, refreshData }
 }
 
 export default useFetchAnnouncement

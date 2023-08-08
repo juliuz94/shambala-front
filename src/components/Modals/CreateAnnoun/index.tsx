@@ -16,9 +16,14 @@ import styles from './styles.module.css'
 type CreateAnnounModalProps = {
   isModalOpen: boolean
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setUpdateAnnoun: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const CreateAnnounModal = ({ isModalOpen, setIsModalOpen}: CreateAnnounModalProps) => {
+const CreateAnnounModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  setUpdateAnnoun,
+}: CreateAnnounModalProps) => {
   const { user } = useUserContext()
   const [isLoading, setIsLoading] = useState(false)
   const [content, setContent] = useState('')
@@ -65,6 +70,7 @@ const CreateAnnounModal = ({ isModalOpen, setIsModalOpen}: CreateAnnounModalProp
 
     try {
       await axiosInstance.post(`${ROUTES.ANNOUNCEMENT}`, announInfo)
+      setUpdateAnnoun((prev) => !prev)
       setIsModalOpen(false)
       setContent('')
       toast.success('Se agregó tu anuncio correctamente')

@@ -8,12 +8,15 @@ import CreateAnnounModal from '../Modals/CreateAnnoun'
 import { Button } from 'antd'
 import CompanyBio from './UI/CompanyBio'
 import Announcements from './UI/Announcements'
+import useFetchAnnouncement from '@/Hooks/useFetchAnnouncement'
 import styles from './styles.module.css'
 
 const Company: FC = () => {
   const router = useRouter()
   const workshopId = router.query.id
   const { workshop } = useFetchWorkshop(workshopId as string)
+  const { announcement, setAnnouncement, setUpdateAnnoun }: any =
+    useFetchAnnouncement()
   const { user } = useUserContext()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -69,7 +72,12 @@ const Company: FC = () => {
           </div>
 
           <CompanyBio setIsModalOpen={setIsModalOpen} />
-          <Announcements />
+
+          <Announcements
+            announcement={announcement}
+            setAnnouncement={setAnnouncement}
+            setUpdateAnnoun={setUpdateAnnoun}
+          />
         </div>
 
         <div className={styles.right_column}>
@@ -87,6 +95,7 @@ const Company: FC = () => {
         <CreateAnnounModal
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
+          setUpdateAnnoun={setUpdateAnnoun}
         />
       </section>
     </main>

@@ -5,7 +5,6 @@ import { DocPost } from '@/types'
 import { useUserContext } from '@/context/userContext'
 import Post from '@/components/Community/Post'
 import PostForm from '@/components/Community/PostForm'
-import ShowPost from '@/components/Community/ShowPost'
 import UpdateUserInfoModal from '../Modals/UpdateUserInfoModal'
 import SearchInput from '@/components/SearchInput'
 import { axiosInstance } from '@/axios/axiosInstance'
@@ -92,12 +91,6 @@ const Community = () => {
   }
 
   useEffect(() => {
-    if (showPost) {
-      setFilteredPosts([])
-    }
-  }, [showPost])
-
-  useEffect(() => {
     if (!user) return
     if (!user?.tags || user?.tags.length < 1) {
       setShowUpdateModal(true)
@@ -121,49 +114,30 @@ const Community = () => {
           </div>
         </div>
 
-        {/* Eliminar el showPost, su componente, su state y su useEffect */}
-        {showPost ? (
-          <ShowPost
-            post={selectedPost}
-            setShowPost={setShowPost}
-            comments={comments}
-            fetchComments={fetchComments}
-            setComments={setComments}
-            commentsLimit={commentsLimit}
-            setCommentsLimit={setCommentsLimit}
-            setUpdatePost={setUpdatePost}
-          />
-        ) : (
-          <>
-            <div className={styles.events_options}>
-              <SearchInput onSearch={handleSearch} />
-              <Filter filters={filters} onFilterSelect={handleFilterSelect} />
-            </div>
+        <div className={styles.events_options}>
+          <SearchInput onSearch={handleSearch} />
+          <Filter filters={filters} onFilterSelect={handleFilterSelect} />
+        </div>
 
-            <PostForm
-              setPageNumber={setPageNumber}
-              setUpdatePost={setUpdatePost}
-              category={category}
-            />
+        <PostForm
+          setPageNumber={setPageNumber}
+          setUpdatePost={setUpdatePost}
+          category={category}
+        />
 
-            <div className={styles.comments}>
-              {(filteredPosts.length > 0 ? filteredPosts : posts?.docs)?.map(
-                (post: DocPost, index: number) => (
-                  <Post
-                    post={post}
-                    key={index}
-                    onSelectPost={setSelectedPost}
-                    fetchComments={fetchComments}
-                    commentsLimit={commentsLimit}
-                    setUpdatePost={setUpdatePost}
-                    setShowPost={setShowPost}
-                    setPageNumber={setPageNumber}
-                  />
-                )
-              )}
-            </div>
-          </>
-        )}
+        <div className={styles.comments}>
+          {(filteredPosts.length > 0 ? filteredPosts : posts?.docs)?.map(
+            (post: DocPost, index: number) => (
+              <Post
+                post={post}
+                key={index}
+                setUpdatePost={setUpdatePost}
+                setShowPost={setShowPost}
+                setPageNumber={setPageNumber}
+              />
+            )
+          )}
+        </div>
 
         <img
           className={styles.bg}

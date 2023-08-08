@@ -24,7 +24,34 @@ const Post = () => {
   const [commentsLimit, setCommentsLimit] = useState(10)
   const commentsRef = useRef<HTMLDivElement>(null)
   const [comments, setComments] = useState<CommentData | null>(null)
-  // const [category, setCategory] = useState(filters[0].category)
+
+  const filters = [
+    {
+      tag: 'Agora Virtual',
+      category: 'AGORA_VIRTUAL',
+    },
+    {
+      tag: 'Retos Ambientales',
+      category: 'RETOS_AMBIENTALES',
+    },
+    // {
+    //   tag: 'Pon tu grano de arena',
+    //   category: 'GRANO_DE_ARENA',
+    // },
+    {
+      tag: user?.community ? user?.community.title : null,
+      category: user?.community ? user?.community._id : null,
+    },
+  ].filter((filter) => filter.tag !== null)
+
+  const [category, setCategory] = useState(filters[0].category)
+
+  const { setUpdatePost } = useFetchPosts(
+    pageNumber,
+    category,
+    searchString,
+    setPageNumber
+  )
 
   const { query } = router
 
@@ -38,18 +65,12 @@ const Post = () => {
     }
   }
 
-  // Imagen del usuario del post - poner la propiedad de la imagen del usuario que hizo el post
   const { renderProfileImage } = useRenderProfileImage(
     post?.user?.image,
     post?.user?.firstName,
     post?.user?.lastName,
     styles.pfp
   )
-
-  const setUpdatePost = () => {
-    // No sé su se necesite esta funcion acá. 
-    console.log('setUpdatePost')
-  }
 
   const handleGoBack = () => {
     router.back()
@@ -92,15 +113,8 @@ const Post = () => {
     }
   }, [commentsRef.current, comments])
 
-  // Falta poner id del post
-  // useEffect(() => {
-  //   if (post?._id) {
-  //     fetchComments(post._id, commentsLimit)
-  //   }
-  // }, [commentsLimit])
-
   useEffect(() => {
-    if (query.id) {
+    if (query?.id) {
       fetchPost(query.id)
       fetchComments(query.id, commentsLimit)
     }
@@ -127,9 +141,7 @@ const Post = () => {
 
           <div className={styles.post}>
             <div className={styles.title}>
-              <h1>
-                { post?.title }
-              </h1>
+              <h1>{post?.title}</h1>
             </div>
 
             <div className={styles.options}>
@@ -152,8 +164,6 @@ const Post = () => {
             </div>
 
             <div className={styles.comments} ref={commentsRef}>
-              {/* Agregar id del post */}
-
               {comments?.docs
                 ?.filter((comment: DocComment) => comment.anchored === true)
                 .map((comment: DocComment, index: number) => (
