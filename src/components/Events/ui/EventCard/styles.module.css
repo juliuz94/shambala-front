@@ -46,6 +46,15 @@
   gap: 0.5rem;
 }
 
+.premium_bagde {
+  width: 80px;
+}
+
+.premium_bagde img {
+  width: 100%;
+  height: auto;
+}
+
 .event_title {
   font-weight: 600;
   font-size: 1.25rem;

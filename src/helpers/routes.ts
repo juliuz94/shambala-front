@@ -1,6 +1,7 @@
 type Routes = {
   VIDEOS: string
   VIDEOS_BY_TAG: string
+  VIDEO_LIKE: string
   COMMENT: string
   COMMENTS: string
   VIDEOS_WITH_PROGRESS: string
@@ -8,6 +9,7 @@ type Routes = {
   WORKSHOP_PER_MONTH: string
   WORKSHOP: string
   POST: string
+  POST_BY_ID: string,
   TAGS: string
   POST_COMMENT: string
   PIN_COMMENT: string
@@ -28,6 +30,7 @@ type Routes = {
 const ROUTES: Routes = {
   VIDEOS: 'video',
   VIDEOS_BY_TAG: 'video/tags/paginate',
+  VIDEO_LIKE: 'video/like',
   VIDEOS_WITH_PROGRESS: '/video/progress/user',
   VIDEO_PROGRESS: '/video/updateProgress',
   COMMENT: 'video/comment',
@@ -35,6 +38,7 @@ const ROUTES: Routes = {
   WORKSHOP_PER_MONTH: '/workshop/peerMonth',
   WORKSHOP: '/workshop',
   POST: 'community/post',
+  POST_BY_ID: '/community/post-by-id',
   TAGS: 'tags',
   POST_COMMENT: 'community/post/comment',
   PIN_COMMENT: 'community/pin-comment',

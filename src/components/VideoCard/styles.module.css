@@ -86,6 +86,16 @@
   -webkit-box-orient: vertical;
 }
 
+.premium_bagde {
+  margin-top: 0.5rem;
+  width: 25%;
+}
+
+.premium_bagde img {
+  width: 100%;
+  height: auto;
+}
+
 .author {
   display: flex;
   align-items: center;

@@ -36,7 +36,7 @@ const Company: FC = () => {
                 )}
               </div>
 
-              <div className={styles.company_stats}>
+              {/* <div className={styles.company_stats}>
                 <div className={styles.stat}>
                   <h3>0</h3>
                   <p>Usuario</p>
@@ -51,7 +51,7 @@ const Company: FC = () => {
                   <h3>0</h3>
                   <p>Eventos</p>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {user?.company.owner === user?._id ? (

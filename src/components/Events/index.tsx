@@ -55,7 +55,7 @@ const Events = () => {
       const { data } = await axiosInstance.get(
         `${ROUTES.WORKSHOP_PER_MONTH}?month=${
           month.monthNumber
-        }&type=${category}&search=${search || ''}`
+        }&type=${category}&sort=desc&search=${search || ''}`
       )
       setWorkShopsData(data)
     } catch (error) {

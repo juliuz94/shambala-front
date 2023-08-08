@@ -18,7 +18,11 @@ const useFetchAnnouncement = () => {
     fetchAnnouncement()
   }, [])
 
-  return { announcement, setAnnouncement }
+  const refreshData = async () => {
+    fetchAnnouncement()
+  }
+
+  return { announcement, setAnnouncement, refreshData }
 }
 
 export default useFetchAnnouncement

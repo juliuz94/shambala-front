@@ -20,7 +20,6 @@ const Main = () => {
   const checkSubscription = async () => {
     try {
       const subscription = await axiosInstance.get(`${ROUTES.SUBSCRIPTION}`)
-      console.log('status', subscription.data.status)
       if (
         hasClickedPayNow &&
         (subscription.data.status === null ||
@@ -28,7 +27,7 @@ const Main = () => {
           subscription.data.status === 'CANCEL')
       ) {
         redirectUser()
-        toast.success('Redireccionando a Stripe')
+        toast.success('Redirigiendo a Stripe')
       } else if (subscription.data.status === 'APPROVED') {
         setAlreadyApproved(true)
       }

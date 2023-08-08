@@ -18,10 +18,7 @@ type CreateAnnounModalProps = {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const CreateAnnounModal = ({
-  isModalOpen,
-  setIsModalOpen,
-}: CreateAnnounModalProps) => {
+const CreateAnnounModal = ({ isModalOpen, setIsModalOpen}: CreateAnnounModalProps) => {
   const { user } = useUserContext()
   const [isLoading, setIsLoading] = useState(false)
   const [content, setContent] = useState('')

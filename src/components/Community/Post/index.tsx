@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import moment from 'moment'
 import 'moment/locale/es'
@@ -34,6 +35,7 @@ const Post = ({
   setShowPost,
   setPageNumber,
 }: PostProps) => {
+  const router = useRouter()
   const { user } = useUserContext()
 
   const [deletePostModal, setDeletePostModal] = useState(false)
@@ -49,8 +51,9 @@ const Post = ({
   )
 
   const handleSelectPost = () => {
-    onSelectPost(post)
-    fetchComments(post._id, commentsLimit)
+    router.push(`/community/post/${post._id}`)
+    // onSelectPost(post)
+    // fetchComments(post._id, commentsLimit)
   }
 
   const likePost = async (e: React.MouseEvent) => {

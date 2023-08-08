@@ -4,6 +4,8 @@ import { useUserContext } from '@/context/userContext'
 import Company from '@/components/Company'
 import Splash from '@/components/Splash'
 import Layout from '@/components/Layout'
+import 'swiper/css'
+import 'swiper/css/effect-cards'
 
 export default function Videos() {
   const [loading, setLoading] = useState(true)

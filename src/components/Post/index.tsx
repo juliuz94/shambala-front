@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import moment from 'moment'
 import 'moment/locale/es'
@@ -15,57 +16,46 @@ import useFetchPosts from '@/Hooks/useFetchPosts'
 import styles from './styles.module.css'
 
 const Post = () => {
+  const router = useRouter()
   const { user } = useUserContext()
-  const commentsRef = useRef<HTMLDivElement>(null)
-
+  const [post, setPost] = useState<DocPost | null>(null)
   const [pageNumber, setPageNumber] = useState(1)
   const [searchString, setSearchString] = useState('')
   const [commentsLimit, setCommentsLimit] = useState(10)
+  const commentsRef = useRef<HTMLDivElement>(null)
   const [comments, setComments] = useState<CommentData | null>(null)
+  // const [category, setCategory] = useState(filters[0].category)
 
-  const filters = [
-    {
-      tag: 'Agora Virtual',
-      category: 'AGORA_VIRTUAL',
-    },
-    {
-      tag: 'Retos Ambientales',
-      category: 'RETOS_AMBIENTALES',
-    },
-    // {
-    //   tag: 'Pon tu grano de arena',
-    //   category: 'GRANO_DE_ARENA',
-    // },
-    {
-      tag: user?.community ? user?.community.title : null,
-      category: user?.community ? user?.community._id : null,
-    },
-  ].filter((filter) => filter.tag !== null)
+  const { query } = router
 
-  const [category, setCategory] = useState(filters[0].category)
-
-  // Imagen del usuario del post - poner la propiedad de la imagen del usuario que hizo el post
-
-  // const { renderProfileImage } = useRenderProfileImage(
-  //   post?.user?.image,
-  //   post?.user?.firstName,
-  //   post?.user?.lastName,
-  //   styles.pfp
-  // )
-
-  const { setUpdatePost } = useFetchPosts(
-    pageNumber,
-    category,
-    searchString,
-    setPageNumber
-  )
-
-  const handleGoBack = () => {
-    setComments(null)
-    setCommentsLimit(10)
+  const fetchPost = async (id: string | string[]) => {
+    try {
+      const { data } = await axiosInstance.get(`${ROUTES.POST_BY_ID}?id=${id}`)
+      console.log('data ->', data)
+      setPost(data)
+    } catch (error) {
+      console.log('[fetchPost]', error)
+    }
   }
 
-  const fetchComments = async (id: string, limit: number) => {
+  // Imagen del usuario del post - poner la propiedad de la imagen del usuario que hizo el post
+  const { renderProfileImage } = useRenderProfileImage(
+    post?.user?.image,
+    post?.user?.firstName,
+    post?.user?.lastName,
+    styles.pfp
+  )
+
+  const setUpdatePost = () => {
+    // No sé su se necesite esta funcion acá. 
+    console.log('setUpdatePost')
+  }
+
+  const handleGoBack = () => {
+    router.back()
+  }
+
+  const fetchComments = async (id: string | string[], limit: number) => {
     try {
       const res = await axiosInstance.get<CommentData>(
         `${ROUTES.POST_COMMENT}?id=${id}&limit=${limit}`
@@ -89,16 +79,13 @@ const Post = () => {
 
   const convertImageUrlToImageTag = (htmlString: string) => {
     const imageRegEx = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg)/g
-
     return htmlString.replace(imageRegEx, '<img src="$&" alt="dynamic image"/>')
   }
 
   useEffect(() => {
     const commentDiv = commentsRef.current
-
     if (commentDiv) {
       commentDiv.addEventListener('scroll', handleCommentScroll)
-
       return () => {
         commentDiv.removeEventListener('scroll', handleCommentScroll)
       }
@@ -106,12 +93,18 @@ const Post = () => {
   }, [commentsRef.current, comments])
 
   // Falta poner id del post
-
   // useEffect(() => {
   //   if (post?._id) {
   //     fetchComments(post._id, commentsLimit)
   //   }
   // }, [commentsLimit])
+
+  useEffect(() => {
+    if (query.id) {
+      fetchPost(query.id)
+      fetchComments(query.id, commentsLimit)
+    }
+  }, [query])
 
   return (
     <section className={styles.posts}>
@@ -134,37 +127,34 @@ const Post = () => {
 
           <div className={styles.post}>
             <div className={styles.title}>
-              <h1>Titulo</h1>
+              <h1>
+                { post?.title }
+              </h1>
             </div>
 
             <div className={styles.options}>
               <div className={styles.info}>
-                {/* Fecha - poner createdAt del post */}
-                {/* <p>{moment(post?.createdAt).fromNow()}</p> */}
+                <p>{moment(post?.createdAt).fromNow()}</p>
                 <p>•</p>
                 <p>{comments?.totalDocs || 0} Respuestas</p>
               </div>
             </div>
 
             <div className={styles.text}>
-              {/* Texto del post - Poner el atributo text del post */}
-              {/* {post && parse(convertImageUrlToImageTag(post.text))} */}
+              {post && parse(convertImageUrlToImageTag(post.text))}
             </div>
 
             <div className={styles.user}>
-              {/* Imagen del usuario del post */}
-              {/* {renderProfileImage()} */}
+              {renderProfileImage()}
               <p>
-                {/* Nombre - Poner los atributos del nombre */}
-                {/* {post?.user?.firstName || ''} {post?.user?.lastName || ''} */}
-                Nombre apellido
+                {post?.user?.firstName || ''} {post?.user?.lastName || ''}
               </p>
             </div>
 
             <div className={styles.comments} ref={commentsRef}>
               {/* Agregar id del post */}
 
-              {/* {comments?.docs
+              {comments?.docs
                 ?.filter((comment: DocComment) => comment.anchored === true)
                 .map((comment: DocComment, index: number) => (
                   <PostComment
@@ -187,16 +177,14 @@ const Post = () => {
                     key={index}
                     setUpdatePost={setUpdatePost}
                   />
-                ))} */}
+                ))}
             </div>
-
-            {/* Falta agregarle el id del post */}
-            {/* <CommentForm
+            <CommentForm
               id={post?._id || ''}
               fetchComments={fetchComments}
               commentsLimit={commentsLimit}
               setCommentsLimit={setCommentsLimit}
-            /> */}
+            />
           </div>
         </div>
 

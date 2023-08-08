@@ -138,6 +138,7 @@ export interface Workshop {
   __v: number
   isLandingPage: boolean
   speakers: any[] // Update the type of speakers if possible
+  isPremium?: boolean
 }
 
 export interface AuthStoreType {
@@ -399,6 +400,7 @@ export interface DocPost {
   isPublic: boolean
   createdAt: string
   updatedAt: string
+  category: string | undefined
   __v: number
 }
 

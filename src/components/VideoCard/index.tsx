@@ -18,17 +18,11 @@ const VideoCard = ({ video }: any) => {
 
   const likeVideo = async () => {
     try {
-      if (liked) {
-        await axiosInstance.patch(`${ROUTES.VIDEOS}/${video._id}`, {
-          like: video.like.filter((id: string) => id !== user?._id),
+        await axiosInstance.patch(`${ROUTES.VIDEO_LIKE}/${video._id}`, {
+        isLike: liked ? false : true
         })
-      } else {
-        await axiosInstance.patch(`${ROUTES.VIDEOS}/${video._id}`, {
-          like: [...video.like, user?._id],
-        })
-      }
     } catch (error) {
-      console.log(error)
+      console.log('[likeVideo]', error)
     }
   }
 
@@ -88,6 +82,13 @@ const VideoCard = ({ video }: any) => {
         )}
         <h1 className={styles.video_title}>{video?.title}</h1>
         <p className={styles.video_description}>{video?.description}</p>
+        {
+          video.isPremium && (
+            <div className={styles.premium_bagde}>
+              <img src='/images/premium_badge.png' alt='premium badge' />
+            </div>
+          )
+        }
       </div>
       {/* <section className={styles.author}>
         <Avatar size={24} icon={<UserOutlined />} />

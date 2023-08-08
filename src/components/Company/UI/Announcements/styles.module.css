@@ -1,10 +1,10 @@
 .announcements_section {
   background-color: var(--background-color);
   width: 100%;
-  min-height: 300px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  height: 300px;
 }
 
 .announcements_section h2:not(.announcement_title) {
@@ -37,18 +37,24 @@
 
 .announcement_card {
   width: 90%;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
   background-color: var(--background-color);
   padding: 0.5rem;
-  padding-right: 3rem;
+  padding-right: 1rem;
   border-radius: 13px;
   box-shadow: 0px 0px 20px 1px #b9b9b939;
   position: absolute;
   left: 0;
   z-index: 10;
-  height: 220px;
+  height: fit-content;
+}
+
+.announcement_content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
 }
 
 .announcement_card:nth-child(2) {
@@ -73,12 +79,14 @@
   align-items: center;
   justify-content: center;
   margin-left: 20px;
+  min-width: 220px;
+  max-width: 230px;
+  max-height: 170px;
 }
 
 .image_container img {
   width: 100%;
   height: auto;
-  max-width: 230px;
 }
 
 .announcement_info {
@@ -105,6 +113,24 @@
   font-weight: 300;
   margin-top: 0.5rem;
   text-transform: capitalize;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+          line-clamp: 2; 
+  -webkit-box-orient: vertical;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.delete_button {
+  color: rgb(252, 96, 96);
 }
 
 @media (max-width: 1047px) {
@@ -120,16 +146,26 @@
 
 @media (max-width: 590px) {
   .announcements_section {
-    min-height: 60%;
+    height: 450px;
+    min-height: fit-content;
   }
 
-  .announcement_card {
+  .announcement_content {
     width: 100%;
+    height: fit-content;
     flex-direction: column;
-    height: 450px;
     margin-bottom: 40px;
     padding-right: 0;
     position: static;
+  }
+
+  .buttons {
+    bottom: 0.25rem;
+    right: 0.25rem;
+  }
+
+  .image_container {
+    min-height: 200px;
   }
 
   .announcement_card:nth-child(2) {
@@ -145,17 +181,16 @@
   }
 
   .image_container {
-    margin-top: 20px;
     min-width: 100%;
     margin-left: 0;
   }
 
   .announcement_info {
     align-items: center;
+    gap: 1rem;
   }
 
   .announcement_text {
     margin: 0 25px;
-    padding-bottom: 40px;
   }
 }

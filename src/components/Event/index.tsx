@@ -20,6 +20,8 @@ import FileCard from '@/components/FileCard'
 import { Workshop, Attachment } from '@/types'
 import dayjs from 'dayjs'
 import es from 'dayjs/locale/es'
+import useFetchUserPlan from '@/Hooks/useFetchUserPlan'
+import PremiumBlocker from '../Premium'
 import styles from './styles.module.css'
 
 dayjs.locale(es)
@@ -51,9 +53,8 @@ const Event: FC = () => {
   const [files, setFiles] = useState<Attachment[] | []>([])
   const [tabSelected, setTabSelected] = useState('1')
   const router = useRouter()
-  const {
-    query: { id },
-  } = router
+  const { subscription } = useFetchUserPlan()
+  const { query: { id } } = router
 
   const postWorkshop = async () => {
     const data = {
@@ -77,7 +78,6 @@ const Event: FC = () => {
     setLoading(true)
     try {
       const { data } = await axiosInstance.get(`${ROUTES.WORKSHOP}/${id}`)
-      console.log('event ->', data)
       setEvent(data)
       const attachments = data.attachments
       if (attachments.length > 0) {
@@ -173,6 +173,11 @@ const Event: FC = () => {
 
   return (
     <div className={styles.event_container}>
+      {
+        (subscription?.status !== 'ACTIVE' && event?.isPremium) && (
+          createPortal(<PremiumBlocker />, document.body)
+        )
+      }
       <Head>
         <title>Evento - {event.title}</title>
       </Head>
@@ -303,31 +308,35 @@ const Event: FC = () => {
               </div> */}
             </div>
 
-            <div className={styles.event_subscription_right_column}>
-              {event.subscribedUsers.some(
-                (userInEvent) => userInEvent._id === user?._id
-              ) ? (
-                <div className={styles.event_info_price}>
-                  <p className={'event_info_text'}>
-                    Ya estás registrado a este evento
-                  </p>
+            {
+              (!event?.isPremium || subscription?.status === 'ACTIVE' ) && (
+                <div className={styles.event_subscription_right_column}>
+                  {event.subscribedUsers.some(
+                    (userInEvent) => userInEvent._id === user?._id
+                  ) ? (
+                    <div className={styles.event_info_price}>
+                      <p className={'event_info_text'}>
+                        Ya estás registrado a este evento
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <div className={styles.event_info_price}>
+                        <label className='event_info_label'>Precio</label>
+                        <p className='event_info_text'>GRATIS</p>
+                      </div>
+                      <button
+                        type='button'
+                        className='event_info_button'
+                        onClick={postWorkshop}
+                      >
+                        Registrarme ahora
+                      </button>
+                    </>
+                  )}
                 </div>
-              ) : (
-                <>
-                  <div className={styles.event_info_price}>
-                    <label className='event_info_label'>Precio</label>
-                    <p className='event_info_text'>GRATIS</p>
-                  </div>
-                  <button
-                    type='button'
-                    className='event_info_button'
-                    onClick={postWorkshop}
-                  >
-                    Registrarme ahora
-                  </button>
-                </>
-              )}
-            </div>
+              )
+            }
           </div>
         </div>,
         document.body

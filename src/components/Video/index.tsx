@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { createPortal } from 'react-dom'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { axiosInstance } from '@/axios/axiosInstance'
@@ -7,9 +8,11 @@ import VideoPlayer from './ui/VideoPlayer'
 import VideoTabs from './ui/VideoTabs'
 import VideoComments from './ui/VideoComments'
 import RecommendedVideos from './ui/RecommendedVideos'
+import PremiumBlocker from '../Premium'
 import { BiDownArrowAlt } from 'react-icons/bi'
 import ROUTES from '@/helpers/routes'
 import styles from './styles.module.css'
+import useFetchUserPlan from '@/Hooks/useFetchUserPlan'
 
 const Video = () => {
   const [showComments, setShowComments] = useState(false)
@@ -19,6 +22,7 @@ const Video = () => {
   const [progress, setProgress] = useState(0)
   const router = useRouter()
   const { id } = router.query
+  const { subscription } = useFetchUserPlan()
 
   // events related
   const fetchRelated = async () => {
@@ -71,18 +75,20 @@ const Video = () => {
 
   return (
     <div className={styles.section}>
+      {
+        (subscription?.status !== 'ACTIVE' &&  video?.isPremium) && (
+          createPortal(<PremiumBlocker />, document.body)
+        )
+      }
       <Head>
         <title>{video?.title}</title>
       </Head>
 
       <div className={styles.video_container}>
         <VideoHeader video={video} progress={progress} related={related} />
-
-        <VideoPlayer video={video} videoProgress={progress} />
-
+        <VideoPlayer video={(subscription?.status !== 'ACTIVE' &&  video?.isPremium) ? '' : video} videoProgress={progress} />
         <div className={styles.video_info_container}>
           <VideoTabs video={video} />
-
           {!showComments && (
             <div
               className={styles.video_comments}
@@ -100,7 +106,6 @@ const Video = () => {
               </div>
             </div>
           )}
-
           {showComments && (
             <VideoComments
               video={video}
@@ -111,7 +116,6 @@ const Video = () => {
           )}
         </div>
       </div>
-
       {/* <RecommendedVideos /> */}
     </div>
   )
