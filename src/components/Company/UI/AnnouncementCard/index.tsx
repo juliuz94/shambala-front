@@ -103,6 +103,7 @@ export const AnnouncementCard = ({
         isModalOpen={isAnnounModalOpen}
         setIsModalOpen={setIsAnnounModalOpen}
         id={announ?._id}
+        setUpdateAnnoun={setUpdateAnnoun}
       />
     </>
   )

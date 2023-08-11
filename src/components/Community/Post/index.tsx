@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 import 'moment/locale/es'
 import { DocPost } from '@/types'
 import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io/index'
-import { BsTrashFill } from 'react-icons/bs'
+import { BsTrashFill, BsPinFill, BsPin } from 'react-icons/bs'
 import { axiosInstance } from '@/axios/axiosInstance'
 import { useUserContext } from '@/context/userContext'
 import ROUTES from '@/helpers/routes'
@@ -21,6 +21,7 @@ interface PostProps {
   setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
   setShowPost: SetShowPostFunction
   setPageNumber: React.Dispatch<React.SetStateAction<number>>
+  handlePinPost: (post: DocPost, pin: boolean) => void
 }
 
 const Post = ({
@@ -28,6 +29,7 @@ const Post = ({
   setUpdatePost,
   setShowPost,
   setPageNumber,
+  handlePinPost
 }: PostProps) => {
   const router = useRouter()
   const { user } = useUserContext()
@@ -63,7 +65,6 @@ const Post = ({
 
   const deletePost = (e: React.MouseEvent) => {
     e.stopPropagation()
-
     setDeletePostModal(true)
   }
 
@@ -74,6 +75,11 @@ const Post = ({
       setIsLiked(false)
     }
   }, [post, user])
+
+  const handlePin = (e: React.MouseEvent, post: DocPost, pin: boolean) => {
+    e.stopPropagation()
+    handlePinPost(post, pin)
+  }
 
   return (
     <div className={styles.container} onClick={handleSelectPost}>
@@ -124,13 +130,13 @@ const Post = ({
         <div className={styles.icons}>
           {isLiked ? (
             <IoIosHeart
-              style={{ fill: '#54c055' }}
+              style={{ fill: '#54c055', cursor: 'pointer' }}
               size={24}
               onClick={likePost}
             />
           ) : (
             <IoIosHeartEmpty
-              style={{ fill: '#54c055' }}
+              style={{ fill: '#54c055', cursor: 'pointer' }}
               size={24}
               onClick={likePost}
             />
@@ -144,6 +150,23 @@ const Post = ({
               onClick={deletePost}
             />
           )}
+
+          {
+            user?.type === 'admin' && post.pin ?
+              <BsPinFill color='#54c055' style={{ cursor: 'pointer' }} onClick={(e) => handlePin(e, post, false)} />
+              :
+              <BsPin color='#54c055' style={{ cursor: 'pointer' }} onClick={(e) => handlePin(e, post, true)} />
+          }
+
+          {
+            post.pin && (
+              <div className={styles.pinned_post}>
+                <p>Destacado</p>
+                <BsPinFill color='#54c055' />
+              </div>
+            )
+          }
+
         </div>
       </div>
     </div>

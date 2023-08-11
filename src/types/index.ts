@@ -401,6 +401,7 @@ export interface DocPost {
   createdAt: string
   updatedAt: string
   category: string | undefined
+  pin?: boolean
   __v: number
 }
 

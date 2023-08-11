@@ -15,8 +15,7 @@ const Company: FC = () => {
   const router = useRouter()
   const workshopId = router.query.id
   const { workshop } = useFetchWorkshop(workshopId as string)
-  const { announcement, setAnnouncement, setUpdateAnnoun }: any =
-    useFetchAnnouncement()
+  const { announcement, setAnnouncement, setUpdateAnnoun }: any = useFetchAnnouncement()
   const { user } = useUserContext()
 
   const [isModalOpen, setIsModalOpen] = useState(false)

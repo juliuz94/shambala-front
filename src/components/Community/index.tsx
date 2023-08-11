@@ -26,17 +26,6 @@ const Community = () => {
   const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false)
   const [showRulesModal, setShowRulesModal] = useState<boolean>(false)
 
-  const fetchComments = async (id: string, limit: number) => {
-    try {
-      const res = await axiosInstance.get<CommentData>(
-        `${ROUTES.POST_COMMENT}?id=${id}&limit=${limit}`
-      )
-      setComments(res.data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   const filters = [
     {
       tag: 'Agora Virtual',
@@ -76,7 +65,6 @@ const Community = () => {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
-
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
@@ -96,6 +84,18 @@ const Community = () => {
       setShowUpdateModal(true)
     }
   }, [user])
+
+  const handlePinPost = async (post: DocPost, pin: boolean) => {
+    try {
+      const res = await axiosInstance.patch(`${ROUTES.POST}/${post._id}`, {
+        pin: pin
+      })
+      setUpdatePost((prevUpdatePost) => !prevUpdatePost)
+      console.log('res ->', res)
+    } catch (error) {
+      console.log('handlePinPost', error)
+    }
+  }
 
   return (
     <section className={styles.section}>
@@ -134,6 +134,7 @@ const Community = () => {
                 setUpdatePost={setUpdatePost}
                 setShowPost={setShowPost}
                 setPageNumber={setPageNumber}
+                handlePinPost={handlePinPost}
               />
             )
           )}

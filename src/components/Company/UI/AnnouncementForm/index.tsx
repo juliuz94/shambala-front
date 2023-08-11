@@ -1,19 +1,20 @@
 import { useState } from 'react'
+import { Spin } from 'antd'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { useUserContext } from '@/context/userContext'
 import { toast } from 'sonner'
 import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
+import { LoadingOutlined } from '@ant-design/icons'
 import styles from './styles.module.css'
 
 interface AnnounProps {
   id: string
-  // fetchComments: (id: string, limit: number) => Promise<void>
-  // commentsLimit: number
 }
 
 const AnnouncementForm = ({ id }: AnnounProps) => {
   const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
   const { user } = useUserContext()
 
   const { renderProfileImage } = useRenderProfileImage(
@@ -27,20 +28,21 @@ const AnnouncementForm = ({ id }: AnnounProps) => {
     setMessage(e.target.value)
   }
 
-  const handleCreateComment = async (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleCreateComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
     try {
+      setLoading(true)
       await axiosInstance.patch(`${ROUTES.ANNOUNCEMENT}/comment/${id}`, {
         message,
         announcement: id,
       })
-      // fetchComments(id, commentsLimit)
+      setMessage('')
       toast.success('Se agregó tu comentario correctamente')
     } catch (error) {
       toast.error('Parece que hubo un error')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -62,8 +64,9 @@ const AnnouncementForm = ({ id }: AnnounProps) => {
         className={styles.button}
         type='submit'
         onClick={handleCreateComment}
+        disabled={loading}
       >
-        Comentar
+        { loading ? <LoadingOutlined style={{ fontSize: 20 }} spin /> : 'Comentar'}
       </button>
     </div>
   )

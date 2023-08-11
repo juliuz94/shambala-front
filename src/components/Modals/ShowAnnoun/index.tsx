@@ -13,19 +13,19 @@ import styles from './styles.module.css'
 type ShowAnnounProps = {
   isModalOpen: boolean
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  id: string
+  id: string,
+  setUpdateAnnoun: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const ShowAnnounModal = ({
   isModalOpen,
   setIsModalOpen,
   id,
+  setUpdateAnnoun
 }: ShowAnnounProps) => {
   const [isLiked, setIsLiked] = useState(false)
   const { announ } = useFetchAnnoun(id)
   const { user } = useUserContext()
-
-  console.log('announ', announ)
 
   const handleOk = () => {
     setIsModalOpen(false)
@@ -63,7 +63,7 @@ const ShowAnnounModal = ({
         return new Promise(async (resolve, reject) => {
           try {
             const res = await axiosInstance.delete(`${ROUTES.ANNOUNCEMENT}/comment:${id}`)
-            console.log('res ->', res)
+            setUpdateAnnoun(prevState => !prevState)
             resolve('')
           } catch (error) {
             console.log(error)

@@ -4,11 +4,10 @@
   align-items: flex-start;
   padding: 24px;
   gap: 5px;
-
   width: 100%;
-
   border: 1px solid #e5e7eb;
   border-radius: 8px;
+  position: relative;
 }
 
 .title h1 {
@@ -116,4 +115,26 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.pinned_post {
+  display: flex;
+  background-color: var(--primary-color);
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.2rem 0.25rem;
+  border-radius: 3px;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.pinned_post p {
+  font-size: 0.6rem;
+  color: var(--contrast-text-color);
+}
+
+.pinned_post svg {
+  fill: var(--contrast-text-color);
+  font-size: 0.6rem;
 }
