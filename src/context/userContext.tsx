@@ -4,6 +4,7 @@ import React, {
   useState,
   PropsWithChildren,
   useContext,
+  useEffect,
 } from 'react'
 import { getAuth, signOut, User } from 'firebase/auth'
 import { useRouter } from 'next/router'
@@ -13,6 +14,8 @@ import { AuthStoreType, User as LocalUser } from '@/types'
 
 type UserContextType = {
   user: LocalUser | null
+  userPoints: number
+  fetchPoints: (userId: string) => void
   setUser: (user: LocalUser | null) => void
   handleLogin: (user: LocalUser) => void
   handleLoginModal: (user: LocalUser) => void
@@ -30,6 +33,7 @@ export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<LocalUser | null>(
     userInfo ? JSON.parse(userInfo) : null
   )
+  const [userPoints, setUserPoints] = useState(0)
 
   const setAuthInfo = (user: LocalUser | null) => {
     localStorage.setItem('sha_user', JSON.stringify(user))
@@ -48,6 +52,7 @@ export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
       )
       localStorage.setItem('sha_user_token', user.accessToken)
       setAuthInfo(data)
+      fetchPoints(data._id)
       toast.success('¡Qué bueno tenerte acá!')
       router.push('/community')
     } catch (error) {
@@ -83,10 +88,42 @@ export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }, 1000)
   }
 
+  const fetchPoints = async (userId: string) => {
+    try {
+      const token = localStorage.getItem('sha_user_token')
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/points/by-user?_id=${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      console.log('data ->', data)
+      if (data?.length > 0) {
+        const totalPoints = data.reduce((accumulator: number, current: any) => {
+          return accumulator + current.point
+        }, 0)
+        setUserPoints(totalPoints)
+      }
+
+    } catch (error) {
+      console.log('[fetchPoints]', error)
+    }
+  }
+
+  useEffect(() => {
+    if (user) {
+      fetchPoints(user._id)
+    }
+  }, [])
+
   return (
     <Provider
       value={{
         user: user,
+        userPoints: userPoints,
+        fetchPoints: (userId) => fetchPoints(userId),
         setUser: (data) => setAuthInfo(data),
         handleLogin: (user) => handleLogin(user),
         handleLoginModal: (user) => handleLoginModal(user),

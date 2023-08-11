@@ -7,7 +7,7 @@ import type { MenuProps } from 'antd'
 import { FaLeaf } from 'react-icons/fa'
 import { HiBell } from 'react-icons/hi2'
 import { useUserContext } from '@/context/userContext'
-import fetchNotificationsByUser from '@/Hooks/useFetchNotifications'
+import useFetchNotifications from '@/Hooks/useFetchNotifications'
 import { MoreOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons'
 import { getNotificationMessage } from '@/helpers/getNotificationMessage'
 import { Notification } from '@/types'
@@ -15,14 +15,14 @@ import styles from './styles.module.css'
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
-  const { user, logOut } = useUserContext()
+  const { user, logOut, userPoints } = useUserContext()
   const router = useRouter()
   const {
     notifications,
     paginationData,
     refreshNotifications,
     setNotificationAsRead,
-  } = fetchNotificationsByUser(false, 1)
+  } = useFetchNotifications(false, 1)
 
   const items: MenuProps['items'] = [
     {
@@ -202,7 +202,7 @@ const Header = () => {
             </Popover>
             <div className={styles.point_counter}>
               <FaLeaf />
-              {/* <p>25</p> */}
+              <p>{userPoints}</p>
             </div>
 
             {/* <p className={styles.user_name}>{user?.name?.split(' ')[0]}</p> */}
@@ -265,7 +265,7 @@ const Header = () => {
         <div className={styles.user_options_container}>
           <div className={styles.point_counter}>
             <FaLeaf />
-            {/* <p>25</p> */}
+            <p>{userPoints}</p>
           </div>
 
           <p className={styles.user_name}>{user?.name?.split(' ')[0]}</p>

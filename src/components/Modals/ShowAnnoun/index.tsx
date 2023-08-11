@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
-import { Modal } from 'antd'
+import { Avatar, Button, Modal } from 'antd'
 import useFetchAnnoun from '@/Hooks/useFetchAnnoun'
 import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io/index'
+import { ExclamationCircleFilled } from '@ant-design/icons'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { useUserContext } from '@/context/userContext'
 import AnnouncementForm from '@/components/Company/UI/AnnouncementForm'
+import { HiTrash } from 'react-icons/hi2'
 import styles from './styles.module.css'
 
 type ShowAnnounProps = {
@@ -23,6 +25,8 @@ const ShowAnnounModal = ({
   const { announ } = useFetchAnnoun(id)
   const { user } = useUserContext()
 
+  console.log('announ', announ)
+
   const handleOk = () => {
     setIsModalOpen(false)
   }
@@ -33,7 +37,6 @@ const ShowAnnounModal = ({
 
   const likeAnnoun = async (e: React.MouseEvent) => {
     e.stopPropagation()
-
     try {
       await axiosInstance.patch(`${ROUTES.ANNOUNCEMENT}/like/${id}`)
       setIsLiked(!isLiked)
@@ -50,7 +53,27 @@ const ShowAnnounModal = ({
     }
   }, [announ, user])
 
-  console.log('single', announ)
+  const handleDeleteComment = (id: string) => {
+    Modal.confirm({
+      title: 'Deseas borrar este comentario?',
+      icon: <ExclamationCircleFilled />,
+      okText: 'Borrar',
+      cancelText: 'Cancelar',
+      onOk() {
+        return new Promise(async (resolve, reject) => {
+          try {
+            const res = await axiosInstance.delete(`${ROUTES.ANNOUNCEMENT}/comment:${id}`)
+            console.log('res ->', res)
+            resolve('')
+          } catch (error) {
+            console.log(error)
+            reject()
+          }
+        })
+      },
+      onCancel() { },
+    })
+  }
 
   return (
     <Modal
@@ -67,7 +90,7 @@ const ShowAnnounModal = ({
         <div className={styles.img}>
           <img src={announ?.image} alt={announ?.title} />
         </div>
-
+        <div dangerouslySetInnerHTML={{ __html: announ?.content || '' }} />
         <div className={styles.buttons}>
           {isLiked ? (
             <button className={styles.button} onClick={likeAnnoun}>
@@ -81,10 +104,51 @@ const ShowAnnounModal = ({
             </button>
           )}
         </div>
-
-        <div dangerouslySetInnerHTML={{ __html: announ?.content || '' }} />
-
-        {/* <AnnouncementForm id={id} /> */}
+      </div>
+      <AnnouncementForm id={id} />
+      <div className={styles.comments}>
+        <h4>Comentarios</h4>
+        <div className={styles.comments_container}>
+          {
+            announ?.comments?.map(comment => {
+              return (
+                <div key={comment._id} className={styles.comment_card}>
+                  <Avatar
+                    size='small'
+                    style={{
+                      backgroundColor: '#0F72EC',
+                      border: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      minWidth: '25px'
+                    }}
+                    src={comment.user.image}
+                  >
+                    <p style={{ fontSize: '0.75rem' }}>
+                      {comment.user.firstName.split('')[0]}
+                      {comment.user.lastName?.split('')[0]}
+                    </p>
+                  </Avatar>
+                  <div className={styles.comment_content}>
+                    <p>
+                      {comment.message}
+                    </p>
+                    <div className={styles.comment_user_data}>
+                      <p>
+                        {comment.user.lastName}{' '}{comment.user.lastName ? comment.user.lastName : ''}
+                      </p>
+                    </div>
+                  </div>
+                  <div className={styles.comment_options}>
+                    <Button type='ghost' className={styles.options_button} onClick={() => handleDeleteComment(comment._id)}>
+                      <HiTrash />
+                    </Button>
+                  </div>
+                </div>
+              )
+            })
+          }
+        </div>
       </div>
     </Modal>
   )

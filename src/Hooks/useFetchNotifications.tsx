@@ -3,9 +3,9 @@ import { axiosInstance } from '@/axios/axiosInstance'
 import { Notification } from '@/types'
 import ROUTES from '@/helpers/routes'
 
-const fetchNotificationsByUser = (read: boolean | null, page: number = 1) => {
+const useFetchNotifications = (read: boolean | null, page: number = 1) => {
   const [loadingData, setLoadingData] = useState(false)
-  const [paginationData, setPaginationData] = useState({
+  const [paginationData, setPaginationData] = useState<any>({
     hasNextPage: false,
     hasPrevPage: false,
     limit: 10,
@@ -83,4 +83,4 @@ const fetchNotificationsByUser = (read: boolean | null, page: number = 1) => {
   return { notifications, paginationData, loadingData, refreshNotifications, setNotificationAsRead }
 }
 
-export default fetchNotificationsByUser
+export default useFetchNotifications

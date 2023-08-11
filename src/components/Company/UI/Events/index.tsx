@@ -19,6 +19,7 @@ interface EventsTypes {
 }
 
 const Events = ({ work }: EventsTypes) => {
+  console.log('work ->', work)
   const router = useRouter()
 
   return (
@@ -60,12 +61,12 @@ const Events = ({ work }: EventsTypes) => {
                     }}
                     src={speaker.image}
                   >
-                    <p style={{ fontSize: '0.5rem' }}>
-                      {speaker.name.split(' ')[0].split('')[0]}
-                      {speaker.name.split(' ')[1]?.split('')[0]}
-                    </p>
+                    {/* <p style={{ fontSize: '0.5rem' }}>
+                      {speaker?.name?.split(' ')[0].split('')[0]}
+                      {speaker?.name?.split(' ')[1]?.split('')[0]}
+                    </p> */}
                   </Avatar>
-                  <p className={styles.speaker_name}>{speaker.name}</p>
+                  {/* <p className={styles.speaker_name}>{speaker.name}</p> */}
                 </div>
               )
             })}
@@ -140,12 +141,12 @@ const Events = ({ work }: EventsTypes) => {
                       }}
                       // src={speaker.image}
                     >
-                      <p style={{ fontSize: '0.75rem' }}>
+                      {/* <p style={{ fontSize: '0.75rem' }}>
                         {speaker.name.split(' ')[0].split('')[0]}
                         {speaker.name.split(' ')[1]?.split('')[0]}
-                      </p>
+                      </p> */}
                     </Avatar>
-                    <p className={styles.speaker_name}>{speaker.name}</p>
+                    {/* <p className={styles.speaker_name}>{speaker.name}</p> */}
                   </div>
                 )
               })}
@@ -168,7 +169,7 @@ const Events = ({ work }: EventsTypes) => {
         </div>
 
         <div className={styles.image_container}>
-          {/* <img src={event?.image} alt='img' /> */}
+          <img src={work?.image} alt='img' />
           <div className={styles.event_type}>
             <HiCalendarDays />
             <p>{work?.type === 'EVENT' ? 'Evento' : 'Taller'}</p>

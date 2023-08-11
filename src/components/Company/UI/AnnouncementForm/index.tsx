@@ -14,7 +14,6 @@ interface AnnounProps {
 
 const AnnouncementForm = ({ id }: AnnounProps) => {
   const [message, setMessage] = useState('')
-
   const { user } = useUserContext()
 
   const { renderProfileImage } = useRenderProfileImage(
@@ -49,7 +48,6 @@ const AnnouncementForm = ({ id }: AnnounProps) => {
     <div className={styles.announ_form}>
       <div className={styles.bar}>
         {renderProfileImage()}
-
         <div className={styles.text_container}>
           <textarea
             className={styles.input_bar}

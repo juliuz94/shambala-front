@@ -58,7 +58,6 @@ const Post = () => {
   const fetchPost = async (id: string | string[]) => {
     try {
       const { data } = await axiosInstance.get(`${ROUTES.POST_BY_ID}?id=${id}`)
-      console.log('data ->', data)
       setPost(data)
     } catch (error) {
       console.log('[fetchPost]', error)

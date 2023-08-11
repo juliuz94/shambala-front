@@ -5,6 +5,7 @@ import ROUTES from '@/helpers/routes'
 import { useUserContext } from '@/context/userContext'
 import { toast } from 'sonner'
 import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
+import { sendPoints } from '@/helpers/gamification'
 import styles from './styles.module.css'
 
 interface Props {
@@ -22,8 +23,8 @@ const CommentForm = ({
 }: Props) => {
   const [message, setMessage] = useState('')
 
-  const context = useUserContext()
-  const user = context?.user
+  const { user, fetchPoints } = useUserContext()
+  // const user = context?.user
 
   const { renderProfileImage } = useRenderProfileImage(
     user?.image,
@@ -45,6 +46,8 @@ const CommentForm = ({
       await axiosInstance.post(`${ROUTES.POST_COMMENT}/${id}`, { message })
       setMessage('')
       fetchComments(id, commentsLimit)
+      sendPoints('COMMUNITY_COMMENT', { userId: user._id})
+      fetchPoints(user?._id)
       toast.success('Se agregó tu comentario correctamente')
     } catch (error) {
       toast.error('Parece que hubo un error')

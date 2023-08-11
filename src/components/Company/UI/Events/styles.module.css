@@ -96,8 +96,9 @@
 }
 
 .image_container img {
+  width: 100%;
   max-width: 220px;
-  height: 150px;
+  height: auto;
   border-radius: 10px;
 }
 

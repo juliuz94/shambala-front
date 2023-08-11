@@ -94,11 +94,11 @@ const EventCard = ({ small, event, fetchEvents }: PropTypes) => {
                     src={speaker.image}
                   >
                     <p style={{ fontSize: '0.5rem' }}>
-                      {speaker.name.split(' ')[0].split('')[0]}
-                      {speaker.name.split(' ')[1]?.split('')[0]}
+                      {speaker?.name?.split(' ')[0].split('')[0]}
+                      {speaker?.name?.split(' ')[1]?.split('')[0]}
                     </p>
                   </Avatar>
-                  <p className={styles.speaker_name}>{speaker.name}</p>
+                  <p className={styles.speaker_name}>{speaker?.name}</p>
                 </div>
               )
             })}
@@ -188,11 +188,11 @@ const EventCard = ({ small, event, fetchEvents }: PropTypes) => {
                     // src={speaker.image}
                     >
                       <p style={{ fontSize: '0.75rem' }}>
-                        {speaker.name.split(' ')[0].split('')[0]}
-                        {speaker.name.split(' ')[1]?.split('')[0]}
+                        {speaker?.name?.split(' ')[0].split('')[0]}
+                        {speaker?.name?.split(' ')[1]?.split('')[0]}
                       </p>
                     </Avatar>
-                    <p className={styles.speaker_name}>{speaker.name}</p>
+                    <p className={styles.speaker_name}>{speaker?.name}</p>
                   </div>
                 )
               })}

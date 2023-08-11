@@ -5,11 +5,11 @@ import { Avatar, Button, Skeleton } from 'antd'
 import styles from './styles.module.css'
 import { Notification } from '@/types'
 import { getNotificationMessage } from '@/helpers/getNotificationMessage'
-import fetchNotificationsByUser from '@/Hooks/useFetchNotifications'
+import useFetchNotifications from '@/Hooks/useFetchNotifications'
 
 const Notifications = () => {
   const [filter, setFilter] = useState<boolean | null>(false)
-  const { notifications, paginationData, refreshNotifications, setNotificationAsRead, loadingData } = fetchNotificationsByUser(filter, 1)
+  const { notifications, paginationData, refreshNotifications, setNotificationAsRead, loadingData } = useFetchNotifications(filter, 1)
 
   console.log('notifications ->', notifications)
 
@@ -62,7 +62,7 @@ const Notifications = () => {
           notifications?.length > 0 && !loadingData && <div className={styles.notifications_container}>
             {notifications.map((notification: Notification) => {
               return (
-                <div className={styles.notification_card}>
+                <div className={styles.notification_card} key={notification._id}>
                   <div className={styles.notification_data}>
                     <div className={styles.notification_avatar_container}>
                       <Avatar

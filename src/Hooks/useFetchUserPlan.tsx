@@ -3,7 +3,7 @@ import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 
 const useFetchUserPlan = () => {
-  const [subscription, setSubscription] = useState(null)
+  const [subscription, setSubscription] = useState<any>(null)
 
   const fetchUserPlan = async () => {
     try {
