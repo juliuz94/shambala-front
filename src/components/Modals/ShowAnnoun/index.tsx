@@ -139,11 +139,14 @@ const ShowAnnounModal = ({
                       </p>
                     </div>
                   </div>
-                  <div className={styles.comment_options}>
-                    <Button type='ghost' className={styles.options_button} onClick={() => handleDeleteComment(comment._id)}>
-                      <HiTrash />
-                    </Button>
-                  </div>
+                  {
+                    (user?.type === 'admin' || comment.user?._id === user._id) &&
+                    <div className={styles.comment_options}>
+                      <Button type='ghost' className={styles.options_button} onClick={() => handleDeleteComment(comment._id)}>
+                        <HiTrash />
+                      </Button>
+                    </div>
+                  }
                 </div>
               )
             })
