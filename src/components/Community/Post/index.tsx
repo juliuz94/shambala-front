@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import moment from 'moment'
@@ -14,12 +13,9 @@ import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
 import styles from './styles.module.css'
 moment.locale('es')
 
-type SetShowPostFunction = (value: boolean) => void
-
 interface PostProps {
   post: DocPost
   setUpdatePost: React.Dispatch<React.SetStateAction<boolean>>
-  setShowPost: SetShowPostFunction
   setPageNumber: React.Dispatch<React.SetStateAction<number>>
   handlePinPost: (post: DocPost, pin: boolean) => void
 }
@@ -27,9 +23,8 @@ interface PostProps {
 const Post = ({
   post,
   setUpdatePost,
-  setShowPost,
   setPageNumber,
-  handlePinPost
+  handlePinPost,
 }: PostProps) => {
   const router = useRouter()
   const { user } = useUserContext()
@@ -81,9 +76,14 @@ const Post = ({
     handlePinPost(post, pin)
   }
 
+  const redirectToProfile = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    router.push(`/profile/${post.user?._id}`)
+  }
+
   return (
-    <div className={styles.container} onClick={handleSelectPost}>
-      <div className={styles.title} onClick={() => setShowPost(true)}>
+    <div className={styles.container}>
+      <div className={styles.title} onClick={handleSelectPost}>
         <h1>{post.title}</h1>
       </div>
 
@@ -94,7 +94,7 @@ const Post = ({
           <p>{post?.commentsCount || 0} Respuestas</p>
         </div>
 
-        <div className={styles.circle} onClick={() => setShowPost(true)}>
+        <div className={styles.circle} onClick={handleSelectPost}>
           <img
             className={styles.arrow}
             src='/images/svg/arrow_right.svg'
@@ -107,11 +107,9 @@ const Post = ({
         <div className={styles.content}>
           {renderProfileImage()}
 
-          <Link href={`/profile/${post.user?._id}`} className={styles.links}>
-            <p>
-              {post.user?.firstName || ''} {post.user?.lastName || ''}
-            </p>
-          </Link>
+          <p className={styles.links} onClick={redirectToProfile}>
+            {post.user?.firstName || ''} {post.user?.lastName || ''}
+          </p>
         </div>
       </div>
 
@@ -124,7 +122,7 @@ const Post = ({
       />
 
       <div className={styles.footer}>
-        <p className={styles.answer} onClick={() => setShowPost(true)}>
+        <p className={styles.answer} onClick={handleSelectPost}>
           Responder
         </p>
         <div className={styles.icons}>
@@ -151,22 +149,26 @@ const Post = ({
             />
           )}
 
-          {
-            user?.type === 'admin' && post.pin ?
-              <BsPinFill color='#54c055' style={{ cursor: 'pointer' }} onClick={(e) => handlePin(e, post, false)} />
-              :
-              <BsPin color='#54c055' style={{ cursor: 'pointer' }} onClick={(e) => handlePin(e, post, true)} />
-          }
+          {user?.type === 'admin' && post.pin ? (
+            <BsPinFill
+              color='#54c055'
+              style={{ cursor: 'pointer' }}
+              onClick={(e) => handlePin(e, post, false)}
+            />
+          ) : (
+            <BsPin
+              color='#54c055'
+              style={{ cursor: 'pointer' }}
+              onClick={(e) => handlePin(e, post, true)}
+            />
+          )}
 
-          {
-            post.pin && (
-              <div className={styles.pinned_post}>
-                <p>Destacado</p>
-                <BsPinFill color='#54c055' />
-              </div>
-            )
-          }
-
+          {post.pin && (
+            <div className={styles.pinned_post}>
+              <p>Destacado</p>
+              <BsPinFill color='#54c055' />
+            </div>
+          )}
         </div>
       </div>
     </div>

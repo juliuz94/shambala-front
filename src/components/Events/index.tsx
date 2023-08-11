@@ -180,13 +180,15 @@ const Events = () => {
               <Skeleton />
             </>
           ) : (
-            workShopsData?.docs?.map((workshop) => (
-              <EventCard
-                key={workshop._id}
-                event={workshop}
-                fetchEvents={handleFetchUpdatedEvent}
-              />
-            ))
+            workShopsData?.docs
+              .filter((workshop) => dayjs().isBefore(dayjs(workshop.date)))
+              .map((workshop) => (
+                <EventCard
+                  key={workshop._id}
+                  event={workshop}
+                  fetchEvents={handleFetchUpdatedEvent}
+                />
+              ))
           )}
 
           {!loading && workShopsData?.docs.length === 0 && (

@@ -1,6 +1,6 @@
 .company_container {
   background-color: var(--general-background-color);
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);
 }
 
 .company_content_container {

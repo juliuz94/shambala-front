@@ -38,14 +38,23 @@ const PostComment = ({
   )
 
   const handlePinComment = async () => {
-    try {
-      const res = await axiosInstance.post(`${ROUTES.PIN_COMMENT}`, {
-        commentId: comment._id,
-      })
-      fetchComments(id, commentsLimit)
-      console.log('res >', res)
-    } catch (error) {
-      console.log('[handlePinComment]', error)
+    if (comment?.anchored) {
+      try {
+        await axiosInstance.delete(`${ROUTES.PIN_COMMENT}/${comment._id}`)
+        fetchComments(id, commentsLimit)
+      } catch (error) {
+        console.log('[handlePinComment]', error)
+      }
+    } else {
+      try {
+        const res = await axiosInstance.post(`${ROUTES.PIN_COMMENT}`, {
+          commentId: comment._id,
+        })
+        fetchComments(id, commentsLimit)
+        console.log('res >', res)
+      } catch (error) {
+        console.log('[handlePinComment]', error)
+      }
     }
   }
 
@@ -91,6 +100,7 @@ const PostComment = ({
             </div>
           )}
         </div>
+
         <div className={styles.comment_options}>
           {(comment?.user?._id === user?._id ||
             (user?.type && user?.type === 'admin')) && (
@@ -101,6 +111,7 @@ const PostComment = ({
               />
             </Button>
           )}
+
           {user?.type && user?.type === 'admin' && (
             <Button
               className={`${styles.comment_button}`}
@@ -110,6 +121,7 @@ const PostComment = ({
               {comment.anchored ? <BsPinFill /> : <BsPin />}
             </Button>
           )}
+
           {isLiked ? (
             <IoIosHeart
               style={{ fill: '#54c055' }}

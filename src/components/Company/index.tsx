@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useUserContext } from '@/context/userContext'
@@ -9,16 +9,20 @@ import { Button } from 'antd'
 import CompanyBio from './UI/CompanyBio'
 import Announcements from './UI/Announcements'
 import useFetchAnnouncement from '@/Hooks/useFetchAnnouncement'
+import useFetchCompanyStatistics from '@/Hooks/useFetchCompanyStatistics'
 import styles from './styles.module.css'
 
-const Company: FC = () => {
+const Company = () => {
   const router = useRouter()
   const workshopId = router.query.id
   const { workshop } = useFetchWorkshop(workshopId as string)
-  const { announcement, setAnnouncement, setUpdateAnnoun }: any = useFetchAnnouncement()
+  const { announcement, setAnnouncement, setUpdateAnnoun }: any =
+    useFetchAnnouncement()
   const { user } = useUserContext()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const { companyStatistics } = useFetchCompanyStatistics(workshopId)
 
   return (
     <main className={styles.company_container}>
@@ -38,22 +42,22 @@ const Company: FC = () => {
                 )}
               </div>
 
-              {/* <div className={styles.company_stats}>
+              <div className={styles.company_stats}>
                 <div className={styles.stat}>
-                  <h3>0</h3>
+                  <h3>{companyStatistics?.users?.length || 0}</h3>
                   <p>Usuario</p>
                 </div>
 
                 <div className={styles.stat}>
-                  <h3>0</h3>
+                  <h3>{companyStatistics?.courses?.length || 0}</h3>
                   <p>Cursos</p>
                 </div>
 
                 <div className={styles.stat}>
-                  <h3>0</h3>
+                  <h3>{companyStatistics?.events?.length || 0}</h3>
                   <p>Eventos</p>
                 </div>
-              </div> */}
+              </div>
             </div>
 
             {user?.company.owner === user?._id ? (

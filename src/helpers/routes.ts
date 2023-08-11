@@ -9,11 +9,11 @@ type Routes = {
   WORKSHOP_PER_MONTH: string
   WORKSHOP: string
   POST: string
-  POST_BY_ID: string,
+  POST_BY_ID: string
   TAGS: string
   POST_COMMENT: string
   PIN_COMMENT: string
-  STATISTICS: string
+  COMPANY_STATISTICS: string
   LANDING_VIDEOS: string
   LANDING_WORKSHOP: string
   USERS: string
@@ -23,7 +23,7 @@ type Routes = {
   PLANS: string
   GENERATE_LINK: string
   SUBSCRIPTION: string
-  NOTIFICATIONS: string,
+  NOTIFICATIONS: string
   NOTIFICATIONS_BY_USER: string
 }
 
@@ -42,7 +42,7 @@ const ROUTES: Routes = {
   TAGS: 'tags',
   POST_COMMENT: 'community/post/comment',
   PIN_COMMENT: 'community/pin-comment',
-  STATISTICS: 'users/statistics',
+  COMPANY_STATISTICS: 'company/statistics',
   LANDING_VIDEOS: 'landing/videos',
   LANDING_WORKSHOP: 'landing/workshop',
   USERS: 'users',
@@ -53,7 +53,7 @@ const ROUTES: Routes = {
   GENERATE_LINK: 'stripe/generateLink',
   SUBSCRIPTION: 'users/subscription',
   NOTIFICATIONS: 'notifications',
-  NOTIFICATIONS_BY_USER: 'notifications/by-user'
+  NOTIFICATIONS_BY_USER: 'notifications/by-user',
 }
 
 export default ROUTES

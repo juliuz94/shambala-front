@@ -13,14 +13,16 @@ type UseFetchPostsHook = (
   pageNumber: number,
   category: string,
   searchString: string,
-  setPageNumber: Dispatch<SetStateAction<number>>
+  setPageNumber: Dispatch<SetStateAction<number>>,
+  tagId: string
 ) => ReturnTypeOfUseFetchPosts
 
 const useFetchPosts: UseFetchPostsHook = (
   pageNumber,
   category,
   searchString,
-  setPageNumber
+  setPageNumber,
+  tagId
 ) => {
   const [posts, setPosts] = useState<TypePost | null>(null)
   const [updatePost, setUpdatePost] = useState(false)
@@ -28,15 +30,13 @@ const useFetchPosts: UseFetchPostsHook = (
   const fetchPosts = async () => {
     let paramsString
     if (defaultCategories.includes(category)) {
-      paramsString = `?page=${pageNumber}&category=${category}&sort=acs&search=${searchString}`
+      paramsString = `?page=${pageNumber}&category=${category}&sort=acs&search=${searchString}&tag=${tagId}`
     } else {
-      paramsString = `?page=${pageNumber}&category=NULL&community=${category}&sort=acs&search=${searchString}`
+      paramsString = `?page=${pageNumber}&category=NULL&community=${category}&sort=acs&search=${searchString}&tag=${tagId}`
     }
 
     try {
-      const { data } = await axiosInstance.get(
-        `${ROUTES.POST}${paramsString}`
-      )
+      const { data } = await axiosInstance.get(`${ROUTES.POST}${paramsString}`)
 
       if (pageNumber === 1) {
         setPosts(data)
@@ -53,7 +53,7 @@ const useFetchPosts: UseFetchPostsHook = (
 
   useEffect(() => {
     fetchPosts()
-  }, [updatePost, pageNumber, category, searchString])
+  }, [updatePost, pageNumber, category, searchString, tagId])
 
   useEffect(() => {
     setPosts(null)

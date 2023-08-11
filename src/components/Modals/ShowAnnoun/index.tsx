@@ -13,7 +13,7 @@ import styles from './styles.module.css'
 type ShowAnnounProps = {
   isModalOpen: boolean
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  id: string,
+  id: string
   setUpdateAnnoun: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -21,10 +21,10 @@ const ShowAnnounModal = ({
   isModalOpen,
   setIsModalOpen,
   id,
-  setUpdateAnnoun
+  setUpdateAnnoun,
 }: ShowAnnounProps) => {
   const [isLiked, setIsLiked] = useState(false)
-  const { announ } = useFetchAnnoun(id)
+  const { announ, setUpdateAnn } = useFetchAnnoun(id)
   const { user } = useUserContext()
 
   const handleOk = () => {
@@ -62,8 +62,11 @@ const ShowAnnounModal = ({
       onOk() {
         return new Promise(async (resolve, reject) => {
           try {
-            const res = await axiosInstance.delete(`${ROUTES.ANNOUNCEMENT}/comment:${id}`)
-            setUpdateAnnoun(prevState => !prevState)
+            const res = await axiosInstance.delete(
+              `${ROUTES.ANNOUNCEMENT}/comment:${id}`
+            )
+            setUpdateAnnoun((prevState) => !prevState)
+            setUpdateAnn((prev) => !prev)
             resolve('')
           } catch (error) {
             console.log(error)
@@ -71,7 +74,7 @@ const ShowAnnounModal = ({
           }
         })
       },
-      onCancel() { },
+      onCancel() {},
     })
   }
 
@@ -105,52 +108,55 @@ const ShowAnnounModal = ({
           )}
         </div>
       </div>
-      <AnnouncementForm id={id} />
+
+      <AnnouncementForm id={id} setUpdateAnn={setUpdateAnn} />
+
       <div className={styles.comments}>
         <h4>Comentarios</h4>
         <div className={styles.comments_container}>
-          {
-            announ?.comments?.map(comment => {
-              return (
-                <div key={comment._id} className={styles.comment_card}>
-                  <Avatar
-                    size='small'
-                    style={{
-                      backgroundColor: '#0F72EC',
-                      border: 'none',
-                      display: 'flex',
-                      alignItems: 'center',
-                      minWidth: '25px'
-                    }}
-                    src={comment.user.image}
-                  >
-                    <p style={{ fontSize: '0.75rem' }}>
-                      {comment.user.firstName.split('')[0]}
-                      {comment.user.lastName?.split('')[0]}
-                    </p>
-                  </Avatar>
-                  <div className={styles.comment_content}>
+          {announ?.comments?.map((comment) => {
+            return (
+              <div key={comment._id} className={styles.comment_card}>
+                <Avatar
+                  size='small'
+                  style={{
+                    backgroundColor: '#0F72EC',
+                    border: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    minWidth: '25px',
+                  }}
+                  src={comment?.user?.image}
+                >
+                  <p style={{ fontSize: '0.75rem' }}>
+                    {comment?.user?.firstName.split('')[0]}
+                    {comment?.user?.lastName?.split('')[0]}
+                  </p>
+                </Avatar>
+                <div className={styles.comment_content}>
+                  <p>{comment.message}</p>
+                  <div className={styles.comment_user_data}>
                     <p>
-                      {comment.message}
+                      {comment?.user?.lastName}{' '}
+                      {comment?.user?.lastName ? comment?.user?.lastName : ''}
                     </p>
-                    <div className={styles.comment_user_data}>
-                      <p>
-                        {comment.user.lastName}{' '}{comment.user.lastName ? comment.user.lastName : ''}
-                      </p>
-                    </div>
                   </div>
-                  {
-                    (user?.type === 'admin' || comment.user?._id === user._id) &&
-                    <div className={styles.comment_options}>
-                      <Button type='ghost' className={styles.options_button} onClick={() => handleDeleteComment(comment._id)}>
-                        <HiTrash />
-                      </Button>
-                    </div>
-                  }
                 </div>
-              )
-            })
-          }
+                {(user?.type === 'admin' ||
+                  comment?.user?._id === user?._id) && (
+                  <div className={styles.comment_options}>
+                    <Button
+                      type='ghost'
+                      className={styles.options_button}
+                      onClick={() => handleDeleteComment(comment._id)}
+                    >
+                      <HiTrash />
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )
+          })}
         </div>
       </div>
     </Modal>

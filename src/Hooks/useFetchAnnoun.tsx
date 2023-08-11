@@ -18,6 +18,7 @@ export interface Announ {
 
 const useFetchAnnoun = (id: any) => {
   const [announ, setAnnoun] = useState<Announ | null>(null)
+  const [updateAnn, setUpdateAnn] = useState(false)
 
   const fetchAnnoun = async () => {
     try {
@@ -30,11 +31,12 @@ const useFetchAnnoun = (id: any) => {
 
   useEffect(() => {
     fetchAnnoun()
-  }, [])
+  }, [updateAnn])
 
   return {
     announ,
     setAnnoun,
+    setUpdateAnn,
   }
 }
 

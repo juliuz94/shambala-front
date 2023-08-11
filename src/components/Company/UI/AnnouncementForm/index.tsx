@@ -10,9 +10,10 @@ import styles from './styles.module.css'
 
 interface AnnounProps {
   id: string
+  setUpdateAnn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const AnnouncementForm = ({ id }: AnnounProps) => {
+const AnnouncementForm = ({ id, setUpdateAnn }: AnnounProps) => {
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const { user } = useUserContext()
@@ -28,7 +29,9 @@ const AnnouncementForm = ({ id }: AnnounProps) => {
     setMessage(e.target.value)
   }
 
-  const handleCreateComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleCreateComment = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
     e.preventDefault()
 
     try {
@@ -37,6 +40,7 @@ const AnnouncementForm = ({ id }: AnnounProps) => {
         message,
         announcement: id,
       })
+      setUpdateAnn((prev) => !prev)
       setMessage('')
       toast.success('Se agregó tu comentario correctamente')
     } catch (error) {
@@ -66,7 +70,11 @@ const AnnouncementForm = ({ id }: AnnounProps) => {
         onClick={handleCreateComment}
         disabled={loading}
       >
-        { loading ? <LoadingOutlined style={{ fontSize: 20 }} spin /> : 'Comentar'}
+        {loading ? (
+          <LoadingOutlined style={{ fontSize: 20 }} spin />
+        ) : (
+          'Comentar'
+        )}
       </button>
     </div>
   )

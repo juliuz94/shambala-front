@@ -145,17 +145,13 @@ const EventCard = ({ small, event, fetchEvents }: PropTypes) => {
         </div>
 
         <div className={styles.event_info}>
-          <h2 className={styles.event_title}>
-            {event?.title}
-          </h2>
+          <h2 className={styles.event_title}>{event?.title}</h2>
 
-          {
-            event?.isPremium && (
-              <div className={styles.premium_bagde}>
-                <img src='/images/premium_badge.png' alt='premium badge' />
-              </div>
-            )
-          }
+          {event?.isPremium && (
+            <div className={styles.premium_bagde}>
+              <img src='/images/premium_badge.png' alt='premium badge' />
+            </div>
+          )}
 
           <div className={styles.event_time}>
             <HiOutlineClock />
@@ -185,7 +181,7 @@ const EventCard = ({ small, event, fetchEvents }: PropTypes) => {
                         display: 'flex',
                         alignItems: 'center',
                       }}
-                    // src={speaker.image}
+                      // src={speaker.image}
                     >
                       <p style={{ fontSize: '0.75rem' }}>
                         {speaker?.name?.split(' ')[0].split('')[0]}
