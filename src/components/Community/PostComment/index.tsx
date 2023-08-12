@@ -110,7 +110,7 @@ const PostComment = ({
         <div className={styles.comment_options}>
           {(comment?.user?._id === user?._id ||
             (user?.type && user?.type === 'admin')) && (
-            <Button className={styles.comment_button} type='ghost'>
+            <Button className={styles.comment_button} type='link'>
               <BsTrashFill
                 style={{ fill: '#54c055' }}
                 onClick={() => setDeleteCommentModal(true)}
@@ -122,7 +122,7 @@ const PostComment = ({
             <Button
               className={`${styles.comment_button}`}
               onClick={() => handlePinComment()}
-              type='ghost'
+              type='link'
             >
               {comment.anchored ? <BsPinFill /> : <BsPin />}
             </Button>
