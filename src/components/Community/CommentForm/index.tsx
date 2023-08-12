@@ -46,7 +46,7 @@ const CommentForm = ({
       await axiosInstance.post(`${ROUTES.POST_COMMENT}/${id}`, { message })
       setMessage('')
       fetchComments(id, commentsLimit)
-      sendPoints('COMMUNITY_COMMENT', { userId: user._id})
+      sendPoints('COMMUNITY_COMMENT', { userId: user._id })
       fetchPoints(user?._id)
       toast.success('Se agregó tu comentario correctamente')
     } catch (error) {

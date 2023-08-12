@@ -10,6 +10,7 @@ import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
 import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import styles from './styles.module.css'
+import { sendPoints } from '@/helpers/gamification'
 
 interface PostCommentProps {
   id: string
@@ -65,9 +66,14 @@ const PostComment = ({
       await axiosInstance.post(
         `${ROUTES.POST_COMMENT}/handleLike?id=${comment._id}&isLike=${!isLiked}`
       )
-      setIsLiked(!isLiked)
+      const response = await sendPoints('LIKE_COMMENT', {
+        userId: user._id,
+      })
+      console.log('response:handleLikeComment', response)
     } catch (error) {
       console.error(error)
+    } finally {
+      setIsLiked(!isLiked)
     }
   }
 

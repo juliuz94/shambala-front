@@ -5,13 +5,16 @@ export const sendPoints = async (type: string, data: any) => {
     const token = localStorage.getItem('sha_user_token')
     console.log({
       type,
-      data
+      data,
     })
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/points/assign_point`,
-      { 
+      {
         type,
-        ...data
+        data: {
+          type,
+          ...data,
+        },
       },
       {
         headers: {
@@ -19,7 +22,7 @@ export const sendPoints = async (type: string, data: any) => {
         },
       }
     )
-    console.log('res ->', res)
+    return res.data
   } catch (error) {
     console.log('error')
   }
