@@ -30,9 +30,9 @@ const useFetchPosts: UseFetchPostsHook = (
   const fetchPosts = async () => {
     let paramsString
     if (defaultCategories.includes(category)) {
-      paramsString = `?page=${pageNumber}&category=${category}&sort=acs&search=${searchString}&tag=${tagId}`
+      paramsString = `?page=${pageNumber}&category=${category}&sort=acs&search=${searchString}&tags=${tagId}`
     } else {
-      paramsString = `?page=${pageNumber}&category=NULL&community=${category}&sort=acs&search=${searchString}&tag=${tagId}`
+      paramsString = `?page=${pageNumber}&category=NULL&community=${category}&sort=acs&search=${searchString}&tags=${tagId}`
     }
 
     try {
