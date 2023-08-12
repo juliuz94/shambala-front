@@ -14,7 +14,7 @@ type UseFetchPostsHook = (
   category: string,
   searchString: string,
   setPageNumber: Dispatch<SetStateAction<number>>,
-  tagId: string
+  tagId?: string
 ) => ReturnTypeOfUseFetchPosts
 
 const useFetchPosts: UseFetchPostsHook = (
