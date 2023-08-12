@@ -10,6 +10,8 @@ import 'react-quill/dist/quill.snow.css'
 import dynamic from 'next/dynamic'
 const ReactQuill = dynamic(import('react-quill'), { ssr: false })
 import styles from './styles.module.css'
+import { sendPoints } from '@/helpers/gamification'
+import { useUserContext } from '@/context/userContext'
 
 type CreatePostModalProps = {
   isModalOpen: boolean
@@ -31,6 +33,7 @@ const CreatePostModal = ({
   setPageNumber,
 }: CreatePostModalProps) => {
   const { tags } = useFetchTags()
+  const { user } = useUserContext()
 
   const [isLoading, setIsLoading] = useState(false)
   const [content, setContent] = useState('')
@@ -64,11 +67,15 @@ const CreatePostModal = ({
 
     try {
       await axiosInstance.post(`${ROUTES.POST}`, postInfo)
+      await sendPoints('CREATE_CONVERSATION', {
+        userId: user.id,
+      })
       setIsModalOpen(false)
       setPageNumber(1)
       setUpdatePost((prev) => !prev)
       setTitle('')
       setContent('')
+
       toast.success('Se agregó tu post correctamente')
     } catch (error) {
       toast.error('Parece que hubo un error')
