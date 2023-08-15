@@ -174,7 +174,7 @@ const Event: FC = () => {
   return (
     <div className={styles.event_container}>
       {
-        (subscription?.status !== 'ACTIVE' && event?.isPremium) && (
+        (subscription?.status !== 'APPROVED' && event?.isPremium) && (
           createPortal(<PremiumBlocker />, document.body)
         )
       }
@@ -309,7 +309,7 @@ const Event: FC = () => {
             </div>
 
             {
-              (!event?.isPremium || subscription?.status === 'ACTIVE' ) && (
+              (!event?.isPremium || subscription?.status === 'APPROVED' ) && (
                 <div className={styles.event_subscription_right_column}>
                   {event.subscribedUsers.some(
                     (userInEvent) => userInEvent._id === user?._id

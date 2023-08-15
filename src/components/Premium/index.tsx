@@ -25,15 +25,13 @@ const PremiumBlocker = () => {
   const { user } = useUserContext()
   const { plans } = useFetchPlans()
 
-  console.log('user ->', user)
-  console.log('plans ->', plans)
-
   const handleRedirectUser = async () => {
     try {
       toast.success('Redirigiendo a Stripe')
       const { data } = await axiosInstance.get(
         `${ROUTES.GENERATE_LINK}?plan=${plans[0]?._id}&mongo_user_id=${user?._id}`
       )
+      console.log('data ->', data)
       if (data && data.url) {
         window.location.href = data.url
       }

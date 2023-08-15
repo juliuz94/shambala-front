@@ -76,7 +76,7 @@ const Video = () => {
   return (
     <div className={styles.section}>
       {
-        (subscription?.status !== 'ACTIVE' &&  video?.isPremium) && (
+        (subscription?.status !== 'APPROVED' &&  video?.isPremium) && (
           createPortal(<PremiumBlocker />, document.body)
         )
       }
@@ -86,7 +86,7 @@ const Video = () => {
 
       <div className={styles.video_container}>
         <VideoHeader video={video} progress={progress} related={related} />
-        <VideoPlayer video={(subscription?.status !== 'ACTIVE' &&  video?.isPremium) ? '' : video} videoProgress={progress} />
+        <VideoPlayer video={(subscription?.status !== 'APPROVED' &&  video?.isPremium) ? '' : video} videoProgress={progress} />
         <div className={styles.video_info_container}>
           <VideoTabs video={video} />
           {!showComments && (

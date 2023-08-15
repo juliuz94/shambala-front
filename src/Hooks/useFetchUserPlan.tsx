@@ -8,6 +8,7 @@ const useFetchUserPlan = () => {
   const fetchUserPlan = async () => {
     try {
       const { data } = await axiosInstance.get(`${ROUTES.SUBSCRIPTION}`)
+      console.log('dafetchUserPlanta ->', data)
       setSubscription(data)
     } catch (error) {
       console.log('[fetchUserPlan]', error)
