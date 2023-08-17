@@ -1,14 +1,14 @@
 import { Input } from 'antd'
-import { HiMagnifyingGlass } from 'react-icons/hi2'
+import { HiMagnifyingGlass, HiMiniLockClosed, HiXCircle } from 'react-icons/hi2'
 import styles from './styles.module.css'
 
 interface SearchInputProps {
   onSearch?: (value: string) => void
+  currentValue?: string
 }
 
-const SearchInput = ({ onSearch }: SearchInputProps) => {
-
-  const debounce =  (cb: (value: string) => void, delay: number)  => {
+const SearchInput = ({ onSearch, currentValue }: SearchInputProps) => {
+  const debounce = (cb: (value: string) => void, delay: number) => {
     let timeout: ReturnType<typeof setTimeout>
 
     return (value: string) => {
@@ -38,8 +38,17 @@ const SearchInput = ({ onSearch }: SearchInputProps) => {
       <Input
         className={styles.input}
         placeholder='Buscar...'
-        suffix={<HiMagnifyingGlass />}
+        suffix={
+          !currentValue?.trim() ? (
+            <HiMagnifyingGlass />
+          ) : (
+            <div onClick={() => sendSearch('')}>
+              <HiXCircle />
+            </div>
+          )
+        }
         onChange={handleSearch}
+        value={currentValue}
       />
     </div>
   )
