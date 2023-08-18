@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import SearchInput from '@/components/SearchInput'
 import VideoRow from './ui/VideoRow'
 import VideoRowSkeleton from './ui/Skeleton'
@@ -7,6 +7,7 @@ import { axiosInstance } from '@/axios/axiosInstance'
 import ROUTES from '@/helpers/routes'
 import { Video, VideoProfile, NewVideoProfile } from '@/types'
 import styles from './styles.module.css'
+import { useRouter } from 'next/router'
 
 type Label = {
   createdAt: String
@@ -17,18 +18,25 @@ type Label = {
 }
 
 const VideosComponent = () => {
+  const router = useRouter()
+  // const searchQuery = useMemo(
+  //   () => router?.query?.search ?? '',
+  //   [router.query.search]
+  // )
+
   const [loadingData, setLoadingData] = useState(false)
   const [videos, setVideos] = useState<Label[]>([])
+  const [searchQuery, setSearchQuery] = useState('')
   const [videosWithProgress, setVideosWithProgress] = useState<
     NewVideoProfile[]
   >([])
   const [unfinishedVideos, setUnfinishedVideos] = useState([])
 
-  const fetchVideos = async (searchString?: string) => {
+  const fetchVideos = useCallback(async () => {
     setLoadingData(true)
     try {
       const { data } = await axiosInstance.get(
-        `${ROUTES.VIDEOS_BY_TAG}?search=${searchString || ''}`
+        `${ROUTES.VIDEOS_BY_TAG}?search=${searchQuery}`
       )
       setVideos(data.docs)
     } catch (error) {
@@ -36,7 +44,7 @@ const VideosComponent = () => {
     } finally {
       setLoadingData(false)
     }
-  }
+  }, [searchQuery])
 
   const fetchVideosWithProgress = async () => {
     try {
@@ -54,12 +62,17 @@ const VideosComponent = () => {
   }
 
   useEffect(() => {
-    fetchVideosWithProgress()
     fetchVideos()
+  }, [fetchVideos, searchQuery])
+  useEffect(() => {
+    fetchVideosWithProgress()
   }, [])
 
   const handleSearch = (value: string) => {
-    fetchVideos(value)
+    setSearchQuery(value)
+    // router.query.search = value
+    // router.push(router)
+
   }
 
   return (
@@ -69,7 +82,7 @@ const VideosComponent = () => {
       </Head>
 
       <div className={styles.content_container}>
-        {loadingData ? (
+        {false ? (
           <div style={{ marginTop: '2rem' }}>
             <VideoRowSkeleton />
             <VideoRowSkeleton />
@@ -77,7 +90,7 @@ const VideosComponent = () => {
         ) : (
           <>
             <div className={styles.video_options}>
-              {/* <SearchInput onSearch={handleSearch} /> */}
+              <SearchInput onSearch={handleSearch} />
             </div>
 
             {videosWithProgress.some((video) => !video.progress.finished) && (
