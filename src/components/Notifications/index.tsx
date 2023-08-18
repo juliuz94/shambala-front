@@ -80,11 +80,15 @@ const Notifications = () => {
                       {getNotificationMessage(notification)}
                     </p>
                   </div>
-                  <div className={styles.notification_options}>
-                    <Button type='link'>
-                      Marcar como leída
-                    </Button>
-                  </div>
+                  {
+                    !notification.read && (
+                      <div className={styles.notification_options}>
+                        <Button type='link' onClick={() => setNotificationAsRead(notification._id, false)}>
+                          Marcar como leída
+                        </Button>
+                      </div>
+                    )
+                  }
                 </div>
               )
             })

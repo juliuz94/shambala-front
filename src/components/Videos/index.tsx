@@ -19,13 +19,14 @@ type Label = {
 
 const VideosComponent = () => {
   const router = useRouter()
-  const searchQuery = useMemo(
-    () => router?.query?.search ?? '',
-    [router.query.search]
-  )
+  // const searchQuery = useMemo(
+  //   () => router?.query?.search ?? '',
+  //   [router.query.search]
+  // )
 
   const [loadingData, setLoadingData] = useState(false)
   const [videos, setVideos] = useState<Label[]>([])
+  const [searchQuery, setSearchQuery] = useState('')
   const [videosWithProgress, setVideosWithProgress] = useState<
     NewVideoProfile[]
   >([])
@@ -35,7 +36,7 @@ const VideosComponent = () => {
     setLoadingData(true)
     try {
       const { data } = await axiosInstance.get(
-        `${ROUTES.VIDEOS_BY_TAG}?search=${searchQuery || ''}`
+        `${ROUTES.VIDEOS_BY_TAG}?search=${searchQuery}`
       )
       setVideos(data.docs)
     } catch (error) {
@@ -68,8 +69,10 @@ const VideosComponent = () => {
   }, [])
 
   const handleSearch = (value: string) => {
-    router.query.search = value
-    router.push(router)
+    setSearchQuery(value)
+    // router.query.search = value
+    // router.push(router)
+
   }
 
   return (
@@ -79,7 +82,7 @@ const VideosComponent = () => {
       </Head>
 
       <div className={styles.content_container}>
-        {loadingData ? (
+        {false ? (
           <div style={{ marginTop: '2rem' }}>
             <VideoRowSkeleton />
             <VideoRowSkeleton />
@@ -87,10 +90,7 @@ const VideosComponent = () => {
         ) : (
           <>
             <div className={styles.video_options}>
-              <SearchInput
-                onSearch={handleSearch}
-                currentValue={searchQuery as string}
-              />
+              <SearchInput onSearch={handleSearch} />
             </div>
 
             {videosWithProgress.some((video) => !video.progress.finished) && (
