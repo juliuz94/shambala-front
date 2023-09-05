@@ -12,6 +12,7 @@ export type User = {
   image: string | null
   invitedBy: string | null
   company: string | null
+  community?: Community | null | undefined
   isVolunteer: boolean
   type: string | null
   createdAt: string
@@ -19,6 +20,13 @@ export type User = {
   updatedAt: string
   __v: number
 } | null
+
+export type Community =  {
+  companies: Company[]
+  description: string,
+  title: string,
+  _id: string
+}
 
 export type Video = {
   progress: any
@@ -129,7 +137,7 @@ export interface Workshop {
   attachments: Attachment[]
   sponsors: Sponsor[]
   type: string
-  speaker: any[] // Update the type of speaker if possible
+  speaker?: any[] // Update the type of speaker if possible
   date: string
   isPublic: boolean
   agenda: any[] // Update the type of agenda if possible
@@ -452,4 +460,25 @@ export type Notification = {
   createdAt: string;
   updatedAt: string;
   __v: number; 
+}
+
+export type LearningRoute = {
+  createdAt: string;
+  description: string;
+  title: string;
+  updatedAt: string;
+  videos: Video[];
+  workshops: Workshop[];
+}
+
+export type LearningPath = {
+  createdAt: string;
+  days: number;
+  finishedRoute: boolean;
+  progress: number;
+  route: LearningRoute;
+  startingDate: string;
+  updatedAt: string;
+  user: string;
+  _id: string;
 }

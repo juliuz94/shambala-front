@@ -159,7 +159,8 @@
 }
 
 .user_option {
-  width: 130px;
+  width: 100%;
+  min-width: 200px;
 }
 
 .user_option a {

@@ -49,6 +49,29 @@
   color: var(--video_row_title);
 }
 
+.route_data {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.route_data p {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.route_progress {
+  margin: 0;
+}
+
+.left_column {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
 .videos_row {
   display: flex;
   align-items: flex-start;

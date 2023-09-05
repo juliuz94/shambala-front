@@ -5,11 +5,11 @@ import { useEffect, useState } from 'react'
 import { Avatar, Button, Dropdown, Badge, Popover } from 'antd'
 import type { MenuProps } from 'antd'
 import { FaLeaf } from 'react-icons/fa'
-import { HiBell } from 'react-icons/hi2'
+import { HiBell, HiOutlineAcademicCap } from 'react-icons/hi2'
 import { useUserContext } from '@/context/userContext'
 import useFetchNotifications from '@/Hooks/useFetchNotifications'
 import { MoreOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons'
-import { getNotificationMessage } from '@/helpers/getNotificationMessage'
+import { getNotificationMessage, getNotificationURL } from '@/helpers/getNotificationMessage'
 import { Notification } from '@/types'
 import styles from './styles.module.css'
 
@@ -38,6 +38,17 @@ const Header = () => {
     },
     {
       key: '2',
+      label: (
+        <div className={styles.user_option}>
+          <Link href={`/learning-routes`}>
+            Rutas de aprendizaje
+            <HiOutlineAcademicCap size={17} />
+          </Link>
+        </div>
+      ),
+    },
+    {
+      key: '3',
       label: (
         <div className={styles.user_option}>
           <a onClick={logOut}>
@@ -75,12 +86,19 @@ const Header = () => {
     }
   }, [showMenu])
 
+  const redirectUserToNotification = (notification: Notification) => {
+    const url = getNotificationURL(notification, user)
+    if (url) {
+      router.push(url)
+    }
+  }
+
   const notificationsContent = (
     <div className={styles.notifications_container}>
       {notifications.length > 1 ? (
         notifications.map((notification: Notification) => {
           return (
-            <div key={notification._id} className={styles.notification_card}>
+            <div key={notification._id} className={styles.notification_card} onClick={() => redirectUserToNotification(notification)}>
               <div className={styles.notification_data}>
                 <div className={styles.notification_avatar_container}>
                   <Avatar
@@ -106,7 +124,7 @@ const Header = () => {
               <div className={styles.notification_options}>
                 <Button
                   type='link'
-                  onClick={() => setNotificationAsRead(notification._id, false)}
+                  onClick={(e) => setNotificationAsRead(e, notification._id, false)}
                 >
                   Marcar como leída
                 </Button>

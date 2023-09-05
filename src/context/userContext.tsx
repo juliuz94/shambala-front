@@ -99,7 +99,6 @@ export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
           },
         }
       )
-      console.log('data ->', data)
       if (data?.length > 0) {
         const totalPoints = data.reduce((accumulator: number, current: any) => {
           return accumulator + current.point

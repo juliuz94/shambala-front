@@ -57,12 +57,15 @@ const Event: FC = () => {
   const { query: { id } } = router
 
   const postWorkshop = async () => {
-    const data = {
+    const data : any = {
       displayName: `${user.firstName}`,
       email: `${user.email}`,
       position: '',
       workshop: event?._id,
-      company: `${user.company}`,
+    }
+
+    if (user.company) {
+      data.company = user.company._id
     }
 
     try {

@@ -1,4 +1,4 @@
-import { Notification } from "@/types"
+import { Notification, User } from "@/types"
 
 const enum NOTIFICATION_EVENTS {
   /* Comentarios */
@@ -24,7 +24,7 @@ export const getNotificationMessage = (notification: Notification) => {
 
     case NOTIFICATION_EVENTS.COMMENT_LIKE:
       return `${notification.user_dispatch?.firstName} ${notification.user_dispatch?.lastName ? notification.user_dispatch?.lastName : ''} 
-      le dio like a tu comentario  "${notification.document_data.title}"`
+      le dio like a tu comentario en el post "${notification.document_data.title}"`
 
     case NOTIFICATION_EVENTS.POST_LIKED:
       return `${notification.user_dispatch?.firstName} ${notification.user_dispatch?.lastName ? notification.user_dispatch?.lastName : ''} 
@@ -49,5 +49,32 @@ export const getNotificationMessage = (notification: Notification) => {
 
     default:
       break;
+  }
+}
+
+export const getNotificationURL = (notification: Notification, user: User) => {
+  console.log('notification ->', notification)
+
+  switch (notification.event_type) {
+    case NOTIFICATION_EVENTS.COMMENT_CREATE:
+    case NOTIFICATION_EVENTS.COMMENT_LIKE:
+      return `/community/post/${notification.document_data._id}`
+
+    case NOTIFICATION_EVENTS.POST_LIKED:
+      return `/community/post/${notification.documentRef}`
+
+    case NOTIFICATION_EVENTS.VIDEO_CREATE:
+    case NOTIFICATION_EVENTS.VIDEO_COMMENT_LIKED:
+    case NOTIFICATION_EVENTS.VIDEO_COMMENT:
+      return `/video/${notification.documentRef}`
+
+    case NOTIFICATION_EVENTS.WORKSHOP_CREATE:
+      return `/event/${notification.documentRef}`
+
+    case NOTIFICATION_EVENTS.ANNOUNCEMENTS_CREATE:
+      return `/company/${user?.community?._id}`
+
+    default:
+      return null
   }
 }

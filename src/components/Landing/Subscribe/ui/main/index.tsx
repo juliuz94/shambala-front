@@ -20,6 +20,7 @@ const Main = () => {
   const checkSubscription = async () => {
     try {
       const subscription = await axiosInstance.get(`${ROUTES.SUBSCRIPTION}`)
+      console.log('subscription', subscription)
       if (
         hasClickedPayNow &&
         (subscription.data.status === null ||

@@ -1,17 +1,19 @@
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Head from 'next/head'
 import Filter from '@/components/PageFilter'
 import { Avatar, Button, Skeleton } from 'antd'
 import styles from './styles.module.css'
 import { Notification } from '@/types'
-import { getNotificationMessage } from '@/helpers/getNotificationMessage'
+import { getNotificationMessage, getNotificationURL } from '@/helpers/getNotificationMessage'
+import { useUserContext } from '@/context/userContext'
 import useFetchNotifications from '@/Hooks/useFetchNotifications'
 
 const Notifications = () => {
+  const router = useRouter()
+  const { user } = useUserContext()
   const [filter, setFilter] = useState<boolean | null>(false)
   const { notifications, paginationData, refreshNotifications, setNotificationAsRead, loadingData } = useFetchNotifications(filter, 1)
-
-  console.log('notifications ->', notifications)
 
   const options = [
     {
@@ -33,10 +35,17 @@ const Notifications = () => {
     refreshNotifications(category, 1)
   }
 
+  const redirectUserToNotification = (notification: Notification) => {
+    const url = getNotificationURL(notification, user)
+    if (url) {
+      router.push(url)
+    }
+  }
+
   return (
     <section className={styles.section}>
       <Head>
-        <title>Comunidad</title>
+        <title>Notificaciones</title>
       </Head>
       <img
         className={styles.bg}
@@ -62,7 +71,7 @@ const Notifications = () => {
           notifications?.length > 0 && !loadingData && <div className={styles.notifications_container}>
             {notifications.map((notification: Notification) => {
               return (
-                <div className={styles.notification_card} key={notification._id}>
+                <div className={styles.notification_card} key={notification._id} onClick={() => redirectUserToNotification(notification)}>
                   <div className={styles.notification_data}>
                     <div className={styles.notification_avatar_container}>
                       <Avatar
@@ -83,7 +92,7 @@ const Notifications = () => {
                   {
                     !notification.read && (
                       <div className={styles.notification_options}>
-                        <Button type='link' onClick={() => setNotificationAsRead(notification._id, false)}>
+                        <Button type='link' onClick={(e) => setNotificationAsRead(e, notification._id, false)}>
                           Marcar como leída
                         </Button>
                       </div>

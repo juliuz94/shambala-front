@@ -25,6 +25,7 @@ type Routes = {
   SUBSCRIPTION: string
   NOTIFICATIONS: string
   NOTIFICATIONS_BY_USER: string
+  LEARNING_PATHS: String
 }
 
 const ROUTES: Routes = {
@@ -54,6 +55,7 @@ const ROUTES: Routes = {
   SUBSCRIPTION: 'users/subscription',
   NOTIFICATIONS: 'notifications',
   NOTIFICATIONS_BY_USER: 'notifications/by-user',
+  LEARNING_PATHS: 'users/routeLearning'
 }
 
 export default ROUTES

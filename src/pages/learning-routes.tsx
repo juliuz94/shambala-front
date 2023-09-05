@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useUserContext } from '@/context/userContext'
-import Community from '@/components/Community'
-import Notifications from '@/components/Notifications'
+import LeaningRoutes from '@/components/LearningRoutes'
 import Splash from '@/components/Splash'
 import Layout from '@/components/Layout'
 
 
-const NotificationPage = () => {
+const LearningRoutes = () => {
   const [loading, setLoading] = useState(true)
   const router = useRouter()
   const { user } = useUserContext()
@@ -24,9 +23,9 @@ const NotificationPage = () => {
     <Splash />
   ) : (
     <Layout>
-      <Notifications />
+      <LeaningRoutes />
     </Layout>
   )
 }
 
-export default NotificationPage
+export default LearningRoutes

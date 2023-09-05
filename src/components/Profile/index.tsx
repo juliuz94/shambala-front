@@ -12,6 +12,7 @@ import EditProfileModal from '../Modals/EditProfile'
 import useFetchUser from '@/Hooks/useFetchUser'
 import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
 import styles from './styles.module.css'
+import { axiosInstance } from '@/axios/axiosInstance'
 
 type ProfileProps = {
   id: string
@@ -26,6 +27,7 @@ const Profile = ({ id }: ProfileProps) => {
   const [filteredVideos, setFilteredVideos] = useState<any[]>([])
   const [unfinishedVideos, setUnfinishedVideos] = useState<Video[]>([])
   const [finishedVideos, setFinishedVideos] = useState<Video[]>([])
+  const [workshopsSignedUp, setWorkshopsSignedUp] = useState([])
 
   const { videos, videosWithProgress, loadingData, fetchVideosByTags } =
     useFetchVideos()
@@ -47,7 +49,17 @@ const Profile = ({ id }: ProfileProps) => {
     return finishedCount
   }
 
+  const fetchUserStats = async () => {
+    try {
+      const { data } = await axiosInstance.get('/users/statistics')
+      setWorkshopsSignedUp(data[0].registeredWorkshops)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
+    fetchUserStats()
     const finished = videosWithProgress.filter(
       (video: VideoProfile) => video.progress.finished
     )
@@ -57,7 +69,7 @@ const Profile = ({ id }: ProfileProps) => {
 
     setFinishedVideos(finished)
     setUnfinishedVideos(unFinished)
-  }, [videosWithProgress])
+  }, [])
 
   const allVideos: VideoProfile[] = []
   videos.forEach((videoCategory: any) => {
@@ -227,7 +239,7 @@ const Profile = ({ id }: ProfileProps) => {
                   </div>
 
                   <div className={styles.projects_text}>
-                    <h3>0</h3>
+                    <h3>{workshopsSignedUp?.length}</h3>
                     <p>Eventos</p>
                   </div>
                   {/* 

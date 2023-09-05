@@ -63,7 +63,8 @@ const useFetchNotifications = (read: boolean | null, page: number = 1) => {
     fetchNotifications(read, page)
   }
 
-  const setNotificationAsRead = async (notificationId: string, read: boolean) => {
+  const setNotificationAsRead = async (event: React.MouseEvent<HTMLElement>, notificationId: string, read: boolean) => {
+    event.stopPropagation()
     try {
       await axiosInstance.patch(`${ROUTES.NOTIFICATIONS}/${notificationId}`, {
         read: true,
