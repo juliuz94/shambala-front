@@ -40,6 +40,21 @@ export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
     setUser(user)
   }
 
+  const handleLoginLog = async (user: User | null | any, token: string) => {
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/logger/loginLog`,
+      {
+        userId: user._id,
+        companyId: user.company?._id || ''
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+  } 
+
   const handleLogin = async (user: User | null | any) => {
     try {
       const { data } = await axios.get(
@@ -51,9 +66,11 @@ export const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
         }
       )
       localStorage.setItem('sha_user_token', user.accessToken)
+
       setAuthInfo(data)
       fetchPoints(data._id)
       toast.success('¡Qué bueno tenerte acá!')
+      handleLoginLog(data, user?.accessToken)
       router.push('/community')
     } catch (error) {
       console.log(error)
