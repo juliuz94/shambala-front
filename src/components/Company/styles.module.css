@@ -59,10 +59,17 @@
   color: #615e73;
 }
 
-.comment_button {
+.organization_buttons {
   position: absolute;
   right: 2.5rem;
   top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.comment_button {
+
 }
 
 .right_column {
@@ -96,6 +103,10 @@
 }
 
 @media (max-width: 787px) {
+  .left_column {
+    align-items: center;
+  }
+
   .comment_button {
     display: none;
   }

@@ -72,7 +72,6 @@ const Community = () => {
         pin: pin,
       })
       setUpdatePost((prevUpdatePost) => !prevUpdatePost)
-      console.log('res ->', res)
     } catch (error) {
       console.log('handlePinPost', error)
     }

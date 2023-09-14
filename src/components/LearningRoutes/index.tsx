@@ -14,6 +14,8 @@ const LeaningRoutes = () => {
   const router = useRouter()
   const { learningPaths } = useFetchLearningPaths()
 
+  console.log('learningPaths', learningPaths)
+
   const handleGoBack = () => {
     router.back()
   }
@@ -64,13 +66,17 @@ const LeaningRoutes = () => {
                     finishDate: handleGetRemainingDays(path?.startingDate, path?.days)
                   }}
                 />
-                <div className={styles.workshops_container}>
-                  {
-                    eventsData.map((event) => (
-                      <RouteEvent key={event._id} event={event} />
-                    ))
-                  }
-                </div>
+                {
+                  path?.route?.workshops?.length > 0 && (
+                    <div className={styles.workshops_container}>
+                      {
+                        path?.route?.workshops?.map((event) => (
+                          <RouteEvent key={event._id} event={event} />
+                        ))
+                      }
+                    </div>
+                  )
+                }
               </>
             )
           })

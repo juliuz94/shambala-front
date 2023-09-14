@@ -16,8 +16,6 @@ const Tags = ({ onTagSelect }: TagsProps) => {
     onTagSelect(value)
   }
 
-  console.log(tags)
-
   return (
     <div className={styles.container}>
       <p>Filtrar por etiquetas:</p>

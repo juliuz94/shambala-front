@@ -14,6 +14,7 @@ interface PropTypes {
   event: Workshop
 }
 const RouteEvent = ({ event }: PropTypes) => {
+  console.log(event)
   const router = useRouter()
 
   return (
@@ -55,7 +56,7 @@ const RouteEvent = ({ event }: PropTypes) => {
           </div>
         )}
 
-        {event && event?.speakers.length > 0 && (
+        {/* {event && event?.speakers.length > 0 && (
           <div className={styles.speakers}>
             {event?.speakers.map((speaker) => {
               return (
@@ -80,7 +81,7 @@ const RouteEvent = ({ event }: PropTypes) => {
               )
             })}
           </div>
-        )}
+        )} */}
 
         {event && event?.sponsors.length > 0 && (
           <div className={styles.sponsors}>

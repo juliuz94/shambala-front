@@ -52,7 +52,6 @@ const PostComment = ({
           commentId: comment._id,
         })
         fetchComments(id, commentsLimit)
-        console.log('res >', res)
       } catch (error) {
         console.log('[handlePinComment]', error)
       }

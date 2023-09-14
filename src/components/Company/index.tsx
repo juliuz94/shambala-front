@@ -5,24 +5,29 @@ import { useUserContext } from '@/context/userContext'
 import Events from './UI/Events'
 import useFetchWorkshop from '@/Hooks/useFetchWorkshop'
 import CreateAnnounModal from '../Modals/CreateAnnoun'
+import UpdateCompany from '../Modals/UpdateCompany'
+import CompanyVideoModal from '../Modals/CompanyVideoModal'
 import { Button } from 'antd'
 import CompanyBio from './UI/CompanyBio'
 import Announcements from './UI/Announcements'
 import useFetchAnnouncement from '@/Hooks/useFetchAnnouncement'
 import useFetchCompanyStatistics from '@/Hooks/useFetchCompanyStatistics'
 import styles from './styles.module.css'
+import useFetchCompanyData from '@/Hooks/useFetchCompany'
 
 const Company = () => {
   const router = useRouter()
-  const workshopId = router.query.id
-  const { workshop } = useFetchWorkshop(workshopId as string)
-  const { announcement, setAnnouncement, setUpdateAnnoun }: any =
-    useFetchAnnouncement()
+  const companyId = router.query.id
+  const { workshop } = useFetchWorkshop(companyId as string)
+  const { announcement, setAnnouncement, setUpdateAnnoun }: any = useFetchAnnouncement()
   const { user } = useUserContext()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [openUpdateCompany, setOpenUpdateCompany] = useState(false)
+  const [openVideoModal, setOpenVideoModal] = useState(false)
 
-  const { companyStatistics } = useFetchCompanyStatistics(workshopId)
+  const { companyStatistics } = useFetchCompanyStatistics(companyId)
+  const { companyData, setUpdateCompany } = useFetchCompanyData(companyId)
 
   return (
     <main className={styles.company_container}>
@@ -59,22 +64,34 @@ const Company = () => {
                 </div>
               </div>
             </div>
-
-            {user?.company.owner === user?._id ? (
-              <Button
-                type='primary'
-                size='large'
-                className={styles.comment_button}
-                onClick={() => setIsModalOpen(true)}
-              >
-                Añadir anuncio
-              </Button>
-            ) : (
-              ''
+            {user?.company.owner === user?._id && (
+              <div className={styles.organization_buttons}>
+                <Button
+                  type='primary'
+                  size='large'
+                  className={styles.comment_button}
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Añadir anuncio
+                </Button>
+                <Button
+                  type='primary'
+                  size='large'
+                  className={styles.comment_button}
+                  onClick={() => setOpenUpdateCompany(true)}
+                >
+                  Actualizar info
+                </Button>
+              </div>
             )}
           </div>
 
-          <CompanyBio setIsModalOpen={setIsModalOpen} />
+          <CompanyBio 
+            setIsModalOpen={setIsModalOpen} 
+            companyData={companyData} 
+            setOpenUpdateCompany={setOpenUpdateCompany}
+            setOpenVideoModal={setOpenVideoModal}
+          />
 
           <Announcements
             announcement={announcement}
@@ -99,6 +116,19 @@ const Company = () => {
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
           setUpdateAnnoun={setUpdateAnnoun}
+        />
+
+        <UpdateCompany 
+          open={openUpdateCompany}
+          setOpen={setOpenUpdateCompany}
+          companyData={companyData}
+          setUpdateCompany={setUpdateCompany}
+        />
+
+        <CompanyVideoModal 
+          open={openVideoModal}
+          setOpen={setOpenVideoModal}
+          videoUrl={companyData?.videoUrl}
         />
       </section>
     </main>

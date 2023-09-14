@@ -1,0 +1,12 @@
+.react_player {
+  width: 100%;
+  height: 300px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #272727;
+  position: relative;
+  margin-top: 1.5rem;
+}

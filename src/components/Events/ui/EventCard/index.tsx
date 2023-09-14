@@ -27,14 +27,14 @@ interface PropTypes {
 const EventCard = ({ small, event, fetchEvents }: PropTypes) => {
   const router = useRouter()
   const { user } = useUserContext()
-  const [liked, setLiked] = useState(event?.like.includes(user?._id))
+  const [liked, setLiked] = useState(event?.like?.includes(user?._id))
 
   const likeEvent = async (e: React.MouseEvent) => {
     e.stopPropagation()
 
     try {
-      if (event?.like.includes(user?._id)) {
-        const updatedLikes = event?.like.filter(
+      if (event?.like?.includes(user?._id)) {
+        const updatedLikes = event?.like?.filter(
           (id: string) => id !== user?._id
         )
         setLiked(false)
@@ -78,7 +78,7 @@ const EventCard = ({ small, event, fetchEvents }: PropTypes) => {
           </div>
         </div>
 
-        {event && event?.speakers.length > 0 && (
+        {event && event?.speakers?.length > 0 && (
           <div className={styles.speakers}>
             {event?.speakers.map((speaker) => {
               return (
@@ -168,7 +168,7 @@ const EventCard = ({ small, event, fetchEvents }: PropTypes) => {
           )}
 
           <p className={styles.event_description}>{event?.description}</p>
-          {event && event?.speakers.length > 0 && (
+          {event && event?.speakers?.length > 0 && (
             <div className={styles.speakers}>
               {event?.speakers.map((speaker) => {
                 return (
@@ -195,7 +195,7 @@ const EventCard = ({ small, event, fetchEvents }: PropTypes) => {
             </div>
           )}
 
-          {event && event?.sponsors.length > 0 && (
+          {event && event?.sponsors?.length > 0 && (
             <div className={styles.sponsors}>
               <p>Presentado por:</p>
               {event?.sponsors.map((sponsor) => {

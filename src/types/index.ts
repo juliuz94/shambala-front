@@ -482,3 +482,16 @@ export type LearningPath = {
   user: string;
   _id: string;
 }
+
+export type CompanyData = {
+  createdAt: string
+  description: string
+  image: string
+  nit: string
+  owner: string
+  permissions: string[]
+  title: string
+  videoUrl: string | null
+  videoThumbnail: string | null
+  _id: string
+}

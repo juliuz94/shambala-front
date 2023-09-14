@@ -3,9 +3,10 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { Button, Dropdown, type MenuProps } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
-import { VideoProfile, Video } from '@/types'
+import { VideoProfile, Video, Workshop } from '@/types'
 import { useUserContext } from '@/context/userContext'
 import VideoSlider from './VideoSlider'
+import EventCard from '../Events/ui/EventCard'
 import VideoRowSkeleton from '../Videos/ui/Skeleton'
 import useFetchVideos from '@/Hooks/useFetchVideos'
 import EditProfileModal from '../Modals/EditProfile'
@@ -52,6 +53,7 @@ const Profile = ({ id }: ProfileProps) => {
   const fetchUserStats = async () => {
     try {
       const { data } = await axiosInstance.get('/users/statistics')
+      console.log('data ->', data)
       setWorkshopsSignedUp(data[0].registeredWorkshops)
     } catch (error) {
       console.log(error)
@@ -322,6 +324,23 @@ const Profile = ({ id }: ProfileProps) => {
             )}
           </>
         )}
+
+        {
+          workshopsSignedUp && workshopsSignedUp.length > 0 && (
+            <div className={styles.events_container}>
+              {
+                workshopsSignedUp.map((workShop: Workshop) => {
+                  return (
+                    <EventCard
+                      key={workShop._id}
+                      event={workShop}
+                    />
+                  )
+                })
+              }
+            </div>
+          )
+        }
 
         <img
           className={styles.bg}

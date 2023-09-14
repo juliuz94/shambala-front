@@ -19,7 +19,6 @@ interface EventsTypes {
 }
 
 const Events = ({ work }: EventsTypes) => {
-  console.log('work ->', work)
   const router = useRouter()
 
   return (

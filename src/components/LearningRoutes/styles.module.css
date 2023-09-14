@@ -43,7 +43,7 @@
 
 .workshops_container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   width: 100%;
   padding: 1rem var(--section-horizontal-padding) 2rem;
