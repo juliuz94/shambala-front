@@ -11,6 +11,7 @@ import VideoRowSkeleton from '../Videos/ui/Skeleton'
 import useFetchVideos from '@/Hooks/useFetchVideos'
 import EditProfileModal from '../Modals/EditProfile'
 import useFetchUser from '@/Hooks/useFetchUser'
+import { HiOutlineAcademicCap } from 'react-icons/hi2'
 import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
 import styles from './styles.module.css'
 import { axiosInstance } from '@/axios/axiosInstance'
@@ -178,12 +179,21 @@ const Profile = ({ id }: ProfileProps) => {
 
       <div className={styles.container}>
         <div className={styles.profile}>
-          <img
-            src='/images/svg/arrow_back.svg'
-            alt='back'
-            onClick={() => router.back()}
-            className={styles.back}
-          />
+          <div className={styles.header_options}>
+            <Button type='ghost'>
+              <img
+                src='/images/svg/arrow_back.svg'
+                alt='back'
+                onClick={() => router.back()}
+                className={styles.back}
+              />
+            </Button>
+
+            <Button type='primary' onClick={() => router.push('/learning-routes')}>
+              Rutas de aprendizaje
+              <HiOutlineAcademicCap size={17} />
+            </Button>
+          </div>
 
           <div className={styles.cards}>
             <div className={styles.user}>
