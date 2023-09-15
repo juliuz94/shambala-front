@@ -65,10 +65,12 @@ const PostComment = ({
       await axiosInstance.post(
         `${ROUTES.POST_COMMENT}/handleLike?id=${comment._id}&isLike=${!isLiked}`
       )
-      const response = await sendPoints('LIKE_COMMENT', {
-        userId: user._id,
-      })
-      console.log('response:handleLikeComment', response)
+      if (!isLiked === true) {
+        const response = await sendPoints('LIKE_COMMENT', {
+          userId: user._id,
+        })
+        console.log('response:handleLikeComment', response)
+      }
     } catch (error) {
       console.error(error)
     } finally {

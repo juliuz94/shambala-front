@@ -66,9 +66,10 @@ const CreatePostModal = ({
     }
 
     try {
+      console.log('user', user)
       await axiosInstance.post(`${ROUTES.POST}`, postInfo)
       await sendPoints('CREATE_CONVERSATION', {
-        userId: user.id,
+        userId: user._id, //TODO: AQUI HABIA UN ERROR USANDO UN ID QUE NO LLEGABA
       })
       setIsModalOpen(false)
       setPageNumber(1)

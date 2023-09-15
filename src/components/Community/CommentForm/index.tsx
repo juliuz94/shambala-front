@@ -37,6 +37,8 @@ const CommentForm = ({
     setMessage(e.target.value)
   }
 
+  //TODO:AQUI
+
   const handleCreateComment = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -47,6 +49,7 @@ const CommentForm = ({
       setMessage('')
       fetchComments(id, commentsLimit)
       sendPoints('COMMUNITY_COMMENT', { userId: user._id })
+
       fetchPoints(user?._id)
       toast.success('Se agregó tu comentario correctamente')
     } catch (error) {

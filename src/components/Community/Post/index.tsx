@@ -11,6 +11,7 @@ import ROUTES from '@/helpers/routes'
 import DeletePostModal from '@/components/Modals/DeletePost'
 import useRenderProfileImage from '@/Hooks/useRenderProfileImage'
 import styles from './styles.module.css'
+import { sendPoints } from '@/helpers/gamification'
 moment.locale('es')
 
 interface PostProps {
@@ -27,7 +28,7 @@ const Post = ({
   handlePinPost,
 }: PostProps) => {
   const router = useRouter()
-  const { user } = useUserContext()
+  const { user, fetchPoints } = useUserContext()
 
   const [deletePostModal, setDeletePostModal] = useState(false)
   const [isLiked, setIsLiked] = useState(false)
@@ -52,6 +53,14 @@ const Post = ({
       await axiosInstance.post(
         `${ROUTES.POST}/handleLike?id=${post._id}&isLike=${!isLiked}`
       )
+      if (!isLiked === true) {
+        const response = await sendPoints('LIKE_POST', {
+          userId: user._id,
+        })
+        console.log('response:LIKE_POST', response)
+        fetchPoints(user?._id)
+      }
+
       setIsLiked(!isLiked)
     } catch (error) {
       console.error(error)
