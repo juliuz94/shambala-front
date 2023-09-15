@@ -64,7 +64,7 @@ const CreateAnnounModal = ({
       title: values.title,
       content,
       createdBy: user?._id,
-      company: user?.community ? `${user?.community._id}` : '',
+      company: user?.company ? `${user?.company._id}` : '',
       image: imageUrl,
     }
 
